@@ -1,10 +1,35 @@
 # Void Matter Online
 
-Personal project for [void-matter.online](https://void-matter.online).
+Personal web game hosted on [Firebase Hosting](https://firebase.google.com/docs/hosting).
 
-## Development
+- **GCP / Firebase project ID:** `void-matter-online` (personal Google account `cajmyers@gmail.com`)
+- **Static site:** `public/` → deploy with Firebase CLI
 
-Documentation and setup instructions will be added as the project takes shape.
+## One-time Firebase CLI (personal account)
+
+Work Firebase login (`cmyers@telana.com`) cannot manage this project. Once per machine:
+
+```bash
+~/dev/projects/personal/setup-firebase-once.sh
+```
+
+## Local preview
+
+```bash
+firebase emulators:start --only hosting
+# or
+npx --yes serve public
+```
+
+## Deploy
+
+From this directory (under `~/dev/projects/personal/` so gcloud + Firebase use personal credentials):
+
+```bash
+firebase deploy --only hosting
+```
+
+Live URL after first deploy: `https://void-matter-online.web.app` (and `.firebaseapp.com`).
 
 ## License
 

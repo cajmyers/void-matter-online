@@ -42,6 +42,11 @@ Thumbs.db
 coverage/
 .nyc_output/
 
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+
 # Caches
 .cache/
 .parcel-cache/
