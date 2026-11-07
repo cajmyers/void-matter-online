@@ -1,0 +1,18 @@
+---
+description: card-sheet-tool is read-only combat/reference; do not edit it
+alwaysApply: true
+---
+
+# card-sheet-tool (read-only reference)
+
+`card-sheet-tool` is **not** part of this repo. It is added to the workspace for reference only.
+
+- **Never modify** any file under `card-sheet-tool/` (including when it lives at `~/Downloads/projects/battle/card-sheet-tool`).
+- **Do not** refactor, fix, or “clean up” that project unless the user explicitly revokes this rule.
+- **Read and cite** it when implementing Void Matter game logic (especially combat).
+
+## Combat rules for AI
+
+Read **`docs/combat-reference.md`** first for combat behavior, round flow, damage, defenses, enemies, and economy. Use card-sheet-tool source only when you need exact component tables, UI wiring, or parity with the simulator.
+
+Implement new code only under **void-matter-online** (copy/adapt logic as needed; do not edit the reference tree).
