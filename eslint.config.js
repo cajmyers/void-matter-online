@@ -7,7 +7,7 @@ import tseslint from "typescript-eslint";
 // packages (ENF-1) arrive with those packages in Stage 2 and are deliberately
 // not enabled for apps/web, which legitimately uses window, document and timers.
 export default tseslint.config(
-  { ignores: ["**/dist/**", "**/node_modules/**", "docs/**", ".firebase/**", "public/**"] },
+  { ignores: ["**/dist/**", "**/node_modules/**", "docs/**", ".firebase/**"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

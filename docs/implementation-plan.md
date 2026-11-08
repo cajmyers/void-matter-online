@@ -8,7 +8,7 @@ Sizes are relative (S, M, L), as in the technical proposal. No dates.
 
 | Stage | State |
 |---|---|
-| 0 Scaffold and preview deploy | **Built**, except two items: the old `public/` placeholder is still in the repo (delete it with `git rm -r public`; `firebase.json` no longer points at it), and the first preview-channel deploy has not been run (`pnpm deploy:preview`, needs the Firebase login in the README) |
+| 0 Scaffold and preview deploy | **Built**, except one item: the first preview-channel deploy has not been run (`pnpm deploy:preview`, needs the Firebase login in the README). The old `public/` placeholder is deleted |
 | 1a Style direction | **Holo tactical chosen; the other two themes are deleted.** Owner's action icons and resource tokens are in. Further Holo changes are being made one area at a time. See `#/dev/style` |
 | 1b Component gallery | **In progress, slice 1 of 3 built** at `#/dev/gallery`: resources and markers (cubes, VM, damage cube, hull track, first-player token, Swarm Larva token), action tokens (general and officer, ready and exhausted), tiles (face-down, both Nexus kinds, all 20 planets, locked areas, all 21 Anomalies, rotation, full and half connections) and ships (four seat colours, hovered, selected, pinned). **Still to build:** cards, zones, dice, the 14 prompt kinds, chrome; and the passive-versus-Interact marking on Anomaly tiles. |
 | 1c to 1f | Not started |
