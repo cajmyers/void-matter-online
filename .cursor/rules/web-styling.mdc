@@ -1,0 +1,20 @@
+---
+description: Styling conventions for apps/web (CSS Modules plus the global theme file)
+globs: apps/web/**/*.{ts,tsx,css}
+alwaysApply: false
+---
+
+# Web styling
+
+Decided by the owner (see `docs/tooling-decisions.md` and `docs/implementation-plan.md` section 5).
+
+- **Components use CSS Modules** (`Thing.module.css` beside `Thing.tsx`). No UI framework, no inline colour values.
+- **`apps/web/src/theme/theme.css` is the one global stylesheet.** It holds the Material UI style palette (`--palette-*`), typography (`--font-*`, `.typography-*` classes), spacing and gaps (`--spacing-*`, `--gap-*`), shape, elevation, motion (`--motion-*`, `--transitions-*`), z-index and the game tokens (`--game-*`).
+- **Never hard-code** a colour, font, gap, radius, shadow, duration or z-index in a module. Read a variable. If one is missing, add it to `theme.css`; `theme.test.ts` fails if a module or the file uses a variable that is not defined. There is **one theme (Holo tactical)**: no `[data-theme]` blocks, no theme switcher.
+- **Look and feel (owner's references):** a space scene behind everything (`SpaceBackdrop`), translucent glass panels with a thin glowing rim, tiles and cards lit round the edge in a type colour (resource colour for planets and sector cards, violet for anomalies, gold for the Central Nexus, seat colour for start Nexuses), one big glowing primary button (`Button size="large"`), decks as glowing card backs. The art is procedural placeholder; the references show the mood, not the features. Render `<HexDefs />` once per page that draws tiles.
+- **Owner-supplied art** lives in `apps/web/src/assets/icons/`: action icons (white on transparent, used as CSS masks so they take the token colour) and resource tokens (full colour, used as images). Keep the `--game-resource-*` and `--game-action-*` variables in step with that art.
+- Use the `Typography` component (or the `.typography-*` classes) for text, `Panel` for containers and `Button` for buttons.
+- **Never rely on colour alone** for game meaning: seats and resources also differ by shape or glyph, token state by ring style. Check with the vision simulator on `/dev/style`.
+- Animate only `transform` and `opacity`. Durations come from `--motion-*` so the global speed multiplier works.
+- Desktop only: design at 1440 by 900 and up. No breakpoints.
+- Dev pages are gated with the compile-time `__DEV_PAGES__` (not the runtime `devPagesEnabled`) wherever a lazy import must disappear from the production build.

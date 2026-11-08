@@ -1,0 +1,37 @@
+.marker {
+  display: inline-flex;
+  flex: none;
+}
+
+.firstHex {
+  fill: var(--game-rim-nexus);
+  stroke: var(--palette-background-default);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--game-rim-nexus) 70%, transparent));
+}
+
+.firstInner {
+  fill: var(--game-tile-nexus-central);
+}
+
+.firstOne {
+  fill: none;
+  stroke: var(--game-rim-nexus);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.larvaDisc {
+  fill: color-mix(in srgb, var(--palette-error-dark) 55%, var(--palette-background-default));
+  stroke: var(--palette-error-light);
+  stroke-width: 1.5;
+}
+
+.larvaSegment {
+  fill: var(--palette-error-light);
+}
+
+.larvaEye {
+  fill: var(--palette-background-default);
+}

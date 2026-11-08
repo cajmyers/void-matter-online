@@ -1,0 +1,18 @@
+---
+description: How to change the Void Matter design docs without letting them drift apart
+globs: docs/**/*.md
+alwaysApply: false
+---
+
+# Editing the docs
+
+A ruling usually touches several files. Before finishing a change:
+
+1. **Search for stale text** that the new ruling contradicts (`rg` the old wording and the card or concept name), in every `docs/*.md` file, including the older numbered sections of `design-decisions.md` and `combat-reference.md`.
+2. **Put the ruling in `design-decisions.md`** with a stable ID (sections 13 to 15 hold IDs; add a new section for a new review rather than rewriting old rows). Fix the older section 7 rows to point at the ID instead of leaving a conflict.
+3. **Mirror it** where needed: `technical-proposal.md` (pipeline, state, saves, tests, section 12 departures, section 13 questions), `content-data.md` (numbers), `tooling-decisions.md` (stack and lint), and the `combat-reference.md` banner (combat overrides).
+4. **Mark guesses** as *(assumed)* and list them under open items. Resolved items leave the open list.
+5. **Do not state numbers you did not measure.** If a figure came from a simulation, re-run `docs/analysis/gate-graph-sim.js` or the relevant script and quote the output.
+6. Keep terms consistent with `TRM-1` (globalRound, combatRound, turn).
+
+Do not edit `docs/Void Matter.pdf`.

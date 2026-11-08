@@ -1,0 +1,112 @@
+.button {
+  --button-main: var(--palette-primary-main);
+  --button-dark: var(--palette-primary-dark);
+  --button-contrast: var(--palette-primary-contrast-text);
+
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-sm);
+  min-height: 36px;
+  padding: var(--spacing-1) var(--spacing-2);
+  border: 1px solid transparent;
+  border-radius: var(--shape-border-radius);
+  font-family: var(--font-text);
+  font-size: var(--typography-button-size);
+  font-weight: var(--text-weight-strong);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background var(--motion-ui-feedback) var(--transitions-easing-ease-out),
+    box-shadow var(--motion-ui-feedback) var(--transitions-easing-ease-out),
+    transform var(--motion-ui-feedback) var(--transitions-easing-ease-out);
+}
+
+.secondary {
+  --button-main: var(--palette-secondary-main);
+  --button-dark: var(--palette-secondary-dark);
+  --button-contrast: var(--palette-secondary-contrast-text);
+}
+
+.error {
+  --button-main: var(--palette-error-main);
+  --button-dark: var(--palette-error-dark);
+  --button-contrast: var(--palette-error-contrast-text);
+}
+
+.contained {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--button-main) 82%, white),
+    var(--button-main) 55%,
+    var(--button-dark)
+  );
+  border-color: color-mix(in srgb, var(--button-main) 60%, white);
+  color: var(--button-contrast);
+  box-shadow:
+    var(--shadow-2),
+    0 0 14px color-mix(in srgb, var(--button-main) var(--glow-strength), transparent),
+    inset 0 1px 0 rgb(255 255 255 / 0.45);
+}
+
+.contained:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+/* The big one: End Turn and the like. A bezel ring and a stronger glow. */
+.large {
+  min-height: 52px;
+  padding: var(--spacing-1-5) var(--spacing-4);
+  border-radius: var(--shape-border-radius-lg);
+  font-family: var(--font-display);
+  font-size: var(--typography-h6-size);
+  letter-spacing: 0.14em;
+}
+
+.large.contained {
+  box-shadow:
+    var(--shadow-3),
+    0 0 0 3px color-mix(in srgb, var(--palette-background-default) 70%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--button-main) 70%, transparent),
+    0 0 26px color-mix(in srgb, var(--button-main) var(--glow-strength), transparent),
+    inset 0 1px 0 rgb(255 255 255 / 0.5);
+}
+
+.outlined {
+  border-color: var(--button-main);
+  background: transparent;
+  color: var(--button-main);
+}
+
+.outlined:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--button-main) 14%, transparent);
+}
+
+.text {
+  background: transparent;
+  color: var(--button-main);
+}
+
+.text:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--button-main) 12%, transparent);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background: var(--palette-action-disabled-background);
+  border-color: transparent;
+  color: var(--palette-action-disabled);
+  box-shadow: none;
+}
+
+.outlined:disabled,
+.text:disabled {
+  background: transparent;
+  border-color: var(--palette-action-disabled-background);
+}

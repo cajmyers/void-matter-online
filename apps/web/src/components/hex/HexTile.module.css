@@ -1,0 +1,154 @@
+.tile {
+  transition: filter var(--motion-ui-feedback) var(--transitions-easing-ease-out);
+}
+
+/* The base plate: dark glass with a quiet edge. The glowing rim is drawn on top (.rim). */
+.body {
+  stroke: color-mix(in srgb, var(--rim) 35%, transparent);
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
+.faceDown { fill: var(--game-tile-face-down); }
+.planet { fill: var(--game-tile-planet); }
+.anomaly { fill: var(--game-tile-anomaly); }
+.nexusCentral { fill: var(--game-tile-nexus-central); }
+.nexusRim { fill: var(--game-tile-nexus-rim); }
+
+/* Every tile is lit round its edge, as in the references. */
+.rim {
+  fill: none;
+  stroke: var(--rim);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 3px var(--rim));
+}
+
+.faceDown ~ .rim {
+  stroke-width: 1.6;
+  opacity: 0.75;
+}
+
+.faceDownInner {
+  fill: none;
+  stroke: var(--game-tile-face-down-edge);
+  stroke-width: 0.8;
+  stroke-dasharray: 3 4;
+  opacity: 0.8;
+}
+
+.questionMark {
+  fill: color-mix(in srgb, var(--game-tile-face-down-edge) 80%, white);
+  opacity: 0.7;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+}
+
+.sphere {
+  stroke: color-mix(in srgb, var(--rim) 60%, white);
+  stroke-width: 0.6;
+  filter: drop-shadow(0 0 4px var(--rim));
+}
+
+/* A dark pill behind badges, so they read on any art. */
+.pill {
+  fill: rgb(2 6 14 / 0.66);
+  stroke: color-mix(in srgb, var(--rim) 45%, transparent);
+  stroke-width: 0.6;
+}
+
+.amount {
+  fill: var(--palette-text-primary);
+  font-family: var(--font-mono);
+}
+
+.lock {
+  fill: var(--game-state-locked);
+}
+
+.lockMark {
+  stroke: var(--palette-primary-contrast-text);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.anomalyStar {
+  fill: color-mix(in srgb, var(--rim) 35%, white);
+  stroke: white;
+  stroke-width: 0.05;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 0.35px var(--rim));
+}
+
+.nexusRing {
+  fill: none;
+  stroke: var(--rim);
+  stroke-width: 1.1;
+  opacity: 0.7;
+}
+
+/* Demand reads as a ghost: same shape as the supply art, faded and desaturated. */
+.demandArt {
+  opacity: 0.4;
+  filter: grayscale(0.6);
+}
+
+.nexusLabel {
+  fill: var(--palette-text-primary);
+  font-family: var(--font-mono);
+}
+
+.gate {
+  stroke: var(--game-gate);
+  stroke-width: 4;
+  stroke-linecap: butt;
+  filter: drop-shadow(0 0 3px var(--game-gate));
+}
+
+.gateHalf {
+  stroke: var(--game-gate-half);
+  stroke-width: 4;
+  stroke-linecap: butt;
+  stroke-dasharray: 3 2;
+  filter: drop-shadow(0 0 3px var(--game-gate-half));
+}
+
+.ship {
+  filter: drop-shadow(0 0 4px var(--ship));
+}
+
+.shipDisc {
+  stroke: var(--palette-background-default);
+  stroke-width: 2;
+}
+
+.hoverRing {
+  fill: none;
+  stroke: var(--palette-text-primary);
+  stroke-width: 1.5;
+  opacity: 0.85;
+}
+
+.selectRing {
+  fill: none;
+  stroke: var(--game-state-selected);
+  stroke-width: 2.6;
+  filter: drop-shadow(0 0 5px var(--game-state-selected));
+}
+
+.pinned {
+  fill: none;
+  stroke: var(--game-state-pinned);
+  stroke-width: 2;
+  stroke-dasharray: 3 3;
+}
+
+.selected .rim {
+  stroke: var(--game-state-selected);
+  stroke-width: 3.4;
+  filter: drop-shadow(0 0 6px var(--game-state-selected));
+}
+
+.vmArt {
+  filter: var(--game-vm-filter);
+}

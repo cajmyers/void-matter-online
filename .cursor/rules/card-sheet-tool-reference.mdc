@@ -1,18 +1,21 @@
 ---
-description: card-sheet-tool is read-only combat/reference; do not edit it
+description: card-sheet-tool is a read-only simulator reference; never edit it, and it loses to the Void Matter docs
 alwaysApply: true
 ---
 
 # card-sheet-tool (read-only reference)
 
-`card-sheet-tool` is **not** part of this repo. It is added to the workspace for reference only.
+`card-sheet-tool` is **not** part of this repo. It is in the workspace for reference only
+(it lives at `~/Downloads/projects/battle/card-sheet-tool`).
 
-- **Never modify** any file under `card-sheet-tool/` (including when it lives at `~/Downloads/projects/battle/card-sheet-tool`).
-- **Do not** refactor, fix, or “clean up” that project unless the user explicitly revokes this rule.
-- **Read and cite** it when implementing Void Matter game logic (especially combat).
+- **Never modify** any file under `card-sheet-tool/`. Do not refactor, fix or "clean up" it unless the user explicitly revokes this rule.
+- Implement new code **only under `void-matter-online`**. Copy and adapt logic; never edit the reference tree.
 
-## Combat rules for AI
+## It is not the rulebook
 
-Read **`docs/combat-reference.md`** first for combat behavior, round flow, damage, defenses, enemies, and economy. Use card-sheet-tool source only when you need exact component tables, UI wiring, or parity with the simulator.
+It is the old **simulator**, and it differs from the V5 rulebook and from the owner's rulings. Where it conflicts with the docs, **the docs win** (see `docs-source-of-truth.mdc`).
 
-Implement new code only under **void-matter-online** (copy/adapt logic as needed; do not edit the reference tree).
+- For combat behaviour, read `docs/design-decisions.md` sections 3, 7 and 15 first. Section 15 overrides everything earlier.
+- `docs/combat-reference.md` describes the simulator, starts with a list of overrides, and is **stale in many places**. Use it only for numeric tables and component lists, after reading the banner.
+- Open `card-sheet-tool` source only for exact component or enemy tables, or for parity checks against the simulator (`playerComponents.ts`, `enemyShips.ts`, `combatEngine.ts` and similar).
+- When you copy a number or behaviour from it, check it against `design-decisions.md`, and cite the ruling ID that overrides it if one exists.

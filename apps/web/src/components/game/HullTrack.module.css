@@ -1,0 +1,46 @@
+.cube {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--shape-border-radius-sm);
+  background: var(--game-state-locked);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--game-state-locked) 60%, transparent);
+}
+
+.cross {
+  fill: none;
+  stroke: var(--palette-primary-contrast-text);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+
+.track {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.slots {
+  display: flex;
+  gap: var(--gap-xs);
+}
+
+.slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--palette-text-secondary);
+  border-radius: var(--shape-border-radius-sm);
+  background: var(--palette-grey-600);
+}
+
+.slotFilled {
+  border-color: var(--game-state-locked);
+}
+
+.full {
+  color: var(--game-state-pinned);
+}

@@ -1,0 +1,20 @@
+---
+description: Determinism and purity rules for the rules engine, bots, content and sim packages
+globs: packages/engine/**,packages/bots/**,packages/content/**,packages/sim/**
+alwaysApply: false
+---
+
+# Engine purity and determinism (`ENF-1`)
+
+The engine must replay byte for byte from a seed, run in a Web Worker and port to a server. Planned layout is in `docs/technical-proposal.md` section 2.
+
+- **Banned in these packages:** `Date.now`, `new Date`, `Math.random`, `localeCompare`, `window`, `document`, `localStorage`, timers. Use the injected seeded RNG (named streams: `game`, `bot`) and recorded events.
+- **Enforcement is ESLint**, not the missing DOM lib (`no-restricted-globals`, `no-restricted-properties`, `no-restricted-syntax`, import boundary: `engine` imports only `content`). Do not weaken or disable those rules to make code compile.
+- **State is plain JSON**, updated immutably, with no classes, functions or cycles. Derived values (speed, capacity) are computed, never stored.
+- **Sort with explicit comparators on IDs.** Never rely on object key order or locale compare; serialise with the canonical serialiser.
+- **Dice and shuffles happen inside engine steps and are recorded in events.** Animation never produces randomness.
+- **Hidden information** reaches bots and UI only through `viewFor(state, seat)`.
+- Events that reveal hidden information or use randomness carry `revealsHidden` or `usesRandomness` (they lock undo and trigger a commit-point save, `SAV-2`).
+- Cite ruling IDs in comments and tests, and use `globalRound`, `combatRound` and `turn` (`TRM-1`).
+
+Method names are lowerCamelCase with no underscores, including test methods (user rule).

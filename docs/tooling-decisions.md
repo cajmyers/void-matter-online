@@ -3,7 +3,20 @@
 Status: design discussion only. No implementation has started and no code has been written.
 Companion to `design-decisions.md` (rules and product). This document covers the front-end technology direction.
 
-Library versions and licences have **not** been verified. Check them when the project is scaffolded.
+**Verified at scaffold (Stage 0, `implementation-plan.md`).** The versions below were checked against the npm registry on the day `apps/web` was scaffolded. Anything not listed (Motion, Zustand, Zod, Howler, Firebase, Comlink) has **not** been verified yet; check it when it is first added.
+
+| Package | Version used | Licence | Note |
+|---|---|---|---|
+| pnpm | 10.34.9 (`packageManager` field) | MIT | pnpm 12.18 does not run under this machine's corepack 0.32 (missing `pnpm.cjs`); pnpm 10 does. Enable once with `corepack enable`. |
+| Node | 20.19.4 on the dev machine (`engines`: >=20.19) | | |
+| react, react-dom | 19.3.1 | MIT | |
+| vite, @vitejs/plugin-react | 8.3.6, 6.2.1 | MIT | Needs Node 20.19 or newer |
+| vitest | 4.1.12 | MIT | **Not 5.x**: Vitest 5 needs Node 22 or newer |
+| typescript | 6.0.3 | Apache-2.0 | **Not 7.x**: `typescript-eslint` 8.72 supports TypeScript below 6.1 |
+| eslint, typescript-eslint, eslint-plugin-react-hooks | 10.14.0, 8.72.1, 7.1.1 | MIT | |
+| Fonts via Fontsource (Orbitron, Rajdhani, Share Tech Mono) | 5.3.x | SIL OFL 1.1 | Self-hosted, latin subset. These are the Holo tactical faces; the owner chose Holo tactical in Stage 1a and the other two themes' fonts were removed. |
+
+**Styling (decided by the owner, Stage 1a):** components are styled with **CSS Modules**. One global `theme.css` holds the Material UI style palette, the typography scale, spacing and gaps, shape, elevation, motion durations and z-index as CSS custom properties, plus the game colours (resources, seats, factions, board states). Components read those variables and hard-code none. There is no UI framework.
 
 ---
 
@@ -93,12 +106,12 @@ Dice alternatives if a 3D look is wanted: pre-rendered frames from Blender, or a
 ## 8. Supporting tooling
 
 - **Language and build:** TypeScript (strict) and Vite.
-- **Engine:** a separate pure TypeScript module with no DOM imports, enforced by a lint boundary or pnpm workspace. A tiny serialisable seeded PRNG that the project owns (for example PCG or sfc32) rather than a dependency.
+- **Engine:** a separate pure TypeScript module with no DOM imports, enforced by a lint boundary or pnpm workspace. **Determinism is enforced by ESLint, not by leaving out the DOM type library** (`ENF-1`): `Date.now`, `new Date`, `Math.random` and `localeCompare` are ES-library APIs and still type-check without DOM types. Use `no-restricted-globals`, `no-restricted-properties` and `no-restricted-syntax`, plus a canary test that proves the rules fail on a banned call. The `tsconfig` still omits the `DOM` lib to catch `window`, `document` and `localStorage`. A tiny serialisable seeded PRNG that the project owns (for example PCG or sfc32) rather than a dependency.
 - **UI state:** Zustand for view state and the animation queue. Engine state must not live in React. XState is optional for the prompt and interrupt flow, but may be overkill.
 - **Validation:** Zod for card data and save files. It also supports the save-versioning policy.
 - **Tests:** Vitest for rules, plus replay tests (rerun a seed and decision log and compare results). **Playwright (end-to-end and visual checks) and Storybook (cards, dice and animations in isolation) are deferred**; a dev-only gallery route stands in for Storybook.
 - **Bots:** Monte Carlo runs in a Web Worker (Comlink makes this easy).
-- **Saves:** store seed, decision log and rules version in Firestore. Saves are tiny and replay deterministically.
+- **Saves (updated, `SAV-1`, `SAV-2`):** the authoritative save is a **full snapshot** (state, RNG streams, resolution stack, bot memory, `schemaVersion`, `rulesVersion`) with the seed and decision log kept as a companion for replay and bug reports. The original "seed plus decision log only" plan is superseded: replay-only saves break on any engine change. Snapshots are written at turn boundaries **and immediately (to IndexedDB, with a debounced Firestore write) after any step that reveals hidden information or uses randomness**, so reloading cannot scout or reroll. Migrations must handle in-flight stack frames.
 - **boardgame.io: not used.** It would constrain the interrupt-heavy flow, and the project wants its own effect language, event stream and bot boundary. It mainly pays off for multiplayer, which is deferred.
 
 ## 9. Architecture rule to settle early: the animation director

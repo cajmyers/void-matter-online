@@ -1,0 +1,33 @@
+---
+description: Which Void Matter doc is authoritative for rules, content, architecture and tooling, and the shared vocabulary
+alwaysApply: true
+---
+
+# Void Matter docs: what to read, and who wins
+
+No game code exists yet. The `docs/` folder is the specification.
+
+| Need | Read | Authority |
+|---|---|---|
+| Rules, rulings, combat, economy | `docs/design-decisions.md` | **Authoritative.** Later sections beat earlier ones; section 15 beats everything. |
+| Card lists, copies, enemy decks, first content slice | `docs/content-data.md` | Proposed numbers; owner may overwrite. |
+| Architecture, engine, saves, map, build order | `docs/technical-proposal.md` | A proposal (v0.2); defers to `design-decisions.md`. |
+| Build order, stages, what to look at when | `docs/implementation-plan.md` | A proposal (v0.1); defers to the three documents above. Look and feel comes first (Stage 1). |
+| Stack, rendering, tooling | `docs/tooling-decisions.md` | Decided stack; saves and lint sections updated by `SAV-2` and `ENF-1`. |
+| Simulator numbers | `docs/combat-reference.md` | **Stale.** Read its banner first. |
+| Board and tile seed data | `docs/technical-proposal.md` appendices A to C | Structural data only. |
+| Connectivity analysis | `docs/analysis/gate-graph-sim.js` | Re-run when tile data or orientation rules change. |
+
+`docs/Void Matter.pdf` is the **old rulebook**: structural seed data only, its rules text is out of date.
+
+## Vocabulary (`TRM-1`)
+
+Use exactly: **globalRound** (Action + Maintenance), **combatRound**, **turn**. Never a bare "round" in code, events or new docs.
+
+## Working with rulings
+
+- Cite ruling IDs (`CMB-3`, `LOT-1`, `DCK-3`, ...) in code comments, tests and docs. IDs are stable; never renumber or reuse one.
+- If a request conflicts with a ruling, say so and ask; do not silently pick one.
+- Rows marked *(assumed)* are the agent's guesses awaiting owner review; do not treat them as settled.
+- Open items live in `design-decisions.md` section 12 ("Open after the second review"). Check them before building on an area.
+- Rules can exist only in the owner's head. If a rule you expect is missing from the docs (the Nexus Hop, `NEX-1`, was one), ask the owner and record it as a ruling.

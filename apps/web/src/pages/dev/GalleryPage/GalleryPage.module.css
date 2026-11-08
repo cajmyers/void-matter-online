@@ -1,0 +1,109 @@
+.page {
+  max-width: var(--layout-content-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.index {
+  position: sticky;
+  top: var(--layout-topbar-height);
+  z-index: var(--z-index-hud);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--spacing-1) var(--spacing-2);
+  background: color-mix(in srgb, var(--palette-background-elevated) 94%, transparent);
+  border: 1px solid var(--palette-divider);
+  border-radius: var(--shape-border-radius);
+  backdrop-filter: blur(6px);
+}
+
+.indexLink {
+  appearance: none;
+  padding: var(--spacing-0-5) var(--spacing-1-5);
+  background: transparent;
+  color: var(--palette-primary-light);
+  border: 1px solid var(--palette-divider);
+  border-radius: var(--shape-border-radius-sm);
+  font-family: var(--font-text);
+  font-size: var(--typography-body2-size);
+  cursor: pointer;
+}
+
+.indexLink:hover {
+  border-color: var(--palette-primary-main);
+}
+
+.indexLink:disabled {
+  color: var(--palette-text-disabled);
+  cursor: default;
+}
+
+.indexLink:disabled:hover {
+  border-color: var(--palette-divider);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  scroll-margin-top: calc(var(--layout-topbar-height) + 72px);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-md);
+  align-items: flex-start;
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  margin: 0;
+}
+
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-sm);
+  min-width: 96px;
+  min-height: 72px;
+  padding: var(--spacing-1);
+  background: color-mix(in srgb, var(--palette-background-default) 78%, transparent);
+  border: 1px solid var(--palette-divider);
+  border-radius: var(--shape-border-radius);
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  /* The caption wraps to the width of the stage; it never makes the figure wider. */
+  width: 0;
+  min-width: 100%;
+}
+
+.todo {
+  padding: var(--spacing-2);
+  color: var(--palette-text-secondary);
+  border: 1px dashed var(--palette-divider);
+  border-radius: var(--shape-border-radius);
+}

@@ -1,0 +1,17 @@
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  padding: var(--spacing-2);
+  background: var(--panel-background);
+  border: var(--panel-border-width) solid var(--panel-border-color);
+  border-radius: var(--shape-border-radius-lg);
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: var(--panel-backdrop-filter);
+}
+
+.title {
+  display: block;
+  color: var(--palette-primary-light);
+}

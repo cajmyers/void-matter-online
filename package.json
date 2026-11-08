@@ -1,0 +1,29 @@
+{
+  "name": "void-matter-online",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Void Matter Online: solo-versus-bots digital board game.",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @void-matter/web dev",
+    "build": "pnpm --filter @void-matter/web build",
+    "build:preview": "pnpm --filter @void-matter/web build:preview",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "lint": "eslint .",
+    "deploy:preview": "pnpm build:preview && firebase hosting:channel:deploy review --expires 30d",
+    "deploy:release": "pnpm build && firebase deploy --only hosting"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.0",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.0.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.1"
+  }
+}

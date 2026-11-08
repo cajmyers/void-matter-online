@@ -2,7 +2,17 @@
 
 > **STALE IN MANY PLACES. Do not implement from this file without checking `design-decisions.md` section by section.** Beyond the differences listed below, these items in this document are **wrong for this project**: the starting Corvette's speed is **2** (not 1); Drone Hangar costs **1 TC from the pool** and only works when the owner starts combat; Spoils of War is **once per round per damaged ship**, never per hit; Underworld Extortion is paid by the **killer from the pool**; Magnetic Shields, Inertial Dampener and Pulse Defense Grid are **-1 to the hit roll**; Energy Shields cap **per weapon**; Thermal Sinks and Decoy Launcher spend **pool** resources (not cargo); Cloaked Slip Drive does **not** apply to Retreat; the Repulsor Grid is a **defender-chosen reroll of any 2 dice**; Pneumatic Ram-Loader damages **once per attack action**; the win condition is **the third VM taken, immediately**, and enemy kills give rewards **directly to the killer**.
 >
-> **Read `design-decisions.md` first.** This document describes the **simulator** (`card-sheet-tool`), which differs from the V5 rulebook. Where they conflict, `design-decisions.md` wins. Known differences: damage is chosen once per event (not per hit), Spoils of War triggers once per ship per round (not per cube), overflow forces a component discard, several enemy stats differ, natural 6s always hit and natural 1s always miss, and the "-1" defences penalise the hit roll rather than removing hits. Decoy Launcher, Thermal Sinks and Energy Shields also work differently (see section 7 of `design-decisions.md`).
+> **Read `design-decisions.md` sections 3, 7 and 15 first.** Section 15 (rulings from the second review) overrides this file and the earlier sections wherever they differ. Overrides that matter most for combat, each with its ruling ID:
+> - **Terms (`TRM-1`):** globalRound, combatRound, turn. "Round" in this file means combatRound when it describes combat and globalRound otherwise.
+> - **Not two sides (`CMB-5`):** combat in a hex is a **free-for-all** over every ship and token present; who may target whom is the `isOpposing` relation (different owners, minus Mercenary-Uplink friendly pairs). The "blue/red sides" model below is a simulator simplification.
+> - **Initiative (`CMB-3`):** recomputed **every combatRound** from live speed (permanent and temporary adjustments), then fixed for that combatRound. Spawned tokens first act in the next combatRound. Solar Flare's +1 speed is contest-only.
+> - **Length (`CMB-4`):** combat runs to completion inside its action or Maintenance step; engine guard of 100 combatRounds.
+> - **Retreat (`CMB-6`):** declared sequentially in first-player order; destination is one hex across a full gate connection, chosen at execution.
+> - **Maintenance combat (`CMB-7`):** sectors snapshotted at the start of the Enemy Combat step and resolved in seat order.
+> - **Dice and pipeline (`CMB-8` to `CMB-11`):** pre-roll commitments are declared together; dice = (printed + additive bonuses) x2 for Overdrive, then minus defender reductions, floor 0; Gauss judged per weapon; Prism and Shield Specialist once per damage event; Interceptor Rig cannot react to range attacks; the owner orders their own simultaneous effects; self-damage is queued with the group's damage; Torpedo resolves before Spoils.
+> - **Loot (`LOT-1` to `LOT-4`):** cargo goes to a same-hex killer's pool, otherwise to supply (Beam Projector kills included); the **defender** chooses the cargo taken by Spoils and the component lost; Larva tokens are not ships for kill triggers.
+>
+> **Then read the rest of this note.** This document describes the **simulator** (`card-sheet-tool`), which differs from the V5 rulebook. Where they conflict, `design-decisions.md` wins. Known differences: damage is chosen once per event (not per hit), Spoils of War triggers once per ship per round (not per cube), overflow forces a component discard, several enemy stats differ, natural 6s always hit and natural 1s always miss, and the "-1" defences penalise the hit roll rather than removing hits. Decoy Launcher, Thermal Sinks and Energy Shields also work differently (see section 7 of `design-decisions.md`).
 
 Authoritative behavior is implemented in the **read-only** `card-sheet-tool` reference (`combatEngine.ts`, `types/combat.ts`, `combatData.ts`, `weaponDefense.ts`, `weaponTargeting.ts`, `combatants.ts`, `enemyAbilities.ts`, `enemyShips.ts`, `playerComponents.ts`). This document is the primary spec for AI work in **void-matter-online**; consult source only for exact numeric tables, full component catalogs, or parity checks.
 
@@ -10,7 +20,7 @@ Authoritative behavior is implemented in the **read-only** `card-sheet-tool` ref
 
 ## Scope
 
-- Two **sides** (`blue` / `red`): player vs player, player vs enemy, or symmetric PvP in the simulator.
+- **Simulator model only (see the banner; `CMB-5` replaces it for this project):** two **sides** (`blue` / `red`): player vs player, player vs enemy, or symmetric PvP in the simulator.
 - Fights occur on a **single hex**; all in-sector combatants participate.
 - **Combatants**: each side’s **primary ship** plus **tokens** (e.g. Swarm Larva). Identified by `CombatantRef`: `{ side }` or `{ side, tokenId }`.
 - Enemies use fixed `weapons[]`; players use **base weapon** + weapons from installed **components**.

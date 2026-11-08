@@ -1,0 +1,29 @@
+.deck {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xs);
+  aspect-ratio: 5 / 7;
+  border: 2px solid var(--rim);
+  border-radius: var(--shape-border-radius-lg);
+  background:
+    radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--rim) 30%, transparent), transparent 70%),
+    repeating-linear-gradient(45deg, rgb(255 255 255 / 0.03) 0 3px, transparent 3px 8px),
+    var(--game-card-background);
+  box-shadow:
+    var(--shadow-3),
+    0 0 16px color-mix(in srgb, var(--rim) var(--glow-strength), transparent),
+    inset 0 0 14px color-mix(in srgb, var(--rim) 28%, transparent);
+  text-align: center;
+}
+
+.label {
+  color: var(--palette-text-primary);
+}
+
+.count {
+  font-size: var(--typography-h5-size);
+  color: var(--rim);
+}

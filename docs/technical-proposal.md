@@ -1,8 +1,8 @@
 # Void Matter Online: technical implementation proposal
 
-Status: **draft v0.1 for discussion.** No code has been written. This is a proposal, not a decision record: where it adds to or departs from `design-decisions.md` or `tooling-decisions.md`, it says so (section 12), and those two documents remain authoritative until you accept a change.
+Status: **draft v0.2 for discussion** (v0.2 folds in the second technical review: terms and the free-for-all combat model, loot and deck rulings, commit-point saves, the corrected enforcement mechanism, a connectivity analysis and a revised first phase; see `design-decisions.md` section 15). No code has been written. This is a proposal, not a decision record: where it adds to or departs from `design-decisions.md` or `tooling-decisions.md`, it says so (section 12), and those two documents remain authoritative until you accept a change.
 
-Inputs read: `design-decisions.md`, `tooling-decisions.md`, `combat-reference.md`, `README.md`, the Firebase hosting scaffold, (read-only) the shape of `card-sheet-tool`, and now **`docs/Void Matter.pdf`** (the old rulebook). The PDF is treated as **structural seed data only** (board layouts, tile warp-gate edges, planet supply and demand). Its rules text is out of date and `design-decisions.md` overrides it everywhere. What I took from it, and what it did not answer, is in section 9 and the appendices.
+Inputs read: `design-decisions.md` (including section 15), `content-data.md`, `tooling-decisions.md`, `combat-reference.md`, `README.md`, the Firebase hosting scaffold, (read-only) the shape of `card-sheet-tool`, and now **`docs/Void Matter.pdf`** (the old rulebook). The PDF is treated as **structural seed data only** (board layouts, tile warp-gate edges, planet supply and demand). Its rules text is out of date and `design-decisions.md` overrides it everywhere. What I took from it, and what it did not answer, is in section 9 and the appendices.
 
 ---
 
@@ -63,7 +63,7 @@ Four TypeScript packages and one app, in a pnpm workspace. Dependencies point on
                     +-----------------------------------------------+
 ```
 
-**Enforcement.** `engine`, `bots`, `content` and `sim` are compiled without the DOM type library, so any use of `window`, `document` or `Date.now` for rules fails type-checking. A lint rule (import boundaries) stops `engine` importing from anything but `content`. Cheap, and it protects the "portable to a server" promise.
+**Enforcement (corrected in v0.2, `ENF-1`).** Leaving out the DOM type library only stops `window` and `document`; `Date.now`, `new Date`, `Math.random` and `localeCompare` are part of the ES library and still type-check. So the engine packages (`engine`, `bots`, `content`, `sim`) are protected by two things: (1) a `tsconfig` that does **not** include the `DOM` lib, which catches `window`, `document` and `localStorage`; and (2) **ESLint** with `no-restricted-globals` (`window`, `document`, `localStorage`, `setTimeout` outside the runner), `no-restricted-properties` (`Date.now`, `Math.random`, `String.prototype.localeCompare`) and `no-restricted-syntax` (`new Date()`), plus an import-boundary rule that stops `engine` importing from anything but `content`. Lint runs in CI and as a pre-commit check. The same boundary protects the "portable to a server" promise.
 
 **Why `sim` exists in the first milestone.** A headless Node runner that plays bot against bot is the cheapest way to (a) soak-test the rules with thousands of games, (b) collect the "rounds to 3 VM" data you asked for, and (c) tune the bot tunables you listed. It costs almost nothing once the decision-source boundary exists.
 
@@ -129,7 +129,7 @@ State is **one plain, JSON-serialisable object**, updated immutably. No classes 
 | Map | hex coordinates, tile identity, face-up/down, **rotation (chosen on reveal)**, resource cubes on supply/demand areas, enemy card and reward stack per Anomaly | Connectivity is computed from tile plus rotation, never stored separately. Layout comes from a per-seat-count data table (section 9). **All non-Nexus tiles, planets included, start face-down**, so the face-down set is hidden information for every seat |
 | Decks and markets | each deck as an ordered list, face-up markets, discard piles, set-aside cards per seat | Full truth lives here, including hidden order |
 | Temporary effects | list of `{source, scope, kind, expiresAt}` (end of round, end of combat, ...) | Where Thermal Pyre's -1 speed, Solar Flare, Fleet Command, Mercenary Uplink "friendly" pairs, Drone deployment live |
-| Round snapshots | initiative order captured at round start; "ships present at round start" lists | Needed by the "initiative is fixed at start of round" and Solar Flare rulings |
+| Round snapshots | the initiative order of the **current combat round** (stored in the combat sub-state, recomputed each combat round, `CMB-3`); the "ships present at the start of the globalRound" list (Solar Flare); the Maintenance combat sector snapshot (`CMB-7`) | Replaces the first draft's single start-of-round initiative snapshot |
 | Combat | the active combat, if any (sub-state, see 4.7) | |
 | Mission progress | per-seat, per-mission counters and flags | Written by the mission tracker (4.9) |
 | Pending | the prompt the engine is currently waiting on, plus the resolution stack (4.4) | This is what makes mid-attack saves and Monte Carlo copies work |
@@ -205,13 +205,13 @@ Every event also carries a **visibility** (public, or private to named seats), s
 This is the part I would prototype first. Your rulings mean a single attack can pause several times, in different seats' hands:
 
 ```
-attacker declares weapon fire
-  -> pre-roll: defender may use Thermal Sinks (cost, maybe 3-for-1 exchange)
-  -> attacker may deploy Drone Hangar
+attacker declares targets AND pre-roll commitments together (CMB-8):
+    drone launch, Overdrive, Nanite token exhaustion
+  -> pre-roll: defenders in seat order may use Thermal Sinks (cost, maybe 3-for-1 exchange)
   -> dice roll
   -> attacker may use Temporal Echo (reroll all)
   -> defender may use Repulsor Grid (pick 2 dice, attacker rerolls)
-  -> defender may fire Interceptor Rig (a nested attack, no further reactions)
+  -> defender may fire Interceptor Rig (a nested attack, no further reactions; not offered against a range attack)
   -> damage event formed -> defender chooses cubes or component
   -> Spoils, Bounty Hunter, Salvage Expert, Self-destruct, Scavenger ...
 ```
@@ -258,6 +258,7 @@ Because prompt volume is a real UX concern (your "step through every decision" c
 - **Named streams** rather than one shared one: `game` (dice, shuffles), `bot` (bot tie-breaks and randomness), and per-simulation derived streams. You said bot randomness uses "the same seeded source as the dice"; separate streams derived from the one game seed keep that spirit (one seed reproduces everything) while ensuring a bot that thinks harder or differently never shifts the dice a human sees. This is the one place I would propose a small change.
 - **Simulation seeds are derived, not drawn:** `derive(gameSeed, round, decisionIndex, runIndex)`. Monte Carlo therefore never advances the game's streams, and the same position always evaluates the same way.
 - Dice are **rolled inside the engine step and recorded in events** before any animation. The animation never produces randomness.
+- **Determinism rules (enforced by lint, `ENF-1`).** No `Date.now`, `new Date`, `Math.random` or `localeCompare` in engine code. Sorting uses explicit comparators on IDs (never locale-dependent string compare, never relying on object key order). State and events are written by a **canonical serialiser** (sorted keys, no `undefined`, no `NaN`) so hashes, replays and saves are byte-stable across browsers. Iteration order over any collection that affects rules is defined (sorted by ID or by ORD-1 key).
 - Shuffles and draws operate on the real decks in state. Hidden order is protected by redaction, not by the engine "not knowing."
 
 ### 4.6 Hidden information and the per-seat view
@@ -289,10 +290,15 @@ Combat is a frame (4.4) with its own sub-state, built to your V5 rulings, not th
 | Maintenance combat | Enemy cards, in Maintenance | Full multi-round combat; the flag is false |
 | Single shot | Beam Projector | One one-sided shot; no rounds, no retreat, no Spoils; the flag is true |
 
-Per combat round (fixed initiative list across all combatants, captured at round start):
+A combat is a **loop of combat rounds run to completion inside the action or Maintenance step that started it** (`CMB-4`). It is **free-for-all**: every ship and token in the hex is a combatant, and `isOpposing(a, b)` (different owners, minus Mercenary-Uplink friendly pairs) decides who may target whom (`CMB-5`). The loop ends when no opposing pair remains. A **safety guard of 100 combat rounds** ends it with a `CombatStalemate` event, which the simulator and tests treat as a bug signal.
+
+Per combat round (**the initiative list is recomputed at the start of every combat round from each combatant's live speed, permanent and temporary, then fixed for that combat round**, `CMB-3`; tokens spawned mid-round first act next combat round):
 
 ```
- declare retreat (any seat, at round start)
+ compute initiative (live speed) -> fixed for this combat round
+ declare retreat, SEQUENTIALLY in first-player order (token holder, then
+   clockwise); later seats see earlier declarations; a ship may declare
+   only if it has a legal destination (one hex across a FULL gate connection)
         |
         v
  for each INITIATIVE GROUP (equal speed), fastest group first:
@@ -300,31 +306,47 @@ Per combat round (fixed initiative list across all combatants, captured at round
         |
         v
    +---------------------- ATTACK PIPELINE (per weapon) -----------------------+
-   | 1 assign targets        multi-shot: assign dice among targets BEFORE roll  |
-   | 2 pre-roll changes      dice count: Thermal Sinks, Reactive Plating,       |
-   |                         Void-Core Overdrive, Pneumatic Ram-Loader (+die)   |
+   | 1 assign targets AND    one declaration: targets (multi-shot dice split),  |
+   |   pre-roll commitments  drone launch, Overdrive, Nanite token exhaustion   |
+   | 2 pre-roll changes      defenders in seat order (Thermal Sinks). Dice =    |
+   |                         (printed + additive bonuses, e.g. Ram-Loader)      |
+   |                         x2 if Overdrive, THEN minus Reactive Plating,      |
+   |                         minus Sinks, floor 0 (CMB-8)                       |
    | 3 gather to-hit mods    accuracy items, crew, Drone, Spark -1, tile bonus, |
    |                         Railgun speed penalty. Natural 6 hits, 1 misses.   |
    | 4 ROLL                  seeded dice, recorded                              |
    | 5 reroll windows        attacker Temporal Echo -> defender Repulsor Grid   |
-   | 6 reactions             Decoy (negate), Interceptor Rig (nested attack)    |
+   | 6 reactions             Decoy (negate), Interceptor Rig (nested attack,    |
+   |                         NOT against a range attack, CMB-10). The owner     |
+   |                         orders their own simultaneous effects              |
    | 7 count hits            apply to-hit to each die                           |
-   | 8 modify hits that land weights (Apocalypse x2, Compressor 6s), Concussion |
+   | 8 weapon-level hits     weights (Apocalypse x2, Compressor 6s), Concussion |
    |                         +1, Energy Shields cap per weapon, Phase Lattice   |
-   |                         cap, Prism +1/-1, Shield Specialist (last)         |
+   |                         cap per PHYSICAL weapon                            |
+   | 8b Gauss test           "exactly 1 hit" judged per weapon on its final     |
+   |                         hit count, before any event-level step             |
    | 9 form damage events    group per attacker per target; Gauss exactly-1     |
    |                         splits into its own un-discardable event           |
-   | 10 defender chooses     cubes (only if ALL fit) OR discard a component     |
-   | 11 apply + after-damage Spoils (once/round/ship), Bounty Hunter, Salvage,  |
-   |                         Torpedo effects, mission events, self-damage       |
+   | 9b event-level hits     ONCE PER EVENT: Prism +1/-1, then Shield           |
+   |                         Specialist last (CMB-9). Shield Calibration        |
+   |                         credit accrues sequentially                        |
+   | 10 defender chooses     cubes (only if ALL fit) OR which component to lose |
+   |                         (LOT-3: defender chooses; Expert Marksman excepted)|
+   | 11 apply + after-damage Torpedo effects BEFORE Spoils (defender picks the  |
+   |                         cargo, LOT-2), Spoils (once/round/ship), Bounty    |
+   |                         Hunter, Salvage, mission events; self-damage is    |
+   |                         queued WITH the group's damage events (CMB-11)     |
    | 12 destruction          Self-destruct chain, Extortion, Scavenger, rewards |
+   |                         cargo to attacker's pool ONLY if same hex (LOT-1), |
+   |                         else general supply; Larva tokens are not ships    |
    +----------------------------------------------------------------------------+
         |
         v
  retreat resolution (evasion contests, one damage event, no Spoils)
         |
         v
- end of round: expire per-round effects; combat over if only one side remains
+ end of combat round: expire per-combat-round effects; loop again while any
+   opposing pair remains (else the combat ends); guard at 100 combat rounds
 ```
 
 Notes that fall straight out of your rulings:
@@ -333,12 +355,20 @@ Notes that fall straight out of your rulings:
 - Step 9's "group all hits from one combatant's attack against one target" is a pure function (hits in, damage events out). The Gauss and Concussion special cases live there.
 - Step 10's overflow rule is a validity check on the decision: the prompt simply does not offer "take cubes" if the hits do not all fit, and enemies are never offered "discard component."
 - Every step that can prevent hits writes `{source, hitsPrevented}` into the event stream so Shield Calibration and Devastation work without special-casing.
-- Initiative uses the snapshot from the start of the round; temporary speed changes only feed the queries that compare speed (Evade, Retreat, Railgun).
+- Initiative is computed from **live speed at the start of each combat round** and then frozen for that combat round (`CMB-3`). This **reverses the first draft**, which ignored temporary speed changes for initiative. Evade, Retreat and Railgun read live speed when they resolve. Solar Flare's +1 is a contest-only modifier (a separate query from initiative speed).
+- **Maintenance combat across sectors (`CMB-7`).** The engine snapshots the sectors and participants at the start of the Enemy Combat step; sectors resolve in seat order of the ships in them (token holder first), ties by hex coordinate; retreaters never join another sector's combat that Maintenance. Spawned tokens **persist in their sector across globalRounds** (stored in state as enemy-owned token entries on the hex) until the existing Enemy Ship Repair step removes them; while present they are ordinary enemy combatants for the snapshot, for combat and for the reward test. A token spawned mid-combat acts from the next combat round; one spawned during Maintenance combat is not in that step's snapshot.
+- **Retreat (`CMB-6`).** Sequential declaration; destination chosen at execution, one adjacent hex across a full connection (an undiscovered hex is flipped and oriented by the retreater under `MAP-6`; an enemy-occupied hex is allowed). A ship with no legal destination cannot declare.
+- `isOpposing` is the single relation behind targeting, retreat contests and "who is in this combat". Enemy-faction ships of the same faction never oppose each other. Who an enemy ship targets among several opposing combatants is still an open rule (`design-decisions.md` section 12); the first implementation uses a deterministic placeholder (lowest hull, then seat order) and logs it.
+- **Loot and removal.** A destroyed ship's cargo moves to the killer's pool only when a killer ship is in the same hex (`LOT-1`); every other cause sends it to the supply. Cargo is a per-resource count on the ship, capped by capacity; losing capacity discards the excess to supply, the owner choosing which (`LOT-5`, assumed). Hull is a count of intact cubes.
 - **Initiative groups (Q4).** Combatants of equal speed are one group. The pipeline steps 1 to 9 run for every member of the group first, with their events recorded, and only then do steps 10 to 12 (damage choice, application, destruction triggers) run for the group's damage events. A ship destroyed by a group-mate's damage therefore still fires, because it already rolled. The order in which the group's damage events are *resolved* still matters (Spoils once per round, Self-destruct chains, first destroyer takes the enemy card) and is covered by the ordering question Q6.
 
 The module can run **without the rest of the game**: given combatants, their pools (for pay-to-react abilities) and a decision policy, it plays to completion. That is what the bot's Monte Carlo strength check uses.
 
 ### 4.8 Round structure
+
+**Terms (`TRM-1`).** The code uses exactly three: a **globalRound** (one Action phase plus one Maintenance phase; the diagram below is one globalRound), a **combatRound** (one pass through the initiative order inside a combat) and a **turn** (one seat's single non-free action choice plus any free actions). Event names, state fields and card text keyed to "round" use these names; a bare "round" in older text means globalRound.
+
+Other lifecycle rulings that land here: **Last Ship Recovery** places the new ship on any Outer Rim Nexus the player picks, pinned if occupied (`REC-1`); **humans may freely discard uncompleted missions** on their own turn (`MSN-2`); a combat in Maintenance runs to completion inside its Enemy Combat step, one sector at a time from a snapshot (`CMB-7`).
 
 ```
  GAME START: seed -> build map, decks, markets; deal starting ship + 2 missions per seat
@@ -517,7 +547,7 @@ Additions that follow from the engine design:
 ```
 
 - **Authoritative save = snapshot**, with the decision log as a companion (replay, debugging, undo, bug reports). This is a change from `tooling-decisions.md`'s "store seed, decision log and rules version." Pure replay saves are brittle: *any* engine change, including a bug fix, can change an old game's outcome, and "finish under starting rules" would require shipping every old engine build. For a solo personal game I recommend: snapshots with **schema migrations**, keep `rulesVersion` in the envelope from day one, and accept that a big rules change may mark old saves as legacy. See Q7.
-- **Autosave** at action-turn boundaries (not every decision, for write count and because a mid-attack prompt is a poor resume point for humans). The pending-prompt design means a mid-combat save would *work*; it is just unnecessary at first.
+- **Autosave at turn boundaries and at commit points (`SAV-2`).** A **commit point** is any step that emits an event flagged `revealsHidden` or `usesRandomness` (a tile flip, a draw, a peek, a dice roll). After one, the engine writes the **local** snapshot (IndexedDB) immediately, mid-action if need be, and queues or debounces the cloud write. Without this, reloading the page restores the last turn-boundary snapshot and lets a player scout a tile or reroll a bad result, which undo deliberately forbids (`UX-2`). The resolution stack is serialisable, so a mid-combat snapshot resumes at the exact prompt. **Consequences:** snapshot migrations must handle in-flight stack frames (so every frame kind needs a versioned shape); the save envelope gains `lastCommitDecisionIndex`; and a human reloading mid-combat resumes at the pending prompt rather than at the start of the turn.
 - **Local first.** The same envelope is written to IndexedDB, so development and offline use never need an account. Cloud sync is last-writer-wins by `decisionIndex`; if the cloud copy is ahead of the local one, ask the user.
 - **Auth:** Firebase Auth (Google sign-in, matching your personal Google project). Rules: a user may read/write only their own games.
 - **Undo (decided, Q8 and Q17):** the human can undo back to the start of the current turn, held as an in-memory snapshot taken at the turn boundary. Undo **locks for the rest of the turn as soon as any event with `revealsHidden` or `usesRandomness` is emitted** (a tile flip, a draw, a peek or any dice roll), so it cannot be used to scout or to re-roll. In practice it covers mis-clicked actions and abandoned plans. Bot turns are never undoable.
@@ -577,8 +607,8 @@ Consequences for the design:
 
 | Query | True when | Used by |
 |---|---|---|
-| `isAdjacent` | The hexes touch. Geometry only; never changes. | Comms Specialist, Beam Projector, Long-range Sensor Specialist, Evade destination checks |
-| `isConnected` | **Both** tiles have a gate on the shared edge (a full connection). | Normal Move and normal Evade |
+| `isAdjacent` | The hexes touch. Geometry only; never changes. | Comms Specialist, Beam Projector, Long-range Sensor Specialist (and nothing that moves a ship) |
+| `isConnected` | **Both** tiles have a gate on the shared edge (a full connection). | Normal Move, **normal Evade** (the earlier draft wrongly listed Evade destinations under adjacency) and **combat Retreat** (`CMB-6`; half-connections and Slip Drive do not apply to Retreat) |
 | `isHalfConnected` | **Exactly one** tile has a gate on the shared edge. | Warp Engineer, Cloaked Slip Drive (Evade), Graviton Warp Conduit, which are allowed to cross this kind of link |
 
   Effects that may use half connections normally accept **full or half**, so I would add a helper `isConnectedOrHalf` and have each such card name it. A hex with gates on neither side has `none` and nothing crosses it. This keeps the effect text readable ("may move between tiles with a gate on only one side") and puts the connection rules in one place, which is where `reachableHexes` and the Evade check read them.
@@ -592,6 +622,47 @@ Consequences for the design:
 
 One thing is now settled and simplifies the engine: **a tile is only ever revealed by a ship entering it** (Move, Evade, or a Graviton Warp Conduit move). Comms Specialist uses an Interact on an *already revealed* adjacent tile and cannot reveal a new one, so the orientation prompt always has an entry gate to match.
 
+### 9.4 Connectivity analysis (new in v0.2; finding `CON-1`, resolved by the Nexus Hop `NEX-1`)
+
+**Question.** With face-down tiles oriented by whoever reveals them under `MAP-6` (a gate must face the hex entered from, nothing else is checked) and full-gate-only movement, can a start Nexus always reach the Central Nexus? Redeeming needs the Central Nexus, so an unreachable centre is a soft-lock for that seat. **Outcome:** the owner pointed out the Nexus Hop (an Interact at any Outer Rim Nexus: pay 1 resource, travel to another Outer Rim Nexus, no Move action, never the Central Nexus; `NEX-1`), which I had missed because it is not in the old rulebook text. The analysis below shows the problem it solves and how much is left.
+
+**Method.** `docs/analysis/gate-graph-sim.js` (run with `node`). It builds the 2-seat and 4-seat boards, deals the real planet and Anomaly gate tables (Appendices B and C), and reveals every hex reachable from the start Nexus tiles, orienting each tile by one of three policies. 4000 games per setting. The 3-seat board is not modelled (provisional layout).
+
+**Results** (percent; "linked" means a route of full gate connections exists on the final board):
+
+| Setting | Seats | Start Nexus linked to Central | Every start linked to Central | Dead-end tiles | Route stretch |
+|---|---|---|---|---|---|
+| Random orientation | 2 | 81.8 | 69.9 | 33.1 | 1.60 |
+| Careful orientation (greedy) | 2 | 97.0 | 94.0 | 24.1 | 1.43 |
+| Greedy, ring around centre must face it | 2 | 97.5 | 95.0 | 24.8 | 1.42 |
+| **Half-connections passable for all normal moves** | 2 | **100.0** | **100.0** | 5.3 | 1.14 |
+| Random orientation | 4 | 75.5 | 45.1 | 33.1 | 1.78 |
+| Careful orientation (greedy) | 4 | 94.3 | 81.0 | 22.6 | 1.61 |
+| Greedy, ring around centre must face it | 4 | 94.3 | 80.3 | 23.0 | 1.60 |
+| **Half-connections passable for all normal moves** | 4 | **100.0** | **99.9** | 3.7 | 1.17 |
+
+**Reading it.**
+- Even with every tile oriented by a link-maximising player, **about 3% (2 seats) to 6% (4 seats) of start Nexus tiles have no full-gate route to the Central Nexus**, and in **6% (2 seats) to 19% (4 seats) of games at least one seat is cut off**. A real table orients selfishly, so the random rows are the more pessimistic bound.
+- Forcing the ring around the Central Nexus to face it changes almost nothing: the breaks occur further out.
+- About 3% to 8% of hexes can never be revealed under normal moves, and about 5% (4 seats) to 9% (2 seats) of planets are unreachable on a careful board (both are in the script output).
+- Letting a single gate on either side make an edge passable for **all** normal moves removes the problem (about 0% unlinked) and shortens routes, but it changes the meaning of gates and weakens the Warp Engineer, Slip Drive and Warp Conduit cards.
+- These numbers ignore the half-connection tools (which may rescue an isolated start), so they overstate the real soft-lock rate somewhat.
+
+**With the Nexus Hop (`NEX-1`).** A ship can move between Outer Rim Nexus tiles regardless of gates, so a seat is stranded only if **no** start Nexus has a full-gate route to the Central Nexus. The script now also reports "at least one start linked to Central":
+
+| Orientation | Seats | At least one start linked to Central | Stranded | Best start's path to Central |
+|---|---|---|---|---|
+| Careful (greedy) | 2 | 99.95% | 0.05% | 2.15 hexes |
+| Careful (greedy) | 4 | 99.92% | 0.08% | 3.03 hexes |
+| Random | 2 | 93.70% | 6.30% | 2.39 hexes |
+| Random | 4 | 94.53% | 5.47% | 3.22 hexes |
+
+So with careful orientation the Hop reduces the stranded rate from 6% (2 seats) and 19% (4 seats) of games to under 0.1%. Under random orientation about 6% of games would still have no start Nexus connected to the centre. The hop costs an Interact token (general or an officer token on that ship) and 1 resource, and a seat that must hop to reach a connected Nexus pays a few extra globalRounds, which the economy simulation should include. Unreachable hexes and planets (3% to 8% and 5% to 9%) stay unreachable by normal moves, which is accepted.
+
+**Resolved (`CON-1` closed by `NEX-1`).** `MAP-6` and `MAP-7` stay unchanged and no orientation mitigation is added. The engine still includes a **soft-lock detector**: when a seat has no ship that can reach the Central Nexus (no gate route from any Outer Rim Nexus and no half-connection tool), surface a "stranded" condition; the residual random-orientation case is watched, not ruled. The Hop is a legal-action kind `nexusHop` (Interact subtype, no Move token). Its Interact event is recorded on the **exit hex only** (mission trackers such as Perimeter Lockdown see an Interact on the exit hex, never on the destination), and a later Interact on the destination is a separate action if a token is available. Assumptions about occupied destinations and pinning are in `NEX-1`.
+
+**Economy side (not yet simulated).** The first task of P1 is an economy-only simulation (section 11) answering whether a game can be won in a sensible number of globalRounds given the one general Interact token per fleet per globalRound (plus officer Interact tokens from crew, `ACT-1`; the slice has Scouts, so run with and without them), planet supply and demand, and the Central Nexus requirement.
+
 ---
 
 ## 10. Testing strategy
@@ -603,6 +674,12 @@ One thing is now settled and simplifies the engine: **a tile is only ever reveal
 | Invariants | **Random legal play at scale:** thousands of seeded games where every prompt is answered by a random legal option, with the 4.12 invariants checked after every step. This will find most rules bugs you cannot foresee. |
 | Bots | **Bot-vs-bot soak and tournament** via `packages/sim`: win rates by seat and by first-player, rounds to 3 VM, stall detection (games that never end). Also the hidden-information poison test (4.6). |
 | Monte Carlo | Same position, same seed gives same win rate. Engine speed budget tracked (a regression test on runs per second). |
+| Combat guard | Random-play and bot soak runs fail the build on any `CombatStalemate` event (the 100-combatRound guard, `CMB-4`); a scenario test forces one and checks it is reported, not swallowed. |
+| Determinism lint | CI runs ESLint with the restricted-API rules (`ENF-1`); a test file containing each banned call must fail lint (a "canary" so the rule cannot silently stop working). A serialiser test checks that key order and `undefined` never change a state hash. |
+| Commit-point saves | A test reloads a snapshot taken immediately after each `revealsHidden` / `usesRandomness` event type (including mid-combat) and continues; the continuation must match the uninterrupted game byte for byte (`SAV-2`). |
+| Soft-locks | The invariant soak also checks the stranded-seat detector: no seat may sit with zero legal actions other than Pass for more than N globalRounds without the condition being flagged. |
+| Economy | The economy-only simulation (section 11, P1) runs thousands of seeded games with the crude bot and reports globalRounds to a VM win, stalls (`GEN-1`, 200-globalRound abort) and Interact-token usage. |
+| Connectivity | `docs/analysis/gate-graph-sim.js` is re-run whenever tile data or orientation rules change; later it becomes a map-module test that asserts the stranded rate with the Nexus Hop stays at the measured level (`CON-1`, `NEX-1`). |
 | Simulator parity | **Limited on purpose.** Only where V5 and the simulator agree (enemy stat tables, basic dice flow). Everywhere else the rulings win. |
 | UI | **No Storybook or Playwright for now (both deferred; Storybook may never be used).** A dev-only gallery route renders cards, prompts and dice from fixtures for visual checks, and the UI is exercised by hand. Revisit a single Playwright smoke test (a seeded game played through the browser) once the UI has stabilised. |
 
@@ -611,6 +688,8 @@ One thing is now settled and simplifies the engine: **a tile is only ever reveal
 ## 11. Suggested build order
 
 Relative size only. No dates.
+
+**Staging (proposed, `implementation-plan.md`):** the plan there pulls visual design forward as **Stage 1, before any engine code**: a fixture-driven table, component gallery and motion lab that read one typed `GameView`, so the look and feel can be judged first. The P0 visual spike becomes its motion lab. The phases below still describe the engine and game work; Stage 2 is P0 (minus the spike), Stage 3 and 4 are P1, Stage 5 is P2, Stage 6 is P3.
 
 ```
  P0 Foundations ---> P1 Economy and board ---> P2 Exploration and combat  = YOUR FIRST MILESTONE
@@ -624,8 +703,8 @@ Relative size only. No dates.
 
 | Phase | Goal | Exit criteria |
 |---|---|---|
-| **P0 Foundations (M)** | Workspace, no-DOM enforcement, content schemas, RNG, state, events, reducer, resolution-stack driver, prompts, `viewFor`, runner, scenario harness. Two **spikes**: the DOM dice/card/pan spike (no Pixi), and the five hard cards run as engine-only fixtures. | A scripted two-seat toy game replays identically; the hard-card fixtures pass; the visual spike works. |
-| **P1 Economy and board (L)** | Map from setup data, Move/Trade/Interact/Pass, cargo vs pool, markets and 3-for-1, Maintenance skeleton, common-technology upgrades, new ships, missions with the tracker, **crew only once its costs are supplied (deferred, see `design-decisions.md` section 12)**, VM and game end. Crude bot (random legal plus redeem priority). Plain functional UI with prompt host. Local save. | Human vs crude bot plays a whole game to a VM win in the browser, ugly but correct. Random-play invariant soak is green. |
+| **P0 Foundations (M)** | Workspace, ESLint determinism and import-boundary rules (`ENF-1`) plus the no-DOM tsconfig, canonical serialiser, content schemas, RNG, state, events, reducer, resolution-stack driver, prompts, `viewFor`, runner, scenario harness. Two **spikes**: the DOM dice/card/pan spike (no Pixi), and the five hard cards run as engine-only fixtures. | A scripted two-seat toy game replays identically; the hard-card fixtures pass; the visual spike works. |
+| **P1 Economy and board (L)** | **First task: an economy-only simulation** (map, Move/Trade/Interact/Pass, Commission, Redeem, upgrades, crude bot, no combat, no enemies) to answer whether a game can be won in a sane number of globalRounds and whether the single general Interact token per globalRound is a bottleneck (crew adds officer tokens, `ACT-1`; run with and without the four-Ensign crew set); **exit criterion: median game length and stall rate are acceptable** (target set by the owner; stalls abort at 200 globalRounds, `GEN-1`); the simulation includes the Nexus Hop (`NEX-1`). Then: map from setup data, Move/Trade/Interact/Pass, cargo vs pool, markets and 3-for-1, Maintenance skeleton, common-technology upgrades, new ships, missions with the tracker, **the four plain Ensign crew (costs supplied; other Ensigns and Commanders wait for their costs, see `design-decisions.md` section 12)**, VM and game end. Crude bot (random legal plus redeem priority). Plain functional UI with prompt host. Local save. | Human vs crude bot plays a whole game to a VM win in the browser, ugly but correct. Random-play invariant soak is green. |
 | **P2 Exploration and combat (L)** | Anomaly tiles (first slice), enemy deck and one faction, discovery bonuses, full multi-ship combat per V5 rulings, damage and retreat prompts, reward cards, Evade and blockade rules, Beam Projector. Bot gets plain strength heuristic and Evade-when-pinned. | **This is your stated first milestone:** map, actions, trading, upgrades, missions and combat against one bot. |
 | **P3 Presentation (L)** | Animation director, DOM/CSS effects behind the effects renderer interface (Pixi deferred), tile flips, card moves, dice, combat log, audio, card visual polish. | A game feels like a board game, not a form. |
 | **P4 Cloud (S to M)** | Firebase Auth, Firestore snapshots + log, IndexedDB fallback, migrations, game summary. | Sign in on a second browser and resume a game. |
@@ -641,13 +720,17 @@ Two sequencing points worth saying aloud. First, **a human-playable UI exists fr
 | Topic | Your documents | This proposal | Why |
 |---|---|---|---|
 | State changes | Engine emits an event stream | Events are the *only* way state changes (reducer) | Removes engine/animation drift; makes director, replay and tracker folds over one source |
-| Save format | Seed + decision log + rules version | **Snapshot** authoritative, log as companion | Replay-only saves break on any engine change |
+| Save format | Seed + decision log + rules version | **Snapshot** authoritative, log as companion; written at turn boundaries **and at commit points** (`SAV-2`) | Replay-only saves break on any engine change; turn-only saves allow reload-scouting and reroll |
+| Enforcement of determinism | Not specified ("no DOM lib" in v0.1) | **ESLint restricted globals and properties** plus a no-DOM tsconfig (`ENF-1`) | The DOM lib does not remove `Date.now`, `Math.random` or `localeCompare` |
+| Combat model | Combat per V5, initiative "at round start" | N-party free-for-all, **initiative recomputed each combatRound from live speed**, run to completion with a 100-combatRound guard (`CMB-3` to `CMB-5`) | Owner rulings in the second review |
+| First build step | P1 starts with the map and economy | P1 **starts with an economy-only simulation** with exit criteria | The largest unknown is whether games are winnable and the length of a game, not combat |
 | Bot randomness | Same seeded source as dice | Same *game seed*, separate named streams | A bot that changes cannot shift human dice |
 | Prompt mechanism | Not specified | Explicit resolution stack in state | Enables mid-attack saves and Monte Carlo copies; generators cannot be cloned |
 | Effect language | Fully designed up front, implemented for the slice | Hybrid: data layer plus registered code for one-offs, same three hook families | Honest about the 25 to 30 one-offs; keeps the core card-free |
 | Bot memory | "Next planned purchase" etc. implied | Stored in the save envelope, outside rules state | Keeps rules state pure; allows bot retuning without breaking saves |
 | Headless sim package | Not mentioned | Added in P0/P1 | Cheapest route to soak tests and the tuning data you want |
 | Undo | Not mentioned | Optional, nearly free | Falls out of snapshot + log |
+| Visual design timing | P3, after P1 and P2 | **Proposed (`implementation-plan.md`): Stage 1, before the engine**, from fixtures behind a `GameView` seam; the P0 spike becomes the motion lab | Owner wants to see the look first; also settles `Q18` and the cargo-versus-pool display |
 | Pixi, Playwright, Storybook | Part of the chosen stack | **Deferred** (Storybook possibly never); DOM/CSS effects behind an effects renderer interface, a dev gallery route, no browser E2E yet | Smaller first build; the interface keeps Pixi cheap to add later |
 
 ---
@@ -663,7 +746,7 @@ Two sequencing points worth saying aloud. First, **a human-playable UI exists fr
 5. **Rulings drift.** The documents already needed a consistency pass. Ruling IDs and tests citing them are the defence.
 6. **Monte Carlo speed in the browser.** Unmeasured. A budget test in P0 and the worker boundary make it a tuning problem, not a redesign.
 
-### Questions raised while drafting (all now resolved)
+### Questions raised while drafting (all resolved except the items listed after the table)
 
 | # | Question | Why it matters |
 |---|---|---|
@@ -680,17 +763,33 @@ Two sequencing points worth saying aloud. First, **a human-playable UI exists fr
 | Q3 | **Resolved: cargo and pool are both public.** | The view projection shows them in full. Bots may use rivals' cargo and pool in decisions, and the Monte Carlo strength check can use them as inputs (for pay-to-react abilities). |
 | Q4 | **Resolved: tied combatants fire simultaneously.** Combatants with equal speed form an **initiative group**. Everyone in the group rolls and fires before any of their damage is resolved, so tied combatants can destroy each other. Groups act in descending speed order. | Combat round shape (section 4.7). The ordering of the group's damage resolution is covered by Q6. |
 | Q5 | **Resolved: Decoy Launcher is used after the attacker rolls**, once the defender can see the result, before damage. | It sits in pipeline step 6 (reactions), after Temporal Echo and Repulsor Grid, as already drawn in section 4.7. |
-| Q6 | **Resolved: the first-player token holder's effects resolve first, then clockwise by seat; within one seat, by the order components were installed; remaining ties by component ID.** This applies to simultaneous damage events in an initiative group, Self-destruct chains, end-of-Action-phase effects and same-window reactions, unless a card says otherwise. | The engine's effect collector sorts by this key, so the order is deterministic and replayable. The engine therefore needs to record an **install sequence number** on every installed component. |
+| Q6 | **Resolved: the first-player token holder's effects resolve first, then clockwise by seat; within one seat, by the order components were installed; remaining ties by component ID.** (Refined by `CMB-10`: the **owner picks** the order of their own simultaneous effects; install order is the default for bots, simulation and tie-breaks.) This applies to simultaneous damage events in an initiative group, Self-destruct chains, end-of-Action-phase effects and same-window reactions, unless a card says otherwise. | The engine's effect collector sorts by this key, so the order is deterministic and replayable. The engine therefore needs to record an **install sequence number** on every installed component. |
 | Q7 | **Resolved: snapshots with schema migrations; big rules changes may mark old saves "legacy".** No old engine builds are kept. | `rulesVersion` and `schemaVersion` live in every save envelope from day one; migrations are small functions run on load. |
 | Q8 | **Resolved: undo back to the start of the current action/turn only.** | The runner keeps an in-memory snapshot taken at each turn boundary and drops it when the turn ends. The scouting loophole this creates is Q17. |
-| Q17 | **Resolved: undo locks the moment anything hidden is revealed or any dice are rolled in the current turn.** Undo therefore only covers harmless mis-clicks and plans, not information gained. | Engine events carry a flag (`revealsHidden` or `usesRandomness`). The runner disables undo for the rest of the turn when it sees one. Peeks (Archives, Sensor Array, Long-range Sensor Specialist), tile flips, card draws and every dice roll set the flag. |
+| Q17 | **Resolved: undo locks the moment anything hidden is revealed or any dice are rolled in the current turn.** Undo therefore only covers harmless mis-clicks and plans, not information gained. | Engine events carry a flag (`revealsHidden` or `usesRandomness`). The runner disables undo for the rest of the turn when it sees one. Peeks (Archives, Sensor Array, Long-range Sensor Specialist), tile flips, card draws and every dice roll set the flag. **The same flag now also triggers an immediate local save (`SAV-2`).** |
+| Q19 | **Resolved (second review): terms.** globalRound, combatRound and turn (`TRM-1`). | Naming in state, events and card data. |
+| Q20 | **Resolved: combat model.** Free-for-all among all opposing combatants, initiative recomputed each combatRound from live speed and then frozen, run to completion, 100-combatRound guard, sequential retreat in first-player order to a full-connection hex, Maintenance combat from a start-of-step snapshot (`CMB-3` to `CMB-7`). | Section 4.7. |
+| Q21 | **Resolved: attack pipeline order.** Targets and pre-roll commitments together, then defender pre-roll reactions in seat order; dice = (printed + bonuses) x2 then minus reductions; Gauss judged per weapon, Prism and Shield Specialist once per event; Interceptor cannot react to range attacks; owner orders their own simultaneous effects; self-damage queued with group damage; Torpedo before Spoils (`CMB-8` to `CMB-11`). | Section 4.7 pipeline. |
+| Q22 | **Resolved: loot and choosers.** Cargo goes to a same-hex killer, otherwise to supply; the defender chooses Spoils cargo and lost components; Larva tokens are not ships (`LOT-1` to `LOT-5`). | Section 4.7 notes. |
+| Q23 | **Resolved: decks and rewards.** Immediate refill of markets to 3; empty decks reshuffle; reward cards come from one of the tile's two bonus-resource decks, discoverer picks; install only in that hex (`DCK-1` to `DCK-4`). | Content and Upgrade handling. |
+| Q24 | **Resolved: saves, recovery, missions, length.** Commit-point saves, recovery on any Nexus (pinned if occupied), free mission discard, 27-card slice mission deck, no game-length limit with a 200-globalRound simulation abort (`SAV-2`, `REC-1`, `MSN-2`, `MSN-3`, `GEN-1`). | Sections 4.8 and 7. |
+| Q26 | **Resolved: start-Nexus connectivity.** The Nexus Hop (Interact at an Outer Rim Nexus, 1 resource, to another Outer Rim Nexus, no Move action, never the Central Nexus; `NEX-1`) removes the soft-lock found by the gate-graph simulation (stranded in under 0.1% of careful games). | Section 9.4. |
+| Q25 | **Resolved: enforcement.** ESLint restricted APIs, not the DOM lib (`ENF-1`). | Section 2. |
 | Q9 | **Resolved: no auto-decline.** The human is asked whenever a reaction is available. The engine still suppresses prompts for reactions that cannot be used (not installed, cannot pay even with the 3-for-1 exchange). | Removes the "auto helper for the human" idea from the default-policy module; the default policy is for bots and simulation only. |
+
+**Still open after the second review** (full list in `design-decisions.md` section 12):
+1. ~~`CON-1`: start-Nexus connectivity~~ **Resolved by the Nexus Hop (`NEX-1`, section 9.4)**; the details I assumed for occupied destinations and pinned arrival still need confirming (the pool cost and the "Interact on the exit hex only" point are confirmed).
+2. Enemy target selection in free-for-all combat (a placeholder is used until ruled).
+3. Explore (Comms Specialist) on a hex that already has an enemy: forbid, or allow several enemies per hex.
+4. Invalidation of peeked deck knowledge after shuffles and draws.
+5. Confirmation of my assumptions in `LOT-5`, `REC-1` (what persists) and the multi-killer loot tie.
+6. Real enemy deck counts and per-card crew costs (`content-data.md` holds placeholders).
 
 ### What I would do first, if you approve the direction
 
 1. Run the P0 DOM dice/card/pan spike and the hard-card fixtures, since those two cheaply retire the biggest visual and rules-model risks.
-2. ~~Get answers to the open questions.~~ **Done:** every question in this table is now resolved.
-3. ~~Fold the answers into `design-decisions.md`.~~ **Done.** They are in `design-decisions.md` sections 13 and 14 with stable IDs (`MAP-1` to `MAP-9`, `CMB-1`, `CMB-2`, `ORD-1`, `INF-1`, `ECO-1`, `SAV-1`, `UX-1` to `UX-3`). The older sections 1 to 12 are not numbered yet, so the next step is to number them as tests are written against them.
+2. ~~Get answers to the open questions.~~ **Done** except the open list above.
+3. ~~Fold the answers into `design-decisions.md`.~~ **Done.** They are in `design-decisions.md` sections 13 to 15 with stable IDs (`MAP-1` to `MAP-9`, `CMB-1` to `CMB-11`, `ORD-1`, `INF-1`, `ECO-1`, `SAV-1`, `SAV-2`, `UX-1` to `UX-3`, `LOT-1` to `LOT-5`, `DCK-1` to `DCK-4`, `TRM-1` and more). The older sections 1 to 12 are not numbered yet, so the next step is to number them as tests are written against them.
 4. Scaffold the workspace and verify library versions and licences, which `tooling-decisions.md` says have not been checked.
 
 ---

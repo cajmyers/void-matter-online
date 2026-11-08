@@ -1,0 +1,33 @@
+.cube {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+
+.art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+.vm .art {
+  filter: var(--game-vm-filter);
+}
+
+/* Demand reads as a ghost: same shape, faded and desaturated. */
+.hollow .art {
+  opacity: 0.4;
+  filter: grayscale(0.6);
+}
+
+.label {
+  position: absolute;
+  bottom: -0.95em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: var(--typography-overline-size);
+  line-height: 1;
+  color: var(--palette-text-secondary);
+}
