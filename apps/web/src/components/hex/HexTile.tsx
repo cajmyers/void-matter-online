@@ -352,11 +352,23 @@ export function HexTileBody(props: HexTileBodyProps) {
 
       {kind === "anomaly" ? (
         <>
-          <circle cy={-size * 0.12} r={size * 0.74} fill="url(#vm-nebula-a)" />
-          <circle cx={size * 0.1} cy={-size * 0.04} r={size * 0.5} fill="url(#vm-nebula-b)" />
-          <g transform={`translate(0 ${-size * 0.14}) scale(${size * 0.3})`}>
-            <path d={starPath} className={styles.anomalyStar} />
-          </g>
+          {detailArt !== undefined ? (
+            <HexTileClippedArt
+              clipId={`${hexArtClipId}-anomaly`}
+              href={detailArt}
+              artTitle={title}
+              artClip={artClip}
+              artBounds={artBounds}
+            />
+          ) : (
+            <>
+              <circle cy={-size * 0.12} r={size * 0.74} fill="url(#vm-nebula-a)" />
+              <circle cx={size * 0.1} cy={-size * 0.04} r={size * 0.5} fill="url(#vm-nebula-b)" />
+              <g transform={`translate(0 ${-size * 0.14}) scale(${size * 0.3})`}>
+                <path d={starPath} className={styles.anomalyStar} />
+              </g>
+            </>
+          )}
           {bonus ? (
             <g transform={`translate(0 ${-size * 0.62})`}>
               <rect

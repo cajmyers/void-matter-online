@@ -1,4 +1,5 @@
 import { seatNumbers } from "../../../components/game/resources";
+import { anomalyDetailArt } from "../../../components/hex/anomalyTileArt";
 import { planetDetailArt } from "../../../components/hex/planetTileArt";
 import { edgeOrder, rotateEdges } from "../../../components/hex/hexGeometry";
 import { Typography } from "../../../components/Typography/Typography";
@@ -21,6 +22,11 @@ function planetTile(planet: PlanetFixture, extra: { lockedSupply?: number; locke
     },
     gates: planetGatePatterns[planet.pattern],
   };
+}
+
+/** Spread helper: `detailArt` is only set when the art file exists (exactOptionalPropertyTypes). */
+function artProp(url: string | undefined): { detailArt?: string } {
+  return url ? { detailArt: url } : {};
 }
 
 const aethel = planetFixtures[0];
@@ -105,7 +111,7 @@ export function TilesSection() {
               key={tile.number}
               name={`${tile.number}. ${tile.name}`}
               note={`${tile.gates.length} gates`}
-              tiles={[{ body: { kind: "anomaly", title: tile.name, bonus: tile.bonus }, gates: tile.gates }]}
+              tiles={[{ body: { kind: "anomaly", title: tile.name, bonus: tile.bonus, ...artProp(anomalyDetailArt(tile.name)) }, gates: tile.gates }]}
             />
           ))}
         </div>
@@ -120,7 +126,7 @@ export function TilesSection() {
                 key={steps}
                 name={`Rotated ${steps * 60}°`}
                 note={scrapYard.name}
-                tiles={[{ body: { kind: "anomaly", title: `${scrapYard.name}, rotated ${steps * 60} degrees`, bonus: scrapYard.bonus }, gates: rotateEdges(scrapYard.gates, steps) }]}
+                tiles={[{ body: { kind: "anomaly", title: `${scrapYard.name}, rotated ${steps * 60} degrees`, bonus: scrapYard.bonus, ...artProp(anomalyDetailArt(scrapYard.name)) }, gates: rotateEdges(scrapYard.gates, steps) }]}
               />
             ))}
           </div>
