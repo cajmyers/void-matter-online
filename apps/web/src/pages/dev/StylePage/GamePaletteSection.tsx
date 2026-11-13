@@ -9,7 +9,10 @@ import {
   seatNumbers,
   type ResourceOrVm,
 } from "../../../components/game/resources";
-import { HexGates, HexTileBody, ShipBadge } from "../../../components/hex/HexTile";
+import { HexTileFigureSvg } from "../../../components/hex/HexTileFigure";
+import { hexTileSizeGalleryBoard } from "../../../components/hex/hexTileSizes";
+import { planetDetailArt } from "../../../components/hex/planetTileArt";
+import { ShipBadge } from "../../../components/hex/HexTile";
 import { Typography } from "../../../components/Typography/Typography";
 import styles from "./StylePage.module.css";
 
@@ -115,12 +118,28 @@ export function GamePaletteSection() {
           <Typography variant="caption">A pip: belongs to one ship (ACT-1)</Typography>
         </div>
         <div className={styles.item}>
-          <svg viewBox="-60 -56 120 112" width={110} height={104} role="img" aria-label="Gate, half gate and a selected tile">
-            <HexTileBody x={0} y={0} size={46} kind="planet" title="Selected planet" supply={[{ resource: "h3", amount: 4 }]} demand={[{ resource: "tc", amount: 3 }]} lockedDemand={1} selected />
-            <HexGates x={0} y={0} size={46} gates={["TL", "R"]} halfGates={["BL"]} />
-          </svg>
-          <Typography variant="subtitle1">Gate, half gate, locked</Typography>
-          <Typography variant="caption">Solid bar, dashed bar, amber cube</Typography>
+          <HexTileFigureSvg
+            size={hexTileSizeGalleryBoard}
+            ariaLabel="Gates and a selected tile"
+            tiles={[
+              {
+                body: {
+                  kind: "planet",
+                  title: "Vulkan's Forge",
+                  supply: [{ resource: "tc", amount: 4 }, { resource: "h3", amount: 2 }],
+                  demand: [{ resource: "pc", amount: 2 }, { resource: "qp", amount: 3 }],
+                  lockedDemand: 1,
+                  selected: true,
+                  ...(planetDetailArt("Vulkan's Forge") ? { detailArt: planetDetailArt("Vulkan's Forge") } : {}),
+                },
+                gates: ["TL", "R", "BL"],
+              },
+            ]}
+          />
+          <Typography variant="subtitle1">Gates and locked demand</Typography>
+          <Typography variant="caption">
+            Cyan gate bars on the rim; locks above supply pills, below demand (2 after trade, −1 each Maintenance)
+          </Typography>
         </div>
         <div className={styles.item}>
           <svg viewBox="-30 -30 60 60" width={72} height={72} role="img" aria-label="Pinned ship">

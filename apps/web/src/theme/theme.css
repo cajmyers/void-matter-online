@@ -243,21 +243,25 @@
   --game-state-pinned: var(--palette-error-main);
   --game-state-selected: var(--palette-primary-main);
 
-  /* Action token glyph colours: one hue per action, apart from the green ready ring. */
+  /* Action token glyph colours: one hue per action; ready ring is white (`--game-action-ready-ring`). */
+  --game-action-ready-ring: var(--palette-text-primary);
   --game-action-move: #5ceb8e;
   --game-action-trade: #4fb8ff;
   --game-action-interact: #e6eef5;
   --game-action-tactical: #ff6a4d;
 
-  --game-tile-face-down: #0a1322;
-  --game-tile-face-down-edge: #2f5f8c;
-  --game-tile-planet: #0b1a2e;
-  --game-tile-anomaly: #170f33;
-  --game-tile-nexus-central: #1a2a44;
+  /* Hex plate fill and lit border match Outer Rim Nexus (N2, `nexusRim`). Accent rims stay per kind. */
   --game-tile-nexus-rim: #0f2140;
+  --game-tile-face-down: var(--game-tile-nexus-rim);
+  --game-tile-planet: var(--game-tile-nexus-rim);
+  --game-tile-anomaly: var(--game-tile-nexus-rim);
+  --game-tile-nexus-central: var(--game-tile-nexus-rim);
   --game-tile-edge: #3a6a94;
-  --game-gate: #7ee6ff;
-  --game-gate-half: #ffb020;
+  --game-tile-plate-border: var(--game-tile-edge);
+  --game-tile-face-down-edge: var(--game-tile-plate-border);
+  /* Lone gate on an edge (half-connected); bright white only when both tiles connect (`MAP-5`). */
+  --game-gate: color-mix(in srgb, var(--palette-primary-light) 84%, var(--palette-grey-700) 16%);
+  --game-gate-full: color-mix(in srgb, #f4f8fc 92%, var(--palette-grey-700) 8%);
 
   /* Glowing rims (the references light every tile and card edge) */
   --game-rim-nexus: #ffd98a;
@@ -265,6 +269,7 @@
 
   --game-card-background: #0a1424;
   --game-card-border: #2e5578;
+  --game-market-pill-fill: #000;
 
   /* The space scene behind the table (SpaceBackdrop) */
   --game-space-deep: #02040a;

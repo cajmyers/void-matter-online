@@ -1,15 +1,24 @@
 import { seatNumbers } from "../../../components/game/resources";
+import { planetDetailArt } from "../../../components/hex/planetTileArt";
 import { edgeOrder, rotateEdges } from "../../../components/hex/hexGeometry";
 import { Typography } from "../../../components/Typography/Typography";
 import { anomalyFixtures, planetFixtures, planetGatePatterns, type PlanetFixture } from "../../../fixtures/tiles";
-import { TileFigure, type FigureTile } from "./Figure";
+import { TileFigure, TileScalesFigure, type FigureTile } from "./Figure";
 import styles from "./GalleryPage.module.css";
 
 const planetGroups = ["High metal", "High fuel", "High component", "High tech"] as const;
 
 function planetTile(planet: PlanetFixture, extra: { lockedSupply?: number; lockedDemand?: number } = {}): FigureTile {
+  const detailArt = planetDetailArt(planet.name);
   return {
-    body: { kind: "planet", title: planet.name, supply: planet.supply, demand: planet.demand, ...extra },
+    body: {
+      kind: "planet",
+      title: planet.name,
+      supply: planet.supply,
+      demand: planet.demand,
+      ...(detailArt ? { detailArt } : {}),
+      ...extra,
+    },
     gates: planetGatePatterns[planet.pattern],
   };
 }
@@ -28,12 +37,12 @@ export function TilesSection() {
       </Typography>
 
       <div className={styles.group}>
-        <Typography variant="overline">Face-down, Nexus and selection</Typography>
+        <Typography variant="overline">Face-down, Nexus and selection (each at board and inspector scale)</Typography>
         <div className={styles.grid}>
-          <TileFigure name="Face-down" note="Every non-Nexus tile starts here" tiles={[{ body: { kind: "faceDown", title: "Face-down tile" } }]} />
-          <TileFigure name="Central Nexus" note="Six gates" tiles={[{ body: { kind: "nexusCentral", title: "Central Nexus" }, gates: edgeOrder }]} />
+          <TileScalesFigure name="Face-down" note="Every non-Nexus tile starts here" tiles={[{ body: { kind: "faceDown", title: "Face-down tile" } }]} />
+          <TileScalesFigure name="Central Nexus" note="Six gates" tiles={[{ body: { kind: "nexusCentral", title: "Central Nexus" }, gates: edgeOrder }]} />
           {seatNumbers.map((seat) => (
-            <TileFigure
+            <TileScalesFigure
               key={seat}
               name={`Outer Rim Nexus, seat ${seat}`}
               note="Gates derived from position (MAP-5)"
@@ -41,19 +50,27 @@ export function TilesSection() {
             />
           ))}
           {aethel ? (
-            <TileFigure name="Selected" note="Cyan rim and glow" tiles={[{ ...planetTile(aethel), body: { ...planetTile(aethel).body, selected: true } }]} />
+            <TileScalesFigure name="Selected" note="Cyan rim and glow" tiles={[{ ...planetTile(aethel), body: { ...planetTile(aethel).body, selected: true } }]} />
           ) : null}
         </div>
       </div>
 
       <div className={styles.group}>
-        <Typography variant="overline">Planets: all 20, in their four groups (supply full strength, demand ghosted)</Typography>
+        <Typography variant="overline">
+          Planets: all 20, in their four groups (supply top, demand bottom). Each row shows board scale and
+          inspector detail scale; both use art from <code>src/assets/tiles/planets/</code> when present (see README there).
+        </Typography>
         {planetGroups.map((group) => (
           <div key={group} className={styles.grid}>
             {planetFixtures
               .filter((planet) => planet.group === group)
               .map((planet) => (
-                <TileFigure key={planet.name} name={planet.name} note={`${group}, pattern ${planet.pattern}`} tiles={[planetTile(planet)]} />
+                <TileScalesFigure
+                  key={planet.name}
+                  name={planet.name}
+                  note={`${group}, pattern ${planet.pattern}`}
+                  tiles={[planetTile(planet)]}
+                />
               ))}
           </div>
         ))}
@@ -62,17 +79,29 @@ export function TilesSection() {
       <div className={styles.group}>
         <Typography variant="overline">Locked areas (damage cubes on supply or demand)</Typography>
         <div className={styles.grid}>
-          {aethel ? <TileFigure name="Supply locked" note="Harvest blocked until cleared" tiles={[planetTile(aethel, { lockedSupply: 2 })]} /> : null}
-          {aethel ? <TileFigure name="Demand locked" note="Delivery blocked until cleared" tiles={[planetTile(aethel, { lockedDemand: 2 })]} /> : null}
-          {vulkan ? <TileFigure name="Both locked" tiles={[planetTile(vulkan, { lockedSupply: 2, lockedDemand: 2 })]} /> : null}
+          {aethel ? (
+            <TileScalesFigure
+              name="Supply locked"
+              note="Harvest adds 2 cubes centred above the pill; Market Shift removes 1 per globalRound"
+              tiles={[planetTile(aethel, { lockedSupply: 2 })]}
+            />
+          ) : null}
+          {aethel ? (
+            <TileScalesFigure
+              name="Demand locked"
+              note="Fulfil adds 2 cubes below the demand pill; 1 cube left = still blocked"
+              tiles={[planetTile(aethel, { lockedDemand: 2 })]}
+            />
+          ) : null}
+          {vulkan ? <TileScalesFigure name="Both locked" tiles={[planetTile(vulkan, { lockedSupply: 2, lockedDemand: 2 })]} /> : null}
         </div>
       </div>
 
       <div className={styles.group}>
-        <Typography variant="overline">Anomalies: all 21 (tile 4 is removed, TIL-1), with discovery bonus</Typography>
+        <Typography variant="overline">Anomalies: all 21 (tile 4 is removed, TIL-1), with discovery bonus, each at board and inspector scale</Typography>
         <div className={styles.grid}>
           {anomalyFixtures.map((tile) => (
-            <TileFigure
+            <TileScalesFigure
               key={tile.number}
               name={`${tile.number}. ${tile.name}`}
               note={`${tile.gates.length} gates`}
@@ -111,9 +140,9 @@ export function TilesSection() {
           />
           <TileFigure
             name="Half connection"
-            note="Only tile A has a gate there, drawn dashed and dim"
+            note="Only tile A has a gate on the shared edge"
             tiles={[
-              { body: { kind: "anomaly", title: "Tile A" }, halfGates: ["R"] },
+              { body: { kind: "anomaly", title: "Tile A" }, gates: ["R"] },
               { q: 1, body: { kind: "anomaly", title: "Tile B" } },
             ]}
           />

@@ -278,7 +278,7 @@
 }
 
 .flipBack {
-  background: var(--game-tile-face-down-edge);
+  background: var(--game-tile-plate-border);
 }
 
 .flipBack::before {
@@ -298,6 +298,6 @@
 }
 
 .flipFront {
-  background: var(--game-tile-planet);
+  background: var(--game-tile-nexus-rim);
   transform: rotateY(180deg);
 }

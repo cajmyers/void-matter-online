@@ -2,9 +2,9 @@
   transition: filter var(--motion-ui-feedback) var(--transitions-easing-ease-out);
 }
 
-/* The base plate: dark glass with a quiet edge. The glowing rim is drawn on top (.rim). */
+/* The base plate: N2 fill; plate border is uniform; `--rim` is for inner accents only. */
 .body {
-  stroke: color-mix(in srgb, var(--rim) 35%, transparent);
+  stroke: color-mix(in srgb, var(--plate-border) 35%, transparent);
   stroke-width: 1;
   stroke-linejoin: round;
 }
@@ -15,13 +15,13 @@
 .nexusCentral { fill: var(--game-tile-nexus-central); }
 .nexusRim { fill: var(--game-tile-nexus-rim); }
 
-/* Every tile is lit round its edge, as in the references. */
+/* Lit hex outline (same on every tile). */
 .rim {
   fill: none;
-  stroke: var(--rim);
+  stroke: var(--plate-border);
   stroke-width: 2.2;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 3px var(--rim));
+  filter: drop-shadow(0 0 3px var(--plate-border));
 }
 
 .faceDown ~ .rim {
@@ -50,7 +50,17 @@
   filter: drop-shadow(0 0 4px var(--rim));
 }
 
-/* A dark pill behind badges, so they read on any art. */
+.planetDetailArt {
+  pointer-events: none;
+}
+
+/* Supply/demand rows: fixed-size solid backing. */
+.marketPill {
+  fill: var(--game-market-pill-fill);
+  stroke: none;
+}
+
+/* Anomaly discovery bonus and similar compact badges. */
 .pill {
   fill: rgb(2 6 14 / 0.66);
   stroke: color-mix(in srgb, var(--rim) 45%, transparent);
@@ -87,12 +97,6 @@
   opacity: 0.7;
 }
 
-/* Demand reads as a ghost: same shape as the supply art, faded and desaturated. */
-.demandArt {
-  opacity: 0.4;
-  filter: grayscale(0.6);
-}
-
 .nexusLabel {
   fill: var(--palette-text-primary);
   font-family: var(--font-mono);
@@ -100,17 +104,17 @@
 
 .gate {
   stroke: var(--game-gate);
-  stroke-width: 4;
-  stroke-linecap: butt;
+  stroke-width: 4.5;
+  stroke-linecap: round;
   filter: drop-shadow(0 0 3px var(--game-gate));
 }
 
-.gateHalf {
-  stroke: var(--game-gate-half);
-  stroke-width: 4;
-  stroke-linecap: butt;
-  stroke-dasharray: 3 2;
-  filter: drop-shadow(0 0 3px var(--game-gate-half));
+/* Same geometry as .gate; both tiles mark a connected edge (`MAP-5`). */
+.gateFull {
+  stroke: var(--game-gate-full);
+  stroke-width: 6;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 1px var(--game-gate-full)) drop-shadow(0 0 5px color-mix(in srgb, var(--game-gate-full) 55%, transparent));
 }
 
 .ship {
@@ -147,8 +151,4 @@
   stroke: var(--game-state-selected);
   stroke-width: 3.4;
   filter: drop-shadow(0 0 6px var(--game-state-selected));
-}
-
-.vmArt {
-  filter: var(--game-vm-filter);
 }

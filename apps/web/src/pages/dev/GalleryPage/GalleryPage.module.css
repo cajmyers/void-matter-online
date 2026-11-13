@@ -93,6 +93,20 @@
   border-radius: var(--shape-border-radius);
 }
 
+.figureScales .stage {
+  overflow-x: auto;
+  justify-content: flex-start;
+}
+
+.scales {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-md);
+  width: max-content;
+  max-width: 100%;
+}
+
 .caption {
   display: flex;
   flex-direction: column;

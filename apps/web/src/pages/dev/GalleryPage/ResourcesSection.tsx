@@ -41,7 +41,7 @@ export function ResourcesSection() {
       <div className={styles.group}>
         <Typography variant="overline">Damage and locks</Typography>
         <div className={styles.grid}>
-          <Figure name="Damage cube" note="Also the marker that locks a planet's supply or demand area">
+          <Figure name="Damage cube" note="Above supply pills, below demand pills, after harvest/fulfil (2 added, 1 removed each Maintenance)">
             <DamageCube size={20} />
             <DamageCube size={32} />
           </Figure>

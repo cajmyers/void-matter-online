@@ -1,8 +1,26 @@
-import type { CSSProperties } from "react";
+import { useId, type CSSProperties } from "react";
 import { seatShapePath } from "../game/SeatMark";
 import { resourceArt } from "../game/resourceArt";
 import { resourceIds, resourceInfo, seatNumbers, type ResourceId, type SeatNumber } from "../game/resources";
-import { edgeSegment, hexCorners, pointsAttribute, type EdgeName } from "./hexGeometry";
+import { isFullGateOnEdge } from "./gateConnection";
+import {
+  edgeSegment,
+  gateEdgeFraction,
+  gateRadiusScale,
+  hexBoundingHalfExtents,
+  hexCorners,
+  pointsAttribute,
+  rimRadiusScale,
+  type EdgeName,
+} from "./hexGeometry";
+import {
+  hexTileMarketDemandY,
+  hexTileMarketLayout,
+  hexTileMarketLockStackY,
+  hexTileMarketSupplyY,
+  type HexTileMarketLayout,
+} from "./hexTileSizes";
+import { nexusDetailArt } from "./nexusTileArt";
 import styles from "./HexTile.module.css";
 
 export type TileKind = "faceDown" | "planet" | "anomaly" | "nexusCentral" | "nexusRim";
@@ -21,15 +39,20 @@ export interface HexTileBodyProps {
   readonly title: string;
   /** Rim Nexus only. */
   readonly seat?: SeatNumber;
-  /** Planet only: full-strength tokens are supply (harvest), ghosted tokens are demand (deliver). */
+  /** Planet only: supply (harvest) and demand (deliver) rows use full-strength resource art. */
   readonly supply?: readonly ResourceAmount[];
   readonly demand?: readonly ResourceAmount[];
-  /** Planet only: damage cubes locking the supply or demand area (Market Shift removes one per globalRound). */
+  /**
+   * Planet only: damage cubes on the supply or demand area (harvest/fulfil each add 2; blocked while any remain;
+   * Market Shift removes 1 per globalRound — design-decisions harvest/fulfil + Market Shift).
+   */
   readonly lockedSupply?: number;
   readonly lockedDemand?: number;
   /** Anomaly only: the two discovery-bonus resources. */
   readonly bonus?: readonly [ResourceId, ResourceId];
   readonly selected?: boolean;
+  /** Planet only: owner art clipped inside the hex when provided (`assets/tiles/planets`). */
+  readonly detailArt?: string;
 }
 
 const tileClass: Readonly<Record<TileKind, string>> = {
@@ -89,8 +112,8 @@ export function HexDefs() {
         <stop offset="1" style={{ stopColor: "var(--game-space-teal)", stopOpacity: 0 }} />
       </radialGradient>
       <radialGradient id="vm-facedown" cx="50%" cy="42%" r="70%">
-        <stop offset="0" style={{ stopColor: "color-mix(in srgb, var(--game-tile-face-down) 70%, var(--game-space-blue))" }} />
-        <stop offset="1" style={{ stopColor: "var(--game-tile-face-down)" }} />
+        <stop offset="0" style={{ stopColor: "color-mix(in srgb, var(--game-tile-nexus-rim) 70%, var(--game-space-blue))" }} />
+        <stop offset="1" style={{ stopColor: "var(--game-tile-nexus-rim)" }} />
       </radialGradient>
       <linearGradient id="vm-gloss" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stopColor="#fff" stopOpacity="0.16" />
@@ -100,62 +123,132 @@ export function HexDefs() {
   );
 }
 
+function DamageLockCube({ x, y, size }: { readonly x: number; readonly y: number; readonly size: number }) {
+  const half = size / 2;
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <rect x={-half} y={-half} width={size} height={size} rx={size * 0.2} className={styles.lock} />
+      <path
+        d={`M${-half * 0.5} ${-half * 0.5}L${half * 0.5} ${half * 0.5}M${half * 0.5} ${-half * 0.5}L${-half * 0.5} ${half * 0.5}`}
+        className={styles.lockMark}
+      />
+    </g>
+  );
+}
+
+/** One cube per remaining lock, centred above (supply) or below (demand) the market pill. */
+function MarketLockStack({
+  count,
+  rowLabel,
+  layout,
+  side,
+}: {
+  readonly count: number;
+  readonly rowLabel: "Supply" | "Demand";
+  readonly layout: HexTileMarketLayout;
+  readonly side: "above" | "below";
+}) {
+  if (count <= 0) return null;
+  const { cube } = layout;
+  const centerY = hexTileMarketLockStackY(layout, side);
+  const step = cube + Math.max(2, Math.round(cube * 0.12));
+  const span = (count - 1) * step;
+  return (
+    <g>
+      <title>
+        {`${count} damage cube(s) block ${rowLabel.toLowerCase()}; harvest/fulfil adds 2; Market Shift removes 1 per globalRound`}
+      </title>
+      {Array.from({ length: count }, (_, index) => {
+        const x = count === 1 ? 0 : -span / 2 + index * step;
+        return <DamageLockCube key={index} x={x} y={centerY} size={cube} />;
+      })}
+    </g>
+  );
+}
+
 function ResourceRow({
   items,
   y,
-  hollow,
-  size,
+  rowLabel,
   locked,
+  layout,
 }: {
   readonly items: readonly ResourceAmount[];
   readonly y: number;
-  readonly hollow: boolean;
-  readonly size: number;
+  readonly rowLabel: "Supply" | "Demand";
   readonly locked: number;
+  readonly layout: HexTileMarketLayout;
 }) {
   if (items.length === 0 && locked === 0) return null;
-  const cube = size * 0.24;
-  const entryWidth = cube + size * 0.2;
-  const total = items.length * entryWidth + (locked > 0 ? cube : 0);
-  const start = -total / 2;
+  const { cube, pillHeight, pillWidth, pillPadY, entryTail, fontSize, textOffsetX } = layout;
+  const entryWidth = cube + entryTail;
+  const contentWidth = items.length * entryWidth;
+  const start = -contentWidth / 2;
+  const lockSide = rowLabel === "Supply" ? "above" : "below";
+  const lockStack = <MarketLockStack count={locked} rowLabel={rowLabel} layout={layout} side={lockSide} />;
   return (
     <g transform={`translate(0 ${y})`}>
+      {lockSide === "above" ? lockStack : null}
       <rect
-        x={start - size * 0.08}
-        y={-cube / 2 - size * 0.05}
-        width={total + size * 0.1}
-        height={cube + size * 0.1}
-        rx={(cube + size * 0.1) / 2}
-        className={styles.pill}
+        x={-pillWidth / 2}
+        y={-cube / 2 - pillPadY}
+        width={pillWidth}
+        height={pillHeight}
+        rx={pillHeight / 2}
+        className={styles.marketPill}
       />
       {items.map((item, index) => {
         const info = resourceInfo[item.resource];
         const left = start + index * entryWidth;
         return (
           <g key={item.resource} transform={`translate(${left} ${-cube / 2})`}>
-            <image
-              href={resourceArt[item.resource]}
-              width={cube}
-              height={cube}
-              className={hollow ? styles.demandArt : undefined}
-            >
-              <title>{`${hollow ? "Demand" : "Supply"}: ${item.amount} ${info.name}`}</title>
+            <image href={resourceArt[item.resource]} width={cube} height={cube}>
+              <title>{`${rowLabel}: ${item.amount} ${info.name}`}</title>
             </image>
-            <text x={cube + size * 0.04} y={cube * 0.82} className={styles.amount} fontSize={size * 0.22}>
+            <text x={cube + textOffsetX} y={cube * 0.82} className={styles.amount} fontSize={fontSize}>
               {item.amount}
             </text>
           </g>
         );
       })}
-      {locked > 0 ? (
-        <g transform={`translate(${start + items.length * entryWidth} ${-cube / 2})`}>
-          <rect width={cube} height={cube} rx={cube * 0.2} className={styles.lock}>
-            <title>{`${locked} damage cube(s) lock this area`}</title>
-          </rect>
-          <path d={`M${cube * 0.25} ${cube * 0.25}L${cube * 0.75} ${cube * 0.75}M${cube * 0.75} ${cube * 0.25}L${cube * 0.25} ${cube * 0.75}`} className={styles.lockMark} />
-        </g>
-      ) : null}
+      {lockSide === "below" ? lockStack : null}
     </g>
+  );
+}
+
+function HexTileClippedArt({
+  clipId,
+  href,
+  artTitle,
+  artClip,
+  artBounds,
+}: {
+  readonly clipId: string;
+  readonly href: string;
+  readonly artTitle: string;
+  readonly artClip: ReturnType<typeof hexCorners>;
+  readonly artBounds: ReturnType<typeof hexBoundingHalfExtents>;
+}) {
+  return (
+    <>
+      <defs>
+        <clipPath id={clipId}>
+          <polygon points={pointsAttribute(artClip)} />
+        </clipPath>
+      </defs>
+      <image
+        href={href}
+        x={-artBounds.halfWidth}
+        y={-artBounds.halfHeight}
+        width={artBounds.halfWidth * 2}
+        height={artBounds.halfHeight * 2}
+        preserveAspectRatio="xMidYMid slice"
+        clipPath={`url(#${clipId})`}
+        className={styles.planetDetailArt}
+      >
+        <title>{artTitle}</title>
+      </image>
+    </>
   );
 }
 
@@ -170,14 +263,43 @@ function rimColour(kind: TileKind, seat: SeatNumber | undefined, supply: readonl
 
 /** The tile body. Draw all bodies first, then all gates, so a neighbour never covers a gate on a shared edge. */
 export function HexTileBody(props: HexTileBodyProps) {
-  const { x, y, size, kind, title, seat, supply = [], demand = [], lockedSupply = 0, lockedDemand = 0, bonus, selected = false } = props;
+  const {
+    x,
+    y,
+    size,
+    kind,
+    title,
+    seat,
+    supply = [],
+    demand = [],
+    lockedSupply = 0,
+    lockedDemand = 0,
+    bonus,
+    selected = false,
+    detailArt,
+  } = props;
+  const hexArtClipId = useId();
   const corners = hexCorners(size);
-  const rimCorners = hexCorners(size * 0.955);
+  const rimCorners = hexCorners(size * rimRadiusScale);
   const inner = hexCorners(size * 0.78);
   const innermost = hexCorners(size * 0.5);
   const firstSupply = supply[0];
-  const rim = rimColour(kind, seat, supply);
-  const tileStyle = { "--rim": rim } as CSSProperties;
+  const usePlanetDetailArt = kind === "planet" && detailArt !== undefined;
+  const nexusArt =
+    kind === "nexusCentral"
+      ? nexusDetailArt("nexusCentral")
+      : kind === "nexusRim" && seat !== undefined
+        ? nexusDetailArt("nexusRim", seat)
+        : undefined;
+  const marketLayout = kind === "planet" ? hexTileMarketLayout(size) : undefined;
+  const artClipRadius = size * 0.94;
+  const artClip = hexCorners(artClipRadius);
+  const artBounds = hexBoundingHalfExtents(artClipRadius);
+  const accent = rimColour(kind, seat, supply);
+  const tileStyle = {
+    "--rim": accent,
+    "--plate-border": "var(--game-tile-plate-border)",
+  } as CSSProperties;
 
   return (
     <g
@@ -200,15 +322,31 @@ export function HexTileBody(props: HexTileBodyProps) {
 
       {kind === "planet" ? (
         <>
-          {firstSupply ? <circle cy={-size * 0.2} r={size * 0.66} fill={`url(#vm-halo-${firstSupply.resource})`} /> : null}
-          <circle
-            cy={-size * 0.2}
-            r={size * 0.36}
-            fill={firstSupply ? `url(#vm-planet-${firstSupply.resource})` : "var(--game-tile-planet)"}
-            className={styles.sphere}
-          />
-          <ResourceRow items={supply} y={size * 0.32} hollow={false} size={size} locked={lockedSupply} />
-          <ResourceRow items={demand} y={size * 0.63} hollow={true} size={size} locked={lockedDemand} />
+          {usePlanetDetailArt ? (
+            <HexTileClippedArt
+              clipId={hexArtClipId}
+              href={detailArt}
+              artTitle={title}
+              artClip={artClip}
+              artBounds={artBounds}
+            />
+          ) : (
+            <>
+              {firstSupply ? <circle cy={-size * 0.2} r={size * 0.66} fill={`url(#vm-halo-${firstSupply.resource})`} /> : null}
+              <circle
+                cy={-size * 0.2}
+                r={size * 0.36}
+                fill={firstSupply ? `url(#vm-planet-${firstSupply.resource})` : "var(--game-tile-planet)"}
+                className={styles.sphere}
+              />
+            </>
+          )}
+          {marketLayout ? (
+            <>
+              <ResourceRow items={supply} y={hexTileMarketSupplyY(size)} rowLabel="Supply" locked={lockedSupply} layout={marketLayout} />
+              <ResourceRow items={demand} y={hexTileMarketDemandY(size)} rowLabel="Demand" locked={lockedDemand} layout={marketLayout} />
+            </>
+          ) : null}
         </>
       ) : null}
 
@@ -220,7 +358,7 @@ export function HexTileBody(props: HexTileBodyProps) {
             <path d={starPath} className={styles.anomalyStar} />
           </g>
           {bonus ? (
-            <g transform={`translate(0 ${size * 0.55})`}>
+            <g transform={`translate(0 ${-size * 0.62})`}>
               <rect
                 x={-size * 0.3}
                 y={-size * 0.15}
@@ -251,21 +389,51 @@ export function HexTileBody(props: HexTileBodyProps) {
 
       {kind === "nexusCentral" ? (
         <>
-          <circle r={size * 0.85} fill="url(#vm-halo-nexus)" />
-          <polygon points={pointsAttribute(inner)} className={styles.nexusRing} />
-          <polygon points={pointsAttribute(innermost)} className={styles.nexusRing} />
-          <image className={styles.vmArt} href={resourceArt.vm} x={-size * 0.26} y={-size * 0.26} width={size * 0.52} height={size * 0.52}>
-            <title>Void Matter</title>
-          </image>
+          {nexusArt ? (
+            <HexTileClippedArt
+              clipId={`${hexArtClipId}-central`}
+              href={nexusArt}
+              artTitle={title}
+              artClip={artClip}
+              artBounds={artBounds}
+            />
+          ) : (
+            <>
+              <circle r={size * 0.85} fill="url(#vm-halo-nexus)" />
+              <polygon points={pointsAttribute(inner)} className={styles.nexusRing} />
+              <polygon points={pointsAttribute(innermost)} className={styles.nexusRing} />
+            </>
+          )}
         </>
       ) : null}
 
       {kind === "nexusRim" && seat ? (
         <>
-          <circle r={size * 0.75} fill={`url(#vm-halo-seat-${seat})`} />
-          <polygon points={pointsAttribute(inner)} className={styles.nexusRing} style={{ stroke: `var(--game-seat-${seat})`, strokeWidth: 2 }} />
+          {nexusArt ? (
+            <HexTileClippedArt
+              clipId={`${hexArtClipId}-rim-${seat}`}
+              href={nexusArt}
+              artTitle={title}
+              artClip={artClip}
+              artBounds={artBounds}
+            />
+          ) : (
+            <>
+              <circle r={size * 0.75} fill={`url(#vm-halo-seat-${seat})`} />
+              <polygon points={pointsAttribute(inner)} className={styles.nexusRing} style={{ stroke: `var(--game-seat-${seat})`, strokeWidth: 2 }} />
+            </>
+          )}
           {/* The label sits low so a ship parked on the tile (drawn at the centre) never covers it. */}
-          <text y={size * 0.66} textAnchor="middle" className={styles.nexusLabel} fontSize={size * 0.24}>
+          {/* A pill behind the label keeps it legible over the busy tile art. */}
+          <rect
+            x={-size * 0.24}
+            y={size * 0.66 - size * 0.18}
+            width={size * 0.48}
+            height={size * 0.36}
+            rx={size * 0.18}
+            className={styles.pill}
+          />
+          <text y={size * 0.66} textAnchor="middle" dominantBaseline="central" className={styles.nexusLabel} fontSize={size * 0.24}>
             {`N${seat}`}
           </text>
         </>
@@ -281,21 +449,31 @@ export interface HexGatesProps {
   readonly x: number;
   readonly y: number;
   readonly size: number;
+  /** Printed warp gates on this tile (`MAP-5`). Half-connected edges look the same; only one hex has a gate there. */
   readonly gates: readonly EdgeName[];
-  /** Edges that carry a gate on this side only (a half connection, MAP-5). */
-  readonly halfGates?: readonly EdgeName[];
+  /** With axial coords and the board gate map, connected edges render white (`MAP-5`). */
+  readonly q?: number;
+  readonly r?: number;
+  readonly gatesByTile?: ReadonlyMap<string, readonly EdgeName[]>;
 }
 
-export function HexGates({ x, y, size, gates, halfGates = [] }: HexGatesProps) {
+export function HexGates({ x, y, size, gates, q, r, gatesByTile }: HexGatesProps) {
   return (
     <g transform={`translate(${x} ${y})`} pointerEvents="none">
       {gates.map((edge) => {
-        const [first, second] = edgeSegment(size, edge, 0.46);
-        return <line key={edge} x1={first.x} y1={first.y} x2={second.x} y2={second.y} className={styles.gate} />;
-      })}
-      {halfGates.map((edge) => {
-        const [first, second] = edgeSegment(size, edge, 0.46);
-        return <line key={edge} x1={first.x} y1={first.y} x2={second.x} y2={second.y} className={styles.gateHalf} />;
+        const full =
+          q !== undefined && r !== undefined && gatesByTile !== undefined && isFullGateOnEdge(q, r, edge, gatesByTile);
+        const [first, second] = edgeSegment(size, edge, gateEdgeFraction, gateRadiusScale);
+        return (
+          <line
+            key={edge}
+            x1={first.x}
+            y1={first.y}
+            x2={second.x}
+            y2={second.y}
+            className={full ? (styles.gateFull ?? styles.gate) : styles.gate}
+          />
+        );
       })}
     </g>
   );

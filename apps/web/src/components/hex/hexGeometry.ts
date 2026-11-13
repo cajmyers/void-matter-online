@@ -40,6 +40,11 @@ export function hexCorners(size: number): readonly Point[] {
   });
 }
 
+/** Axis-aligned bounds of a pointy-top hex centred at the origin (circumradius = `radius`). */
+export function hexBoundingHalfExtents(radius: number): { readonly halfWidth: number; readonly halfHeight: number } {
+  return { halfWidth: (radius * sqrt3) / 2, halfHeight: radius };
+}
+
 // Which two corners (indexes into hexCorners) bound each edge.
 const edgeCornerIndexes: Readonly<Record<EdgeName, readonly [number, number]>> = {
   TR: [0, 1],
@@ -50,9 +55,18 @@ const edgeCornerIndexes: Readonly<Record<EdgeName, readonly [number, number]>> =
   TL: [5, 0],
 };
 
+/** Lit rim inset on `HexTileBody`. */
+export const rimRadiusScale = 0.955;
+
+/** Warp gates sit slightly inside the rim (`MAP-5`). */
+export const gateRadiusScale = 0.925;
+
+/** Length along the edge, centred on the side (`MAP-5`). Same for every gate; neighbours overlap on a shared edge. */
+export const gateEdgeFraction = 0.58;
+
 /** The middle `fraction` of an edge, as two points. */
-export function edgeSegment(size: number, edge: EdgeName, fraction = 1): readonly [Point, Point] {
-  const corners = hexCorners(size);
+export function edgeSegment(size: number, edge: EdgeName, fraction = 1, radiusScale = 1): readonly [Point, Point] {
+  const corners = hexCorners(size * radiusScale);
   const [firstIndex, secondIndex] = edgeCornerIndexes[edge];
   const first = corners[firstIndex] ?? { x: 0, y: 0 };
   const second = corners[secondIndex] ?? { x: 0, y: 0 };

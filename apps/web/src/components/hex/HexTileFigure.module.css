@@ -1,0 +1,8 @@
+/* Tile SVGs use matching width/height and viewBox — do not shrink via flex or max-width. */
+.intrinsic {
+  display: block;
+  flex: none;
+  width: auto;
+  height: auto;
+  max-width: none;
+}
