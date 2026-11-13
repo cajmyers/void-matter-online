@@ -242,6 +242,7 @@
   --game-state-locked: var(--palette-warning-main);
   --game-state-pinned: var(--palette-error-main);
   --game-state-selected: var(--palette-primary-main);
+  --game-state-hover: var(--palette-primary-light);
 
   /* Action token glyph colours: one hue per action; ready ring is white (`--game-action-ready-ring`). */
   --game-action-ready-ring: var(--palette-text-primary);

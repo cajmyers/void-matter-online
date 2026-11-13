@@ -51,6 +51,10 @@ export interface HexTileBodyProps {
   /** Anomaly only: the two discovery-bonus resources. */
   readonly bonus?: readonly [ResourceId, ResourceId];
   readonly selected?: boolean;
+  /** Static specimen (gallery); live boards use `interactive` and CSS `:hover` instead. */
+  readonly hovered?: boolean;
+  /** Rim highlight on pointer hover (`:hover`); used on the style specimen board. */
+  readonly interactive?: boolean;
   /** Planet only: owner art clipped inside the hex when provided (`assets/tiles/planets`). */
   readonly detailArt?: string;
 }
@@ -276,6 +280,8 @@ export function HexTileBody(props: HexTileBodyProps) {
     lockedDemand = 0,
     bonus,
     selected = false,
+    hovered = false,
+    interactive = false,
     detailArt,
   } = props;
   const hexArtClipId = useId();
@@ -304,7 +310,14 @@ export function HexTileBody(props: HexTileBodyProps) {
   return (
     <g
       transform={`translate(${x} ${y})`}
-      className={selected ? `${styles.tile} ${styles.selected}` : styles.tile}
+      className={[
+        styles.tile,
+        interactive ? styles.interactive : undefined,
+        hovered ? styles.hovered : undefined,
+        selected ? styles.selected : undefined,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       style={tileStyle}
     >
       <title>{title}</title>

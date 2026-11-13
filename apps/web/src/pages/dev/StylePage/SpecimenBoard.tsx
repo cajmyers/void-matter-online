@@ -68,7 +68,8 @@ const tiles: Readonly<Record<string, SpecimenTile>> = {
   [axialKey(0, 2)]: { body: { kind: "nexusRim", title: "Outer Rim Nexus, seat 2 start", seat: 2 }, gates: rimGates(0, 2) },
   [axialKey(-1, 0)]: { body: planetBody("Aethel-9"), gates: ["TL", "TR", "R"] },
   [axialKey(0, -1)]: { body: planetBody("Kraken's Breath"), gates: ["TR", "BR", "BL"] },
-  [axialKey(0, 1)]: { body: planetBody("Vulkan's Forge", { lockedDemand: 1 }), gates: ["TL", "R", "BL"] },
+  // Vulkan's Forge is selected so the style page shows the cyan selection rim on a real tile.
+  [axialKey(0, 1)]: { body: { ...planetBody("Vulkan's Forge", { lockedDemand: 1 }), selected: true }, gates: ["TL", "R", "BL"] },
   [axialKey(1, 0)]: { body: anomalyBody("Graviton Warp Conduit"), gates: ["TL", "TR", "BR", "BL"] },
   [axialKey(-1, 1)]: { body: anomalyBody("Dense Asteroid Field"), gates: ["R", "L"] },
   [axialKey(-1, -1)]: { body: planetBody("Stallos Prime"), gates: ["R", "BL"] },
@@ -129,7 +130,7 @@ export function SpecimenBoard() {
       aria-label="Specimen 2-seat board"
     >
       {placed.map(({ hex, centre, tile }) => (
-        <HexTileBody key={axialKey(hex.q, hex.r)} x={centre.x} y={centre.y} size={size} {...tile.body} />
+        <HexTileBody key={axialKey(hex.q, hex.r)} x={centre.x} y={centre.y} size={size} interactive {...tile.body} />
       ))}
       {placed.map(({ hex, centre, tile }) => (
         <HexGates

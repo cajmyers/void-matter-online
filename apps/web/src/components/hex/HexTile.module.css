@@ -147,6 +147,21 @@
   stroke-dasharray: 3 3;
 }
 
+.interactive {
+  cursor: default;
+}
+
+.interactive .body {
+  pointer-events: all;
+}
+
+.hovered:not(.selected) .rim,
+.interactive:hover:not(.selected) .rim {
+  stroke: var(--game-state-hover);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 5px var(--game-state-hover));
+}
+
 .selected .rim {
   stroke: var(--game-state-selected);
   stroke-width: 3.4;
