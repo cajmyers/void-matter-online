@@ -8,26 +8,16 @@ import { ReferenceCard } from "../../../components/game/ReferenceCard";
 import { ShipCard } from "../../../components/game/ShipCard";
 import { resourceInfo, type ResourceId } from "../../../components/game/resources";
 import { Typography } from "../../../components/Typography/Typography";
-import {
-  assetCommonTechSpecimens,
-  assetDefenceSpecimens,
-  assetPatternSpecimens,
-  assetProps,
-  assetSectorSpecimens,
-  assetSlotSpecimens,
-  assetUniqueSpecimens,
-  assetWeaponSpecimens,
-} from "../../../fixtures/assetCardGallery";
-import type { AssetCardFixture } from "../../../fixtures/assetCardFixtures";
 import { enemyFixtures, ensignFixtures } from "../../../fixtures/cards";
 import { hrefFor } from "../../../app/useHashRoute";
-import { ownerSectorGalleryGroups } from "../../../fixtures/sectorAssetCards";
+import {
+  galleryExampleAssetCardsForSectorMarkets,
+  sectorDeckLabel,
+} from "../../../fixtures/sectorAssetCards";
 import { CardScalesFigure } from "./Figure";
 import styles from "./GalleryPage.module.css";
 
-function renderAsset(fixture: AssetCardFixture, width: number) {
-  return <AssetCard {...assetProps(fixture)} width={width} />;
-}
+const sectorMarketGalleryExamples = galleryExampleAssetCardsForSectorMarkets();
 
 const sectorDeckLabels: readonly { readonly sector: ResourceId; readonly count: number; readonly useS1Back: boolean }[] = [
   { sector: firstPlayableSlice.sectorMarkets.s1.resource, count: firstPlayableSlice.sectorMarkets.s1.deckSize, useS1Back: true },
@@ -47,102 +37,34 @@ export function CardsSection() {
       <Typography variant="body2">
         All sector asset cards share one layout (`AssetCard`): ship module header, cost pips, art window, rules panel,
         and slot marker on art. Rim colour follows the sector (`MAP-4`). Print 65 × 100 mm; hand 118px wide, inspect
-        220px.{" "}
+        220px. Full catalogues:{" "}
         <a className={styles.inlineLink} href={hrefFor("/dev/s1-cards")}>
-          Full S1 deck
+          S1
+        </a>
+        {", "}
+        <a className={styles.inlineLink} href={hrefFor("/dev/s2-cards")}>
+          S2
+        </a>
+        {", "}
+        <a className={styles.inlineLink} href={hrefFor("/dev/s3-cards")}>
+          S3
+        </a>
+        {", "}
+        <a className={styles.inlineLink} href={hrefFor("/dev/s4-cards")}>
+          S4
         </a>
         .
       </Typography>
 
       <div className={styles.group}>
-        <Typography variant="overline">Asset card pattern (weapon · defence · module)</Typography>
+        <Typography variant="overline">Sector markets (S1–S4, one example each)</Typography>
         <div className={styles.grid}>
-          {assetPatternSpecimens.map((fixture) => (
+          {sectorMarketGalleryExamples.map((card) => (
             <CardScalesFigure
-              key={fixture.title}
-              name={fixture.title}
-              note={fixture.category}
-              render={(width) => renderAsset(fixture, width)}
-            />
-          ))}
-        </div>
-      </div>
-
-      {ownerSectorGalleryGroups.filter((group) => group.deck !== "s1").map((group) =>
-        group.cards.length > 0 ? (
-          <div className={styles.group} key={group.deck}>
-            <Typography variant="overline">{group.label} — owner illustrations</Typography>
-            <div className={styles.grid}>
-              {group.cards.map((card) => (
-                <CardScalesFigure
-                  key={card.catalogueId}
-                  name={card.title}
-                  note={card.category}
-                  render={(width) => <AssetCard {...card} width={width} />}
-                />
-              ))}
-            </div>
-          </div>
-        ) : null,
-      )}
-
-      <div className={styles.group}>
-        <Typography variant="overline">Four sector rims</Typography>
-        <div className={styles.grid}>
-          {assetSectorSpecimens.map((fixture) => (
-            <CardScalesFigure
-              key={fixture.title}
-              name={fixture.title}
-              note={resourceInfo[fixture.sector].name}
-              render={(width) => renderAsset(fixture, width)}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className={styles.group}>
-        <Typography variant="overline">Slot sizes (`SLT-1`)</Typography>
-        <div className={styles.grid}>
-          {assetSlotSpecimens.map((fixture) => (
-            <CardScalesFigure
-              key={fixture.title}
-              name={fixture.title}
-              note={fixture.slotSize === 0.5 ? "Half slot" : fixture.slotSize === 2 ? "Two slots" : "One slot"}
-              render={(width) => renderAsset(fixture, width)}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className={styles.group}>
-        <Typography variant="overline">Weapons and defences</Typography>
-        <div className={styles.grid}>
-          {assetWeaponSpecimens.map((fixture) => (
-            <CardScalesFigure key={fixture.title} name={fixture.title} render={(width) => renderAsset(fixture, width)} />
-          ))}
-          {assetDefenceSpecimens.map((fixture) => (
-            <CardScalesFigure
-              key={fixture.title}
-              name={fixture.title}
-              note="Defence"
-              render={(width) => renderAsset(fixture, width)}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className={styles.group}>
-        <Typography variant="overline">Unique and common technology</Typography>
-        <div className={styles.grid}>
-          {assetUniqueSpecimens.map((fixture) => (
-            <CardScalesFigure key={fixture.title} name={fixture.title} render={(width) => renderAsset(fixture, width)} />
-          ))}
-          {assetCommonTechSpecimens.map((fixture) => (
-            <CardScalesFigure
-              key={fixture.title}
-              name={fixture.title}
-              note="Not in a sector deck"
-              render={(width) => renderAsset(fixture, width)}
+              key={card.catalogueId}
+              name={card.title}
+              note={sectorDeckLabel[card.sectorDeck]}
+              render={(width) => <AssetCard {...card} width={width} />}
             />
           ))}
         </div>

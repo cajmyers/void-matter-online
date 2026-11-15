@@ -1,4 +1,7 @@
 import s1FaceTextureUrl from "../../assets/cards/s1/fronts/s1-texture.webp";
+import s2FaceTextureUrl from "../../assets/cards/s2/fronts/s2-texture.webp";
+import s3FaceTextureUrl from "../../assets/cards/s3/fronts/s3-texture.webp";
+import s4FaceTextureUrl from "../../assets/cards/s4/fronts/s4-texture.webp";
 
 /** Slug for sector asset hero art (`assets/cards/<deck>/fronts/art/<slug>.webp`). */
 export function cardIllustrationSlug(title: string): string {
@@ -13,7 +16,7 @@ export function cardIllustrationSlug(title: string): string {
 /** @deprecated Use {@link cardIllustrationSlug}. */
 export const s1CardSlug = cardIllustrationSlug;
 
-export type SectorArtDeck = "s1" | "s2" | "s3" | "s4" | "common";
+export type SectorArtDeck = "s1" | "s2" | "s3" | "s4";
 
 const illustrationModules = import.meta.glob<string>("../../assets/cards/**/fronts/art/*.{webp,png,jpg,jpeg}", {
   eager: true,
@@ -21,7 +24,7 @@ const illustrationModules = import.meta.glob<string>("../../assets/cards/**/fron
 });
 
 function parseArtPath(path: string): { deck: SectorArtDeck; slug: string } | undefined {
-  const match = path.match(/\/cards\/(s[1-4]|common)\/fronts\/art\/([^/]+)\.(webp|png|jpe?g)$/i);
+  const match = path.match(/\/cards\/(s[1-4])\/fronts\/art\/([^/]+)\.(webp|png|jpe?g)$/i);
   if (!match?.[1] || !match[2]) return undefined;
   return { deck: match[1] as SectorArtDeck, slug: match[2].toLowerCase() };
 }
@@ -57,11 +60,14 @@ export function cardIllustrationArtForDeck(slug: string, deck: SectorArtDeck): s
 /** @deprecated Use {@link cardIllustrationArt}. */
 export const s1CardIllustrationArt = cardIllustrationArt;
 
-const faceTextureByDeck: Partial<Record<SectorArtDeck, string>> = {
+const faceTextureByDeck: Readonly<Record<SectorArtDeck, string>> = {
   s1: s1FaceTextureUrl,
+  s2: s2FaceTextureUrl,
+  s3: s3FaceTextureUrl,
+  s4: s4FaceTextureUrl,
 };
 
 /** Full-card front stock texture (`fronts/<deck>-texture.webp`), when present. */
-export function sectorCardFaceTexture(deck: SectorArtDeck): string | undefined {
+export function sectorCardFaceTexture(deck: SectorArtDeck): string {
   return faceTextureByDeck[deck];
 }

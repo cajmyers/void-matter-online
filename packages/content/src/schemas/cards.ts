@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { resourceCostSchema } from "./primitives";
 
-export const sectorDeckSchema = z.enum(["s1", "s2", "s3", "s4", "common"]);
+export const sectorDeckSchema = z.enum(["s1", "s2", "s3", "s4"]);
 export type SectorDeck = z.infer<typeof sectorDeckSchema>;
 
 export const assetCardKindSchema = z.enum(["weapon", "special", "defence", "module"]);
@@ -38,6 +38,16 @@ export const assetCardSchema = z.object({
   /** Empty when the card has no printed effect beyond stats (e.g. plain weapons). */
   rulesText: z.string(),
   weapon: weaponBlockSchema.optional(),
+  /** Effect area: permanent speed (e.g. Cloaked Slip Drive +1). */
+  speedBonus: z.number().int().optional(),
+  /** Effect area: printed speed when not a fixed bonus (e.g. Impulse Thrusters "+? Speed"). */
+  speedFooterLabel: z.string().min(1).optional(),
+  /** Effect area: empty cargo slots shown on the card (+N cargo capacity). */
+  cargoBonus: z.number().int().positive().optional(),
+  /** Effect area: printed crew slots (+N Crew). */
+  crewSlotsBonus: z.number().int().positive().optional(),
+  /** Effect area: hull capacity (+N Hull). */
+  hullSlotsBonus: z.number().int().positive().optional(),
 });
 export type AssetCard = z.infer<typeof assetCardSchema>;
 

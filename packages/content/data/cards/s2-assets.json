@@ -1,25 +1,18 @@
 [
   {
-    "id": "impulse-thrusters",
-    "title": "Impulse Thrusters",
-    "sectorDeck": "s2",
-    "slotSize": 1,
-    "kind": "module",
-    "illustrationSlug": "impulse-thrusters",
-    "costs": [{ "resource": "h3", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
-  },
-  {
-    "id": "temporal-echo",
-    "title": "Temporal Echo",
+    "id": "cloaked-slip-drive",
+    "title": "Cloaked Slip Drive",
     "sectorDeck": "s2",
     "slotSize": 1,
     "kind": "special",
-    "illustrationSlug": "temporal-echo",
-    "costs": [{ "resource": "h3", "amount": 2 }, { "resource": "qp", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "illustrationSlug": "cloaked-slip-drive",
+    "costs": [
+      { "resource": "h3", "amount": 3 },
+      { "resource": "qp", "amount": 3 }
+    ],
+    "flavorText": "A quiet drive that slips through half-gated routes.",
+    "rulesText": "When you Evade, you may spend 1 QP from the pool to automatically succeed. You may evade through half-connected tiles.",
+    "speedBonus": 1
   },
   {
     "id": "gravitic-anchor",
@@ -28,31 +21,28 @@
     "slotSize": 1,
     "kind": "module",
     "illustrationSlug": "gravitic-anchor",
-    "costs": [{ "resource": "h3", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 3 },
+      { "resource": "h3", "amount": 2 }
+    ],
+    "flavorText": "A mass sink that makes evasion expensive nearby.",
+    "rulesText": "Any ship in the same sector must pay 2 resources from its pool to use the tactical Evade action."
   },
   {
-    "id": "scavenger-drones",
-    "title": "Scavenger Drones",
+    "id": "impulse-thrusters",
+    "title": "Impulse Thrusters",
     "sectorDeck": "s2",
     "slotSize": 1,
     "kind": "module",
-    "illustrationSlug": "scavenger-drones",
-    "costs": [{ "resource": "h3", "amount": 1 }, { "resource": "qp", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
-  },
-  {
-    "id": "stealth-field",
-    "title": "Stealth Field",
-    "sectorDeck": "s2",
-    "slotSize": 1,
-    "kind": "special",
-    "illustrationSlug": "stealth-field",
-    "costs": [{ "resource": "h3", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "illustrationSlug": "impulse-thrusters",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "h3", "amount": 2 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "A burst pack for when the lane opens and you need to be first.",
+    "speedFooterLabel": "+? Speed",
+    "rulesText": "On your action turn, spend 1 H3 from the pool to add +1 speed until Maintenance begins. Once per round."
   },
   {
     "id": "magnetic-grapple",
@@ -61,41 +51,114 @@
     "slotSize": 1,
     "kind": "module",
     "illustrationSlug": "magnetic-grapple",
-    "costs": [{ "resource": "h3", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 }
+    ],
+    "flavorText": "Magnetic tethers that snag fleeing drives.",
+    "rulesText": "When an enemy attempts Evade or Retreat in this hex, roll a die. On 5+, cancel the whole attempt."
   },
   {
-    "id": "security-credentials",
-    "title": "Security Credentials",
+    "id": "nano-repair-bots",
+    "title": "Nano Repair Bots",
     "sectorDeck": "s2",
     "slotSize": 0.5,
     "kind": "module",
-    "illustrationSlug": "security-credentials",
-    "costs": [{ "resource": "h3", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
-  },
-  {
-    "id": "cloaked-slip-drive",
-    "title": "Cloaked Slip Drive",
-    "sectorDeck": "s2",
-    "slotSize": 2,
-    "kind": "special",
-    "illustrationSlug": "cloaked-slip-drive",
-    "costs": [{ "resource": "h3", "amount": 3 }, { "resource": "qp", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "illustrationSlug": "nano-repair-bots",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Swarms of miniture mechanics that stitch hull breaches and repair damage.",
+    "rulesText": "At the start of Maintenance, before enemy combat, remove 1 damage cube from this ship (stacks with other repair effects)."
   },
   {
     "id": "nested-overdrive",
     "title": "Nested Overdrive",
     "sectorDeck": "s2",
-    "slotSize": 1,
+    "slotSize": 2,
     "kind": "special",
     "illustrationSlug": "nested-overdrive",
-    "costs": [{ "resource": "h3", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "h3", "amount": 3 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Stacked drives wound tight for reckless straight-line speed.",
+    "rulesText": "",
+    "speedBonus": 3
+  },
+  {
+    "id": "self-destruct-protocol",
+    "title": "Self-destruct Protocol",
+    "sectorDeck": "s2",
+    "slotSize": 0.5,
+    "kind": "special",
+    "illustrationSlug": "self-destruct-protocol",
+    "costs": [
+      { "resource": "tc", "amount": 3 },
+      { "resource": "pc", "amount": 1 }
+    ],
+    "flavorText": "A last-resort charge wired to take the hex with you.",
+    "rulesText": "When this ship is destroyed, roll 4 combat dice at 4+ against each opposing ship in this hex. Chain reactions apply. Defences do not apply. No Spoils of War."
+  },
+  {
+    "id": "stealth-field",
+    "title": "Stealth Field",
+    "sectorDeck": "s2",
+    "slotSize": 1,
+    "kind": "special",
+    "illustrationSlug": "stealth-field",
+    "costs": [
+      { "resource": "pc", "amount": 3 },
+      { "resource": "qp", "amount": 4 }
+    ],
+    "flavorText": "A shroud that keeps rivals guessing until you choose to be seen.",
+    "rulesText": "Rivals cannot start combat against this ship unless they exhaust an Interact token to locate it for that combat."
+  },
+  {
+    "id": "subspace-relay",
+    "title": "Subspace Relay",
+    "sectorDeck": "s2",
+    "slotSize": 1,
+    "kind": "special",
+    "illustrationSlug": "subspace-relay",
+    "costs": [
+      { "resource": "qp", "amount": 2 },
+      { "resource": "h3", "amount": 2 }
+    ],
+    "flavorText": "A fleet-sideband that lets one sister ship trade on your market ping.",
+    "rulesText": "Once per global round, when this ship uses a Trade action, one other ship in your fleet may also use a Trade action. The bonus trade does not spend a Trade token, but that ship must still be at a valid trade location. Only one other ship per trigger."
+  },
+  {
+    "id": "warp-drive-mk-i",
+    "title": "Warp Drive Mk I",
+    "sectorDeck": "s2",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "warp-drive-mk-i",
+    "costs": [
+      { "resource": "tc", "amount": 1 },
+      { "resource": "h3", "amount": 2 },
+      { "resource": "pc", "amount": 1 }
+    ],
+    "flavorText": "A reliable jump drive that keeps your ship ahead in the initiative queue.",
+    "rulesText": "",
+    "speedBonus": 1
+  },
+  {
+    "id": "temporal-echo",
+    "title": "Temporal Echo",
+    "sectorDeck": "s2",
+    "slotSize": 0.5,
+    "kind": "special",
+    "illustrationSlug": "temporal-echo",
+    "costs": [
+      { "resource": "pc", "amount": 2 },
+      { "resource": "tc", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "A temporal buffer that lets you revisit a dice roll you already committed to.",
+    "rulesText": "Once per round, after you roll dice for an action, you may reroll all of those dice once."
   }
 ]

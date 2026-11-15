@@ -1,6 +1,6 @@
 # Combat system reference (Void Matter)
 
-> **STALE IN MANY PLACES. Do not implement from this file without checking `design-decisions.md` section by section.** Beyond the differences listed below, these items in this document are **wrong for this project**: the starting Corvette's speed is **2** (not 1); Drone Hangar costs **1 TC from the pool** and only works when the owner starts combat; Spoils of War is **once per round per damaged ship**, never per hit; Underworld Extortion is paid by the **killer from the pool**; Magnetic Shields, Inertial Dampener and Pulse Defense Grid are **-1 to the hit roll**; Energy Shields cap **per weapon**; Thermal Sinks and Decoy Launcher spend **pool** resources (not cargo); Cloaked Slip Drive does **not** apply to Retreat; the Repulsor Grid is a **defender-chosen reroll of any 2 dice**; Pneumatic Ram-Loader damages **once per attack action**; the win condition is **the third VM taken, immediately**, and enemy kills give rewards **directly to the killer**.
+> **STALE IN MANY PLACES. Do not implement from this file without checking `design-decisions.md` section by section.** Beyond the differences listed below, these items in this document are **wrong for this project**: the starting Corvette's speed is **2** (not 1); Drone Hangar costs **1 TC from the pool** and only works when the owner starts combat; Spoils of War is **once per round per damaged ship**, never per hit; Underworld Extortion is paid by the **killer from the pool**; Magnetic Shields, Inertial Dampener and Pulse Defense Grid are **-1 to the hit roll**; Energy Shields cap **per weapon**; Thermal Sinks and Decoy Launcher spend **pool** resources (not cargo); Cloaked Slip Drive does **not** apply to Retreat; the Repulsor Grid is a **defender-chosen reroll of any 2 dice**; Ram-Loader damages **once per attack action**; the win condition is **the third VM taken, immediately**, and enemy kills give rewards **directly to the killer**.
 >
 > **Read `design-decisions.md` sections 3, 7 and 15 first.** Section 15 (rulings from the second review) overrides this file and the earlier sections wherever they differ. Overrides that matter most for combat, each with its ruling ID:
 > - **Terms (`TRM-1`):** globalRound, combatRound, turn. "Round" in this file means combatRound when it describes combat and globalRound otherwise.
@@ -54,7 +54,7 @@ Optional `hitWeight` (default 1): successful dice → `damageHits = hits × hitW
 - Crew **accuracy** (per-crew, listed on roll).
 - **Drone Hangar**: spend **1 cargo** → +1 to hit for that combatant’s attack round (once per firing action).
 - **Mass Targeting Array** / **Energy Focusing Lens** / **Target Guidance Suite**: +1 to hit for matching weapon category.
-- **Pneumatic Ram-Loader** (mass only): +1 die and +1 to hit for mass weapons; each natural **1** on the salvo’s dice inflicts **1 self-damage** on the attacker (hull/component rules).
+- **Ram-Loader** (mass only): +1 die and +1 to hit for mass weapons; each natural **1** on the salvo’s dice inflicts **1 self-damage** on the attacker (hull/component rules).
 - **Prismatic Absorber** (defender ship ability): non-energy attackers get **+1 to hit** vs Prism Prime.
 
 Pre-roll **dice count** changes: Reactive Plating (−dice vs mass), Ablative Sinks (spend 1 cargo, −2 dice vs energy).

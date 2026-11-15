@@ -13,16 +13,14 @@ describe("sector asset catalogues", () => {
     }
   });
   it("loads one row per illustrated card in s2–s4", () => {
-    expect(s2AssetCards).toHaveLength(9);
-    expect(s3AssetCards).toHaveLength(9);
-    expect(s4AssetCards).toHaveLength(12);
+    expect(s2AssetCards).toHaveLength(11);
+    expect(s3AssetCards).toHaveLength(11);
+    expect(s4AssetCards).toHaveLength(11);
   });
 
   it("keeps illustrationSlug aligned with id (s2–s4)", () => {
     for (const card of [...s2AssetCards, ...s3AssetCards, ...s4AssetCards]) {
-      if (card.id !== "habitation-block-alt") {
-        expect(card.illustrationSlug).toBe(card.id);
-      }
+      expect(card.illustrationSlug).toBe(card.id);
     }
   });
 });

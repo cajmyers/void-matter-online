@@ -8,6 +8,7 @@ import s4AssetsJson from "../data/cards/s4-assets.json";
 import ironSyndicateJson from "../data/enemies/iron-syndicate.json";
 import playerShipsJson from "../data/ships/player-ships.json";
 import ensignsJson from "../data/crew/ensigns.json";
+import sectorMarketsJson from "../data/decks/sector-markets.json";
 import firstPlayableJson from "../data/slices/first-playable.json";
 import { z } from "zod";
 import { contentManifestSchema } from "./schemas/manifest";
@@ -19,6 +20,7 @@ import {
 } from "./schemas/cards";
 import { ensignCrewSchema, type EnsignCrew } from "./schemas/crew";
 import { enemyShipSchema, type EnemyShip } from "./schemas/enemies";
+import { fullGameSectorMarketsSchema, type FullGameSectorMarkets } from "./schemas/decks";
 import { firstPlayableSliceSchema, type FirstPlayableSlice } from "./schemas/slices";
 import { playerShipSchema, type PlayerShip } from "./schemas/ships";
 import { anomalyTileSchema, type AnomalyTile } from "./schemas/tiles";
@@ -65,6 +67,7 @@ export const ironSyndicateEnemies: readonly EnemyShip[] = parseArray(enemyShipSc
 export const playerShips: readonly PlayerShip[] = parseArray(playerShipSchema, playerShipsJson, "player-ships");
 export const ensignCrew: readonly EnsignCrew[] = parseArray(ensignCrewSchema, ensignsJson, "ensigns");
 export const firstPlayableSlice: FirstPlayableSlice = firstPlayableSliceSchema.parse(firstPlayableJson);
+export const fullGameSectorMarkets: FullGameSectorMarkets = fullGameSectorMarketsSchema.parse(sectorMarketsJson);
 
 assertUniqueIds(anomalies, "anomalies");
 assertUniqueIds(planets, "planets");

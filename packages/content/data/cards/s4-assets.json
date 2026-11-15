@@ -6,9 +6,13 @@
     "slotSize": 0.5,
     "kind": "defence",
     "illustrationSlug": "nano-bonding",
-    "costs": [{ "resource": "tc", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 4 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Filament paste that welds micro-plates into the skin of the hull.",
+    "rulesText": "",
+    "hullSlotsBonus": 1
   },
   {
     "id": "magnetic-shields",
@@ -17,9 +21,13 @@
     "slotSize": 1,
     "kind": "defence",
     "illustrationSlug": "magnetic-shields",
-    "costs": [{ "resource": "tc", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 1 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Flux curtains that tug incoming energy bolts off their trajectories.",
+    "rulesText": "−1 to all rolls by energy weapon attacks against this ship."
   },
   {
     "id": "energy-shields",
@@ -28,20 +36,27 @@
     "slotSize": 1,
     "kind": "defence",
     "illustrationSlug": "energy-shields",
-    "costs": [{ "resource": "tc", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "pc", "amount": 2 },
+      { "resource": "h3", "amount": 1 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Capacitor lattice that catches and grounds overload from beam fire.",
+    "rulesText": "Each energy weapon that hits this ship scores at most 1 hit."
   },
   {
     "id": "thermal-sinks",
     "title": "Thermal Sinks",
     "sectorDeck": "s4",
-    "slotSize": 0.5,
+    "slotSize": 1,
     "kind": "defence",
     "illustrationSlug": "thermal-sinks",
-    "costs": [{ "resource": "tc", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "h3", "amount": 2 }
+    ],
+    "flavorText": "Ablative panels you burn away to swallow a beamer's focus.",
+    "rulesText": "Before attack dice are rolled, spend 1 H3 from the pool: remove up to 2 dice from this attack (you may reduce a weapon to 0 dice)."
   },
   {
     "id": "inertial-dampener",
@@ -50,9 +65,13 @@
     "slotSize": 0.5,
     "kind": "defence",
     "illustrationSlug": "inertial-dampener",
-    "costs": [{ "resource": "tc", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "h3", "amount": 2 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Gravity compensators that bleed momentum out of incoming slugs.",
+    "rulesText": "−1 to all rolls by mass accelerator attacks against this ship."
   },
   {
     "id": "reactive-plating",
@@ -61,31 +80,43 @@
     "slotSize": 1,
     "kind": "defence",
     "illustrationSlug": "reactive-plating",
-    "costs": [{ "resource": "tc", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "h3", "amount": 1 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Explosive tiles that vent before kinetic rounds punch through.",
+    "rulesText": "Reduce all mass accelerator attack dice by 1 against this ship."
   },
   {
     "id": "pulse-defense-grid",
     "title": "Pulse Defense Grid",
     "sectorDeck": "s4",
-    "slotSize": 1,
+    "slotSize": 0.5,
     "kind": "defence",
     "illustrationSlug": "pulse-defense-grid",
-    "costs": [{ "resource": "tc", "amount": 2 }, { "resource": "pc", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 1 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Point-defense nets timed to spoil missile and drone solutions.",
+    "rulesText": "−1 to all rolls by missile and drone attacks against this ship."
   },
   {
     "id": "decoy-launcher",
     "title": "Decoy Launcher",
     "sectorDeck": "s4",
     "slotSize": 1,
-    "kind": "module",
+    "kind": "defence",
     "illustrationSlug": "decoy-launcher",
-    "costs": [{ "resource": "tc", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "h3", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Spooled flares that rewrite what the seeker thinks is the ship.",
+    "rulesText": "After the attacker rolls, before damage: spend 1 TC from the pool to negate a missile or drone attack against this ship."
   },
   {
     "id": "diamond-hull",
@@ -94,31 +125,25 @@
     "slotSize": 2,
     "kind": "defence",
     "illustrationSlug": "diamond-hull",
-    "costs": [{ "resource": "tc", "amount": 3 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [{ "resource": "tc", "amount": 5 }],
+    "flavorText": "Full refit in fractal carbon laminate—space you will not get back.",
+    "rulesText": "",
+    "hullSlotsBonus": 3
   },
   {
-    "id": "nano-repair-bots",
-    "title": "Nano Repair Bots",
+    "id": "hull-plating",
+    "title": "Hull Plating",
     "sectorDeck": "s4",
     "slotSize": 1,
-    "kind": "module",
-    "illustrationSlug": "nano-repair-bots",
-    "costs": [{ "resource": "tc", "amount": 2 }, { "resource": "qp", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
-  },
-  {
-    "id": "self-destruct-protocol",
-    "title": "Self-destruct Protocol",
-    "sectorDeck": "s4",
-    "slotSize": 0.5,
-    "kind": "special",
-    "illustrationSlug": "self-destruct-protocol",
-    "costs": [{ "resource": "tc", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "kind": "defence",
+    "illustrationSlug": "hull-plating",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 1 }
+    ],
+    "flavorText": "Bolt-on plating packs that soak up the next lucky hit.",
+    "rulesText": "",
+    "hullSlotsBonus": 1
   },
   {
     "id": "mag-repulsor-grid",
@@ -127,8 +152,13 @@
     "slotSize": 1,
     "kind": "defence",
     "illustrationSlug": "mag-repulsor-grid",
-    "costs": [{ "resource": "tc", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 1 },
+      { "resource": "h3", "amount": 1 },
+      { "resource": "pc", "amount": 1 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Repulsor nodes that catch a salvo mid-flight and throw it back.",
+    "rulesText": "When attacked by a mass accelerator weapon, choose any 2 attack dice after the roll; the attacker rerolls them. Once per attacking weapon."
   }
 ]

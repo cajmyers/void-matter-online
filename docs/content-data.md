@@ -4,82 +4,102 @@ Status: **draft**. This file fills the content gaps found in the second review (
 
 How to use: the game data files live in **`packages/content/data/*.json`** (validated by Zod). Keep this markdown in sync when slice totals or deck sizes change. When a number changes here, change it in the JSON in the same commit.
 
-Hero illustrations live under **`apps/web/src/assets/cards/{s1|s2|s3|s4|common}/fronts/art/`** (one folder per market in section 1, plus `common/` for always-available tech). Slug rules: `assetCardArt.ts` in the web app.
+Hero illustrations live under **`apps/web/src/assets/cards/{s1|s2|s3|s4}/fronts/art/`** (one folder per market in section 1). Slug rules: `assetCardArt.ts` in the web app.
 
 ## 1. Sector decks (asset market assignment)
 
-Four asset decks, one per sector and market (`MAP-4`, `DCK-3`): **S1 = Weapons / Offensive (PC), S2 = Propulsion / Utility (H3), S3 = Cargo / Life Support (QP), S4 = Hull / Defensive (TC).** The tile discovery bonus resources map to these (PC to S1, H3 to S2, QP to S3, TC to S4).
+Four asset decks, one per sector and market (`MAP-4`, `DCK-3`): **S1 = Weapons / Offensive (PC), S2 = Propulsion / Utility (H3), S3 = Cargo / Life Support (QP), S4 = Hull / Defensive (TC).** The tile discovery bonus resources map to these (PC to S1, H3 to S2, QP to S3, TC to S4). **Every upgrade card belongs to exactly one of these decks** (no separate common list).
 
-Totals of this proposal: **76 cards across 53 card types.**
+Totals of this proposal: **81 physical market cards** shuffled across S1–S4 below (**57 card types** in sector catalogues).
 
-### S1 Weapons / Offensive (29 cards, 23 types)
+### S1 Weapons / Offensive (30 cards, 24 types)
+
+The S1 market deck is **every type** in `s1-assets.json` (24 types). Six staples have **2 copies**; all other types have **1 copy** (30 cards total).
 
 | Card | Copies | Kind |
 |---|---|---|
-| Minigun | 2 | uncommon |
-| Side-Mounted Laser | 2 | uncommon |
-| Pneumatic Ram-Loader | 2 | uncommon |
-| Mass Targeting Array | 2 | uncommon |
-| Energy Focus Lens | 2 | uncommon |
-| AI Guidance Suite | 2 | uncommon |
-| Drone Hangar | 1 | unique |
-| Void-Core Overdrive | 1 | unique |
-| AI-Targeting Turrets | 1 | unique |
+| Minigun | 2 | weapon |
+| Side-Mounted Laser | 2 | weapon |
+| Mass Targeting Array | 2 | special |
+| Energy Focus Lens | 2 | special |
+| AI Guidance Suite | 2 | special |
+| Laser Cannon | 2 | weapon |
+| Ram-Loader | 1 | special |
+| Drone Hangar | 1 | special |
+| Void-Core Overdrive | 1 | special |
+| AI-Targeting Turrets | 1 | special |
 | Heavy Plasma Cannon | 1 | weapon |
 | Disrupter Lance | 1 | weapon |
 | Thermal Pyre | 1 | weapon |
 | Beam Projector | 1 | weapon |
-| Gauss | 1 | weapon |
+| Gauss Accelerator | 1 | weapon |
 | Railgun | 1 | weapon |
-| Apocalypse | 1 | weapon |
+| The Apocalypse | 1 | weapon |
 | Compressor | 1 | weapon |
-| Flak | 1 | weapon |
-| Swarm Micro-Missile Pod | 1 | weapon |
+| Flak Scattergun | 1 | weapon |
+| Micro-Missile Array | 1 | weapon |
 | Torpedo Bay | 1 | weapon |
 | Concussion | 1 | weapon |
 | Nanite Swarm | 1 | weapon |
 | Interceptor Rig | 1 | weapon |
 
-### S2 Propulsion / Utility (9 cards, 9 types)
+Catalogue JSON holds **one row per type**; copy counts above are shuffled in `packages/content/data/decks/sector-markets.json` (`DCK-3`).
 
-Impulse Thrusters, Temporal Echo, Gravitic Anchor, Scavenger Drones, Stealth Field, Magnetic Grapple, Security Credentials, Cloaked Slip Drive, Nested Overdrive: **1 copy each.** This deck is thin (see section 6).
-
-### S3 Cargo / Life Support (16 cards, 9 types)
+### S2 Propulsion / Utility (15 cards, 11 types)
 
 | Card | Copies |
 |---|---|
-| Compact Storage | 4 |
-| Expanded Cargo Bay | 4 |
-| Bulk Storage | 2 |
+| Warp Drive Mk I | 5 |
+| Impulse Thrusters | 1 |
+| Temporal Echo | 1 |
+| Gravitic Anchor | 1 |
+| Stealth Field | 1 |
+| Magnetic Grapple | 1 |
+| Cloaked Slip Drive | 1 |
+| Nested Overdrive | 1 |
+| Nano Repair Bots | 1 |
 | Subspace Relay | 1 |
-| Data Siphon | 1 |
+| Self-destruct Protocol | 1 |
+
+Catalogue JSON (`s2-assets.json`) holds **one row per type**; copy counts live in `data/decks/sector-markets.json`.
+
+### S3 Cargo / Life Support (18 cards, 11 types)
+
+The S3 market deck is **every type** below (11 types).
+
+| Card | Copies |
+|---|---|
+| Compact Storage | 3 |
+| Expanded Cargo Bay | 2 |
+| Bulk Storage | 2 |
+| Cargo Containers | 2 |
+| Crew Quarters | 3 |
 | Luxury Quarters | 1 |
+| Security Credentials | 1 |
 | Habitation Block | 1 |
 | Smuggler's Hold | 1 |
-| Mercenary Uplink | 1 |
+| Data Siphon | 1 |
+| Scavenger Drones | 1 |
 
-### S4 Hull / Defensive (22 cards, 12 types)
+Catalogue JSON holds **one row per type**; copy counts live in `data/decks/sector-markets.json`.
+
+### S4 Hull / Defensive (18 cards, 11 types)
 
 | Card | Copies |
 |---|---|
 | Nano Bonding | 4 |
 | Magnetic Shields | 2 |
-| Energy Shields | 2 |
-| Thermal Sinks | 2 |
+| Energy Shields | 1 |
+| Thermal Sinks | 1 |
 | Inertial Dampener | 2 |
-| Reactive Plating | 2 |
+| Reactive Plating | 1 |
 | Pulse Defense Grid | 2 |
-| Decoy Launcher | 2 |
+| Decoy Launcher | 1 |
+| Hull Plating | 2 |
 | Diamond Hull | 1 |
-| Nano Repair Bots | 1 |
-| Self-destruct Protocol | 1 |
 | Magnetic Repulsor Grid | 1 |
 
-### Common technologies (not in any deck)
-
-Always available at an upgrade for their printed cost (V5): **Hull Plating, Warp Drive Mk I, Laser Cannon, Cargo Containers, Crew Quarters.** Each takes 1 slot (`SLT-1`).
-
-Slot sizes of the other cards (half-slot items and so on) come from the V5 component tables; capacity is counted in halves (`SLT-1`).
+Slot sizes of the other cards (half-slot items and so on) come from the V5 component tables; capacity is counted in halves (`SLT-1`). Copy counts live in `data/decks/sector-markets.json`.
 
 ## 2. First content slice
 
@@ -87,16 +107,17 @@ Purpose: a small, fully playable game to prove the engine, the bot and the simul
 
 | Area | Contents |
 |---|---|
-| Common technologies | all five |
-| S1 deck | Minigun, Side-Mounted Laser, Mass Targeting Array, Energy Focus Lens (2 copies each), Heavy Plasma Cannon, Disrupter Lance (1 each) = 10 cards |
+| S1 deck | Full S1 market deck (§1): **30 cards**, **24 types** (six types × 2, remainder × 1) |
 | S2 deck | Impulse Thrusters, Nested Overdrive (1 each) = 2 cards |
-| S3 deck | Compact Storage, Expanded Cargo Bay (4 copies each) = 8 cards |
-| S4 deck | Nano Bonding (4), Magnetic Shields, Energy Shields, Thermal Sinks, Reactive Plating (2 each) = 12 cards |
+| S3 deck | Compact Storage ×3, Expanded Cargo Bay ×2 = 5 cards (`first-playable.json` `sectorMarketComposition.s3`) |
+| S4 deck | Nano Bonding (4), Magnetic Shields (2), Energy Shields, Thermal Sinks, Reactive Plating (1 each) = 9 cards |
 | Enemies | **Iron Syndicate only** (Skiff, Enforcer, Goliath), see section 3 |
 | Anomaly tiles | all **22** are loaded under their normal rules (`TIL-2` reinstated tile 4). **Tile 20 (Personnel Transporter) does nothing without crew**, so it is inert in the slice. *(Check the other tiles for dependencies on unloaded content when the data files are written.)* |
 | Crew | the four plain Ensigns (Pilot, Merchant, Tactical, Scout), section 2a. The Recruit action is enabled. Other Ensigns and all Commanders are not loaded (costs pending). |
 | Missions | the 27-card filtered deck, section 4 |
 | Bots | the bot design in `design-decisions.md` section 11 (a Monte Carlo strength check against the real engine) |
+
+*Former V5 “always available at upgrade” staples (**Hull Plating, Warp Drive Mk I, Laser Cannon, Cargo Containers, Crew Quarters**) are now normal rows in S4, S2, S1, and S3 respectively; they are not loaded in this slice unless added here.*
 
 ### 2a. Crew in the slice (`ACT-1`)
 
@@ -109,13 +130,13 @@ Each crew member brings one action token, usable only on its own ship. Costs are
 | Tactical | 3 PC | Tactical |
 | Scout | 1 PC + 2 QP | Interact |
 
-Crew deck size is **not specified**; placeholder: **4 copies of each (16 cards)**, with 4 face-up in the crew market (recruitment refills to 4, `DCK-2` reshuffles an empty deck). Crew capacity comes from the ship (the Corvette has 1 slot) and Crew Quarters, so Crew Quarters (a common technology) matters more in this slice.
+Crew deck size is **not specified**; placeholder: **4 copies of each (16 cards)**, with 4 face-up in the crew market (recruitment refills to 4, `DCK-2` reshuffles an empty deck). Crew capacity comes from the ship (the Corvette has 1 slot) and **Crew Quarters** (S3 deck).
 
 The slice market decks have fewer cards than the full game, so S2 holds only 2 cards; reshuffle (`DCK-2`) keeps the market full.
 
 ## 3. Enemy decks (placeholders, tunable by simulation)
 
-V5 gives the per-faction deck rule but the engine needs concrete numbers. These are **placeholders**.
+V5 gives the per-action deck rule but the engine needs concrete numbers. These are **placeholders**.
 
 ### Full game, per faction
 
@@ -149,8 +170,8 @@ The bot's mission nudge groups (design-decisions section 11) become **Build/stat
 
 ## 5. Verification checklist for the data files
 
-- Deck totals: S1 29, S2 9, S3 16, S4 22 (full game); 10, 2, 8, 12 (slice).
-- Every card name appears in exactly one sector deck or in the common list.
+- Deck totals: S1 30, S2 15, S3 18, S4 18 (full game, `decks/sector-markets.json`); 30, 2, 5, 9 (slice, `first-playable.json`).
+- Every card name appears in exactly one sector deck (S1–S4).
 - Slice enemy deck sizes: 6 and 5.
 - Mission slice size: 27, types 24.
 - Crew slice: 4 types, 16 cards (placeholder counts).
@@ -158,7 +179,7 @@ The bot's mission nudge groups (design-decisions section 11) become **Build/stat
 
 ## 6. Known weaknesses of this proposal
 
-- **S2 is thin**: 9 cards, all single copies. In a 4-seat game, rewards from H3-bonus tiles and deck-draw buys would exhaust it quickly, which `DCK-2` turns into a reshuffle loop. Consider duplicating a few S2 cards.
+- **S2 variety vs volume**: most S2 types are single copies; **Warp Drive Mk I ×5** bulk is intentional. Other H3 rewards may still thin the deck quickly in a 4-seat game (`DCK-2` reshuffle).
 - **S1 is large and S2 is small**, so PC-bonus tiles pay out far more variety than H3-bonus tiles. The price of the 3-resource deck draw is the same for all four markets.
-- **Common technologies at 1 slot each** on a 4-slot Corvette leave little room for rewards and purchases, which is intended pressure but unverified.
+- **Starter staples at 1 slot each** on a 4-slot Corvette leave little room for rewards and purchases, which is intended pressure but unverified.
 - **Enemy deck sizes are guesses.** Run the economy simulation (`technical-proposal.md` section 11) before building combat and tune these counts.

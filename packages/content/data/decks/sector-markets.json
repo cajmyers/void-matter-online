@@ -1,0 +1,83 @@
+{
+  "id": "full-game",
+  "label": "Full game sector market decks (`content-data.md` §1, `DCK-3`)",
+  "decks": {
+    "s1": {
+      "deckSize": 30,
+      "cards": [
+        { "cardId": "minigun", "copies": 2 },
+        { "cardId": "side-mounted-laser", "copies": 2 },
+        { "cardId": "mass-targeting-array", "copies": 2 },
+        { "cardId": "energy-focus-lens", "copies": 2 },
+        { "cardId": "ai-guidance-suite", "copies": 2 },
+        { "cardId": "laser-cannon", "copies": 2 },
+        { "cardId": "pneumatic-ram-loader", "copies": 1 },
+        { "cardId": "drone-hangar", "copies": 1 },
+        { "cardId": "void-core-overdrive", "copies": 1 },
+        { "cardId": "ai-targeting-turrets", "copies": 1 },
+        { "cardId": "heavy-plasma-cannon", "copies": 1 },
+        { "cardId": "disrupter-lance", "copies": 1 },
+        { "cardId": "thermal-pyre", "copies": 1 },
+        { "cardId": "beam-projector", "copies": 1 },
+        { "cardId": "gauss-accelerator", "copies": 1 },
+        { "cardId": "rapid-fire-railgun", "copies": 1 },
+        { "cardId": "apocalypse", "copies": 1 },
+        { "cardId": "compressor-gun", "copies": 1 },
+        { "cardId": "flak-burst-scattergun", "copies": 1 },
+        { "cardId": "micro-missile", "copies": 1 },
+        { "cardId": "torpedo-battery", "copies": 1 },
+        { "cardId": "concussion-missiles", "copies": 1 },
+        { "cardId": "nanite-swarm-drones", "copies": 1 },
+        { "cardId": "interceptor-drone-rig", "copies": 1 }
+      ]
+    },
+    "s2": {
+      "deckSize": 15,
+      "cards": [
+        { "cardId": "warp-drive-mk-i", "copies": 5 },
+        { "cardId": "impulse-thrusters", "copies": 1 },
+        { "cardId": "temporal-echo", "copies": 1 },
+        { "cardId": "gravitic-anchor", "copies": 1 },
+        { "cardId": "stealth-field", "copies": 1 },
+        { "cardId": "magnetic-grapple", "copies": 1 },
+        { "cardId": "cloaked-slip-drive", "copies": 1 },
+        { "cardId": "nested-overdrive", "copies": 1 },
+        { "cardId": "nano-repair-bots", "copies": 1 },
+        { "cardId": "subspace-relay", "copies": 1 },
+        { "cardId": "self-destruct-protocol", "copies": 1 }
+      ]
+    },
+    "s3": {
+      "deckSize": 18,
+      "cards": [
+        { "cardId": "compact-storage", "copies": 3 },
+        { "cardId": "expanded-cargo-bay", "copies": 2 },
+        { "cardId": "bulk-storage", "copies": 2 },
+        { "cardId": "cargo-container", "copies": 2 },
+        { "cardId": "crew-quarters", "copies": 3 },
+        { "cardId": "luxury-quarters", "copies": 1 },
+        { "cardId": "security-credentials", "copies": 1 },
+        { "cardId": "habitation-block", "copies": 1 },
+        { "cardId": "smugglers-hold", "copies": 1 },
+        { "cardId": "data-siphon", "copies": 1 },
+        { "cardId": "scavenger-drones", "copies": 1 }
+      ]
+    },
+    "s4": {
+      "deckSize": 18,
+      "cards": [
+        { "cardId": "nano-bonding", "copies": 4 },
+        { "cardId": "magnetic-shields", "copies": 2 },
+        { "cardId": "energy-shields", "copies": 1 },
+        { "cardId": "thermal-sinks", "copies": 1 },
+        { "cardId": "inertial-dampener", "copies": 2 },
+        { "cardId": "reactive-plating", "copies": 1 },
+        { "cardId": "pulse-defense-grid", "copies": 2 },
+        { "cardId": "decoy-launcher", "copies": 1 },
+        { "cardId": "hull-plating", "copies": 2 },
+        { "cardId": "diamond-hull", "copies": 1 },
+        { "cardId": "mag-repulsor-grid", "copies": 1 }
+      ]
+    }
+  }
+}

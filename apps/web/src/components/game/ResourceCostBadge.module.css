@@ -34,3 +34,12 @@
     0 0 4px rgb(0 0 0 / 0.95),
     0 1px 2px rgb(0 0 0 / 0.85);
 }
+
+/* PC art sits high; nudge the cost numeral into the open band. */
+.amountPc {
+  transform: translateY(12%);
+}
+
+.amountPcDetail {
+  transform: translateY(10%);
+}

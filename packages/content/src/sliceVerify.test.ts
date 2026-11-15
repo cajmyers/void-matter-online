@@ -4,10 +4,10 @@ import { ensignCrew, firstPlayableSlice, ironSyndicateEnemies, s1AssetCards } fr
 /** `content-data.md` §5 and slice tables. */
 describe("first-playable slice verification", () => {
   it("matches proposed slice market deck sizes", () => {
-    expect(firstPlayableSlice.sectorMarkets.s1.deckSize).toBe(10);
+    expect(firstPlayableSlice.sectorMarkets.s1.deckSize).toBe(30);
     expect(firstPlayableSlice.sectorMarkets.s2.deckSize).toBe(2);
-    expect(firstPlayableSlice.sectorMarkets.s3.deckSize).toBe(8);
-    expect(firstPlayableSlice.sectorMarkets.s4.deckSize).toBe(12);
+    expect(firstPlayableSlice.sectorMarkets.s3.deckSize).toBe(5);
+    expect(firstPlayableSlice.sectorMarkets.s4.deckSize).toBe(9);
   });
 
   it("matches Iron Syndicate enemy deck placeholders", () => {

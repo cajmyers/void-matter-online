@@ -7,6 +7,9 @@ const StylePage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/StylePage/Styl
 const GalleryPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/GalleryPage/GalleryPage")) : null;
 const TilesPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/TilesPage/TilesPage")) : null;
 const S1CardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/S1CardsPage/S1CardsPage")) : null;
+const S2CardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/S2CardsPage/S2CardsPage")) : null;
+const S3CardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/S3CardsPage/S3CardsPage")) : null;
+const S4CardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/S4CardsPage/S4CardsPage")) : null;
 
 function pageFor(path: string): ReactNode {
   if (path === "/") {
@@ -23,6 +26,9 @@ function pageFor(path: string): ReactNode {
     if (path === "/dev/gallery" && GalleryPage) return <GalleryPage />;
     if (path === "/dev/tiles" && TilesPage) return <TilesPage />;
     if (path === "/dev/s1-cards" && S1CardsPage) return <S1CardsPage />;
+    if (path === "/dev/s2-cards" && S2CardsPage) return <S2CardsPage />;
+    if (path === "/dev/s3-cards" && S3CardsPage) return <S3CardsPage />;
+    if (path === "/dev/s4-cards" && S4CardsPage) return <S4CardsPage />;
     if (path === "/dev/lab") {
       return (
         <ComingSoonPage

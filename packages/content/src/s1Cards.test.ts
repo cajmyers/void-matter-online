@@ -4,7 +4,7 @@ import { s1AssetCards } from "./loadContent";
 /** Names in `content-data.md` §1 S1 table (23 types). */
 describe("s1-assets catalogue", () => {
   it("lists every S1 card type", () => {
-    expect(s1AssetCards).toHaveLength(23);
+    expect(s1AssetCards).toHaveLength(24);
     expect(s1AssetCards.every((card) => card.sectorDeck === "s1")).toBe(true);
   });
 

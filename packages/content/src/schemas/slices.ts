@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { sliceSectorMarketCompositionSchema } from "./decks";
 import { resourceIdSchema } from "./primitives";
 
 const sectorMarketSchema = z.object({
@@ -29,6 +30,8 @@ export const firstPlayableSliceSchema = z.object({
   includedCardIds: z.object({
     s1: z.array(z.string().min(1)),
   }),
+  /** Slice market rows; sectors omitted use the full `sector-markets.json` deck (`content-data.md` §2). */
+  sectorMarketComposition: sliceSectorMarketCompositionSchema,
   includedCrewIds: z.array(z.string().min(1)),
   includedEnemyIds: z.array(z.string().min(1)),
   includedPlayerShipIds: z.array(z.string().min(1)),

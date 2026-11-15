@@ -20,6 +20,7 @@
     inset 0 0 12px color-mix(in srgb, var(--asset-rim) 18%, transparent);
 }
 
+/* Title area */
 .header {
   display: flex;
   flex-direction: column;
@@ -82,15 +83,16 @@
   z-index: 3;
 }
 
+/* Image area */
 .artPlate {
   position: relative;
   flex: 1 1 auto;
   min-height: var(--art-plate-height);
-  margin: 0 6px;
-  padding: 4px;
-  border-radius: var(--shape-border-radius-sm);
+  margin-inline: 0;
+  padding: 0;
+  border-radius: 0;
   background: var(--game-space-deep);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--asset-rim) 30%, transparent);
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -98,7 +100,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
+  border-radius: 0;
   background: radial-gradient(ellipse at 50% 20%, color-mix(in srgb, var(--asset-rim) 25%, transparent), transparent 65%);
   pointer-events: none;
 }
@@ -110,7 +112,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  border-radius: calc(var(--shape-border-radius-sm) - 2px);
+  border-radius: 0;
 }
 
 /* Placeholder scenes (no owner bitmap). */
@@ -118,7 +120,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: calc(var(--shape-border-radius-sm) - 2px);
+  border-radius: 0;
   background: var(--game-space-deep);
   overflow: hidden;
 }
@@ -168,6 +170,7 @@
   filter: drop-shadow(0 0 6px var(--asset-rim));
 }
 
+/* Text box */
 .textBlock {
   flex: 0 0 auto;
   display: flex;
@@ -210,6 +213,13 @@
   font-size: 0.72rem;
 }
 
+.cardBottomInset {
+  flex: 0 0 auto;
+  height: var(--footer-reserve-height);
+  min-height: 0;
+}
+
+/* Effect area */
 .footerReserve {
   position: relative;
   display: flex;
@@ -232,6 +242,11 @@
   box-shadow:
     inset 0 0 0 1px rgb(255 255 255 / 0.08),
     0 1px 4px rgb(0 0 0 / 0.2);
+}
+
+.card[data-sector-deck="s2"] .footerReserve {
+  padding: 2px 6px 4px;
+  gap: 0;
 }
 
 .typeRibbon {
@@ -279,6 +294,27 @@
 
 .weaponTypeCompact {
   font-size: 0.46rem;
+}
+
+.speedFooter {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-text);
+  font-size: 0.64rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--palette-text-primary);
+}
+
+.detail .speedFooter {
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+.compact .speedFooter {
+  font-size: 0.52rem;
+  line-height: 1.2;
 }
 
 /* Inspect / detail card (220px): extra footer band height — bump weapon line. */
@@ -338,6 +374,75 @@
   max-width: 5rem;
   justify-content: center;
   align-items: center;
+}
+
+.cargoFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.cargoSlots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  max-width: 10rem;
+}
+
+.cargoSlot {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 2px;
+  border-radius: var(--shape-border-radius-sm);
+  border: 1.5px solid var(--asset-rim);
+  background: color-mix(in srgb, var(--asset-rim) 14%, rgb(8 12 18 / 0.72));
+  box-shadow:
+    inset 0 1px 2px rgb(0 0 0 / 0.4),
+    inset 0 0 10px color-mix(in srgb, var(--asset-rim) 20%, transparent),
+    0 0 6px color-mix(in srgb, var(--asset-rim) 28%, transparent);
+}
+
+.cargoSlotCompact {
+  padding: 1px;
+  border-width: 1px;
+}
+
+.cargoSlotVoid {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hullSlot {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 2px;
+  border-radius: var(--shape-border-radius-sm);
+  border: 1.5px solid color-mix(in srgb, var(--game-state-pinned) 55%, var(--asset-rim));
+  background: color-mix(in srgb, var(--game-state-pinned) 22%, rgb(8 12 18 / 0.78));
+  box-shadow:
+    inset 0 1px 2px rgb(0 0 0 / 0.4),
+    inset 0 0 10px color-mix(in srgb, var(--game-state-pinned) 28%, transparent),
+    0 0 6px color-mix(in srgb, var(--game-state-pinned) 22%, transparent);
+}
+
+.hullSlotCompact {
+  padding: 1px;
+  border-width: 1px;
+}
+
+.detail .cargoSlots {
+  gap: 5px;
 }
 
 .footerNote {

@@ -2,7 +2,8 @@
 
 Hero bitmaps only (no printed frame). Paths:
 
-`{s1|s2|s3|s4|common}/fronts/art/<slug>.webp`
+- `fronts/art/<slug>.webp` — illustration in the art window
+- `fronts/<deck>-texture.webp` — full-card face stock under the layout (`sectorCardFaceTexture` in `assetCardArt.ts`)
 
 Slug = `cardIllustrationSlug(card title)` in `assetCardArt.ts`. Match `illustrationSlug` in JSON when you add catalogue rows.
 
@@ -12,6 +13,5 @@ Slug = `cardIllustrationSlug(card title)` in `assetCardArt.ts`. Match `illustrat
 | `s2/` | Propulsion / Utility (H3) |
 | `s3/` | Cargo / Life Support (QP) |
 | `s4/` | Hull / Defensive (TC) |
-| `common/` | Always-available technologies (Hull Plating, Laser Cannon, …) |
 
-Deck backs and reference scans stay under `s1/` until other sector backs exist.
+All four decks ship face textures (`s1-texture.webp` … `s4-texture.webp`). Deck backs and reference scans stay under `s1/` until other sector backs exist.

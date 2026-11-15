@@ -3,6 +3,7 @@ export {
   contentManifest,
   ensignCrew,
   firstPlayableSlice,
+  fullGameSectorMarkets,
   ironSyndicateEnemies,
   passiveAnomalyNumbers,
   planets,
@@ -31,4 +32,9 @@ export type { EnemyShip } from "./schemas/enemies";
 export type { PlayerShip } from "./schemas/ships";
 export type { EnsignCrew } from "./schemas/crew";
 export type { FirstPlayableSlice } from "./schemas/slices";
+export type {
+  FullGameSectorMarkets,
+  MarketDeckCardEntry,
+  SectorMarketDeck,
+} from "./schemas/decks";
 export type { ContentManifest } from "./schemas/manifest";

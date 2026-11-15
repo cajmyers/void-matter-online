@@ -6,42 +6,13 @@
     "slotSize": 0.5,
     "kind": "module",
     "illustrationSlug": "compact-storage",
-    "costs": [{ "resource": "qp", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
-  },
-  {
-    "id": "expanded-cargo-bay",
-    "title": "Expanded Cargo Bay",
-    "sectorDeck": "s3",
-    "slotSize": 1,
-    "kind": "module",
-    "illustrationSlug": "expanded-cargo-bay",
-    "costs": [{ "resource": "qp", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
-  },
-  {
-    "id": "bulk-storage",
-    "title": "Bulk Storage",
-    "sectorDeck": "s3",
-    "slotSize": 1,
-    "kind": "module",
-    "illustrationSlug": "bulk-storage",
-    "costs": [{ "resource": "qp", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
-  },
-  {
-    "id": "subspace-relay",
-    "title": "Subspace Relay",
-    "sectorDeck": "s3",
-    "slotSize": 1,
-    "kind": "special",
-    "illustrationSlug": "subspace-relay",
-    "costs": [{ "resource": "qp", "amount": 2 }, { "resource": "h3", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 1 },
+      { "resource": "h3", "amount": 1 }
+    ],
+    "flavorText": "Vacuum-sealed lockers packed into unused half-slots.",
+    "rulesText": "",
+    "cargoBonus": 1
   },
   {
     "id": "data-siphon",
@@ -50,9 +21,88 @@
     "slotSize": 0.5,
     "kind": "module",
     "illustrationSlug": "data-siphon",
-    "costs": [{ "resource": "qp", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "qp", "amount": 3 }
+    ],
+    "flavorText": "Taps anomaly chatter and bottles it as cargo before the phase turns.",
+    "rulesText": "At the end of the Action phase, before Maintenance, if this ship is in an Anomaly sector, gain 1 resource of your choice from the general supply into this ship's cargo. Once per global round."
+  },
+  {
+    "id": "scavenger-drones",
+    "title": "Scavenger Drones",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "scavenger-drones",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 }
+    ],
+    "flavorText": "Drones that skim the wreck field for usable salvage.",
+    "rulesText": "Whenever your fleet destroys a ship, gain +1 resource of your choice from the general supply into this ship's cargo."
+  },
+  {
+    "id": "cargo-container",
+    "title": "Cargo Containers",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "cargo-container",
+    "costs": [
+      { "resource": "tc", "amount": 1 },
+      { "resource": "h3", "amount": 1 },
+      { "resource": "pc", "amount": 1 }
+    ],
+    "flavorText": "Stackable pods that bolt on wherever the frame has room.",
+    "rulesText": "",
+    "cargoBonus": 1
+  },
+  {
+    "id": "crew-quarters",
+    "title": "Crew Quarters",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "crew-quarters",
+    "costs": [
+      { "resource": "tc", "amount": 1 },
+      { "resource": "pc", "amount": 1 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Cramped bunks and life support for one more specialist.",
+    "rulesText": "",
+    "crewSlotsBonus": 1
+  },
+  {
+    "id": "expanded-cargo-bay",
+    "title": "Expanded Cargo Bay",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "expanded-cargo-bay",
+    "costs": [
+      { "resource": "tc", "amount": 3 },
+      { "resource": "h3", "amount": 2 }
+    ],
+    "flavorText": "A refit bay that trades weapon space for honest freight tonnage.",
+    "rulesText": "",
+    "cargoBonus": 2
+  },
+  {
+    "id": "bulk-storage",
+    "title": "Bulk Storage",
+    "sectorDeck": "s3",
+    "slotSize": 2,
+    "kind": "module",
+    "illustrationSlug": "bulk-storage",
+    "costs": [
+      { "resource": "tc", "amount": 4 },
+      { "resource": "h3", "amount": 2 }
+    ],
+    "flavorText": "Double-height racks and oversized locks for serious haulers.",
+    "rulesText": "",
+    "cargoBonus": 3
   },
   {
     "id": "luxury-quarters",
@@ -61,31 +111,45 @@
     "slotSize": 1,
     "kind": "module",
     "illustrationSlug": "luxury-quarters",
-    "costs": [{ "resource": "qp", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 1 },
+      { "resource": "h3", "amount": 1 },
+      { "resource": "pc", "amount": 1 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Private suites that make senior crew willing to sign on.",
+    "rulesText": "When you recruit crew for this ship, remove any 2 resources of your choice from the recruit cost (minimum 0).",
+    "crewSlotsBonus": 1
+  },
+  {
+    "id": "security-credentials",
+    "title": "Security Credentials",
+    "sectorDeck": "s3",
+    "slotSize": 0.5,
+    "kind": "module",
+    "illustrationSlug": "security-credentials",
+    "costs": [
+      { "resource": "h3", "amount": 2 },
+      { "resource": "tc", "amount": 2 }
+    ],
+    "flavorText": "Forged clearance codes for the busiest hub in the sector.",
+    "rulesText": "This ship may use Interact actions at the Central Nexus even if opposing ships are present."
   },
   {
     "id": "habitation-block",
     "title": "Habitation Block",
     "sectorDeck": "s3",
-    "slotSize": 1,
+    "slotSize": 2,
     "kind": "module",
     "illustrationSlug": "habitation-block",
-    "costs": [{ "resource": "qp", "amount": 2 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
-  },
-  {
-    "id": "habitation-block-alt",
-    "title": "Habitation Block",
-    "sectorDeck": "s3",
-    "slotSize": 1,
-    "kind": "module",
-    "illustrationSlug": "habitation-block-2",
-    "costs": [{ "resource": "qp", "amount": 2 }],
-    "flavorText": "(Proposed — alternate art only; merge or remove duplicate.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "h3", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "A full hab ring with bunks, galley, and recycler loops for a larger crew.",
+    "rulesText": "",
+    "crewSlotsBonus": 3
   },
   {
     "id": "smugglers-hold",
@@ -94,8 +158,13 @@
     "slotSize": 1,
     "kind": "module",
     "illustrationSlug": "smugglers-hold",
-    "costs": [{ "resource": "qp", "amount": 2 }, { "resource": "h3", "amount": 1 }],
-    "flavorText": "(Proposed — awaiting owner text.)",
-    "rulesText": "(Proposed — awaiting owner ruling.)"
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "h3", "amount": 1 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Hidden compartment where one resource rides outside the manifest.",
+    "rulesText": "Keep one resource in this Hold on the card. That cargo can only be taken by other players or card effects if this component is destroyed.",
+    "cargoBonus": 1
   }
 ]

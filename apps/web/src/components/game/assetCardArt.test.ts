@@ -19,7 +19,7 @@ describe("assetCardArt", () => {
     expect(cardIllustrationArtForDeck("impulse-thrusters", "s2")).toMatch(/s2\/fronts\/art\/impulse-thrusters/);
     expect(cardIllustrationArtForDeck("compact-storage", "s3")).toMatch(/s3\/fronts\/art\/compact-storage/);
     expect(cardIllustrationArtForDeck("nano-bonding", "s4")).toMatch(/s4\/fronts\/art\/nano-bonding/);
-    expect(cardIllustrationArtForDeck("hull-plating", "common")).toMatch(/common\/fronts\/art\/hull-plating/);
+    expect(cardIllustrationArtForDeck("hull-plating", "s4")).toMatch(/s4\/fronts\/art\/hull-plating/);
   });
 
   it("resolves by title across decks", () => {
@@ -27,8 +27,10 @@ describe("assetCardArt", () => {
     expect(cardIllustrationArt("Compact Storage")).toMatch(/compact-storage/);
   });
 
-  it("loads S1 face texture", () => {
+  it("loads sector face textures", () => {
     expect(sectorCardFaceTexture("s1")).toMatch(/s1\/fronts\/s1-texture/);
-    expect(sectorCardFaceTexture("s2")).toBeUndefined();
+    expect(sectorCardFaceTexture("s2")).toMatch(/s2\/fronts\/s2-texture/);
+    expect(sectorCardFaceTexture("s3")).toMatch(/s3\/fronts\/s3-texture/);
+    expect(sectorCardFaceTexture("s4")).toMatch(/s4\/fronts\/s4-texture/);
   });
 });
