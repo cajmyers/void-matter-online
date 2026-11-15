@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Typography } from "../../../components/Typography/Typography";
+import { cardWidthDetail, cardWidthHand } from "../../../components/game/cardSizes";
 import { HexTileFigureSvg, HexTileScales, type TileFigureTile } from "../../../components/hex/HexTileFigure";
 import { hexTileSizeGalleryBoard } from "../../../components/hex/hexTileSizes";
 import styles from "./GalleryPage.module.css";
@@ -62,6 +63,32 @@ export function TileScalesFigure({
         <Typography variant="caption">
           {note ?? "Top: board scale. Below: inspector detail (larger hex; planet pills are slightly larger too)."}
         </Typography>
+      </figcaption>
+    </figure>
+  );
+}
+
+/** Playing cards at hand width and inspect zoom (`implementation-plan.md` §5.2). */
+export function CardScalesFigure({
+  name,
+  note,
+  render,
+}: {
+  readonly name: string;
+  readonly note?: string;
+  render: (width: number) => ReactNode;
+}) {
+  return (
+    <figure className={`${styles.figure} ${styles.figureScales}`}>
+      <div className={styles.stage}>
+        <div className={styles.scales}>
+          {render(cardWidthHand)}
+          {render(cardWidthDetail)}
+        </div>
+      </div>
+      <figcaption className={styles.caption}>
+        <Typography variant="subtitle2">{name}</Typography>
+        <Typography variant="caption">{note ?? "Top: hand (118px). Below: inspect (220px)."}</Typography>
       </figcaption>
     </figure>
   );

@@ -10,6 +10,10 @@ import { defineConfig } from "vitest/config";
 // the guarded branches and their lazy chunks are removed by dead-code elimination.
 export default defineConfig(({ mode }) => ({
   plugins: [react()],
+  optimizeDeps: {
+    // Workspace package: let Vite transpile it; pre-bundling broke React scheduler.
+    exclude: ["@void-matter/content"],
+  },
   define: {
     __DEV_PAGES__: JSON.stringify(mode !== "production"),
   },

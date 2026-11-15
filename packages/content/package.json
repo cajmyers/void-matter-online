@@ -1,0 +1,21 @@
+{
+  "name": "@void-matter/content",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Game catalogue data (JSON + Zod). Future: sync same shapes to Firestore.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3",
+    "vitest": "^4.1.12"
+  }
+}

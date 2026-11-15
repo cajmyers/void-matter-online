@@ -1,0 +1,46 @@
+.shipBand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--spacing-0-5) var(--spacing-1) 0;
+}
+
+.art {
+  flex-basis: 28%;
+}
+
+.slotLabel {
+  margin-bottom: var(--spacing-0-5);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.8;
+}
+
+.slotRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-xs);
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  padding: 2px;
+  border-radius: var(--shape-border-radius-sm);
+  border: 1px solid color-mix(in srgb, var(--rim) 45%, var(--palette-divider));
+  background: color-mix(in srgb, var(--game-card-background) 85%, black);
+}
+
+.half {
+  border-radius: 2px;
+  border: 1px dashed color-mix(in srgb, var(--palette-divider) 70%, transparent);
+  background: rgb(255 255 255 / 0.03);
+}
+
+.halfOn {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--rim) 55%, transparent);
+  background: color-mix(in srgb, var(--rim) 22%, transparent);
+}

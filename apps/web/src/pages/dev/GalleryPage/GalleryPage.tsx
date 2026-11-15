@@ -4,6 +4,7 @@ import { Typography } from "../../../components/Typography/Typography";
 import { VisionFilters, visionModes, type VisionMode } from "../StylePage/VisionFilters";
 import { ActionTokensSection } from "./ActionTokensSection";
 import { ResourcesSection } from "./ResourcesSection";
+import { CardsSection } from "./CardsSection";
 import { ShipsSection } from "./ShipsSection";
 import { TilesSection } from "./TilesSection";
 import styles from "./GalleryPage.module.css";
@@ -20,7 +21,7 @@ const entries: readonly IndexEntry[] = [
   { id: "action-tokens", label: "Action tokens", built: true },
   { id: "tiles", label: "Tiles", built: true },
   { id: "ships", label: "Ships", built: true },
-  { id: "cards", label: "Cards", built: false },
+  { id: "cards", label: "Cards", built: true },
   { id: "zones", label: "Zones", built: false },
   { id: "dice", label: "Dice", built: false },
   { id: "prompts", label: "Prompts", built: false },
@@ -80,6 +81,7 @@ export default function GalleryPage() {
         <ActionTokensSection />
         <TilesSection />
         <ShipsSection />
+        <CardsSection />
       </div>
     </div>
   );

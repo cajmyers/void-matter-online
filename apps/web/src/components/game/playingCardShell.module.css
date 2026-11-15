@@ -1,0 +1,72 @@
+.shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  aspect-ratio: var(--card-aspect-ratio);
+  overflow: hidden;
+  background: var(--game-card-background);
+  border: 2px solid var(--rim);
+  border-radius: var(--shape-border-radius-lg);
+  box-shadow:
+    var(--shadow-3),
+    0 0 14px color-mix(in srgb, var(--rim) var(--glow-strength), transparent),
+    inset 0 0 12px color-mix(in srgb, var(--rim) 22%, transparent);
+}
+
+.artBand {
+  position: relative;
+  flex: 0 0 36%;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, var(--rim) 60%, transparent);
+  background: var(--game-space-deep);
+}
+
+.artBand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 65% at 72% 28%, color-mix(in srgb, var(--rim) 55%, transparent), transparent 70%),
+    var(--game-space-deep);
+}
+
+.titleBar {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--spacing-0-5) var(--spacing-1);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--rim) 28%, var(--game-card-background)), var(--game-card-background));
+  border-bottom: 1px solid color-mix(in srgb, var(--rim) 40%, transparent);
+}
+
+.titleBar > :first-child {
+  font-size: 0.74rem;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  padding: var(--spacing-0-5) var(--spacing-1);
+  overflow: hidden;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-xs);
+  padding: var(--spacing-0-5) var(--spacing-1) var(--spacing-1);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  opacity: 0.92;
+  font-size: 0.62rem;
+  line-height: 1.25;
+}

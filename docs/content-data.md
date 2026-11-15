@@ -2,7 +2,9 @@
 
 Status: **draft**. This file fills the content gaps found in the second review (which cards are in which asset deck, how many copies, enemy deck sizes and the first content slice). Rules live in `design-decisions.md`; this file only holds numbers and lists. Every table here is a **proposal** that the owner may overwrite; entries marked *(placeholder)* are tunable by simulation and have no source in V5.
 
-How to use: the game data files (`content/*.ts` or JSON) are generated from, or checked against, these tables. When a number changes here, change it in the data files in the same commit.
+How to use: the game data files live in **`packages/content/data/*.json`** (validated by Zod). Keep this markdown in sync when slice totals or deck sizes change. When a number changes here, change it in the JSON in the same commit.
+
+Hero illustrations live under **`apps/web/src/assets/cards/{s1|s2|s3|s4|common}/fronts/art/`** (one folder per market in section 1, plus `common/` for always-available tech). Slug rules: `assetCardArt.ts` in the web app.
 
 ## 1. Sector decks (asset market assignment)
 
@@ -91,7 +93,7 @@ Purpose: a small, fully playable game to prove the engine, the bot and the simul
 | S3 deck | Compact Storage, Expanded Cargo Bay (4 copies each) = 8 cards |
 | S4 deck | Nano Bonding (4), Magnetic Shields, Energy Shields, Thermal Sinks, Reactive Plating (2 each) = 12 cards |
 | Enemies | **Iron Syndicate only** (Skiff, Enforcer, Goliath), see section 3 |
-| Anomaly tiles | all 21 are loaded under their normal rules. **Tile 20 (Personnel Transporter) does nothing without crew**, so it is inert in the slice. *(Check the other tiles for dependencies on unloaded content when the data files are written.)* |
+| Anomaly tiles | all **22** are loaded under their normal rules (`TIL-2` reinstated tile 4). **Tile 20 (Personnel Transporter) does nothing without crew**, so it is inert in the slice. *(Check the other tiles for dependencies on unloaded content when the data files are written.)* |
 | Crew | the four plain Ensigns (Pilot, Merchant, Tactical, Scout), section 2a. The Recruit action is enabled. Other Ensigns and all Commanders are not loaded (costs pending). |
 | Missions | the 27-card filtered deck, section 4 |
 | Bots | the bot design in `design-decisions.md` section 11 (a Monte Carlo strength check against the real engine) |

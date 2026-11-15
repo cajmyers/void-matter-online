@@ -53,6 +53,15 @@
   border-color: var(--palette-divider);
 }
 
+.inlineLink {
+  color: var(--palette-primary-light);
+  text-underline-offset: 2px;
+}
+
+.inlineLink:hover {
+  color: var(--palette-primary-main);
+}
+
 .section {
   display: flex;
   flex-direction: column;

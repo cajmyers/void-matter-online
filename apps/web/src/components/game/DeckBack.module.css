@@ -1,11 +1,12 @@
 .deck {
+  position: relative;
   display: flex;
   flex: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--gap-xs);
-  aspect-ratio: 5 / 7;
+  aspect-ratio: var(--card-aspect-ratio);
   border: 2px solid var(--rim);
   border-radius: var(--shape-border-radius-lg);
   background:
@@ -26,4 +27,44 @@
 .count {
   font-size: var(--typography-h5-size);
   color: var(--rim);
+}
+
+.s1Upgrade {
+  background-size: cover;
+  background-position: center;
+  border-color: var(--game-resource-pc);
+  box-shadow:
+    var(--shadow-3),
+    0 0 18px color-mix(in srgb, var(--game-resource-pc) 55%, transparent),
+    inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+.s1Upgrade::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--game-resource-pc) 42%, transparent);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.s1Upgrade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at 50% 45%, rgb(255 80 60 / 0.25), transparent 62%);
+  pointer-events: none;
+}
+
+.s1Upgrade .label,
+.s1Upgrade .count {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 4px rgb(0 0 0 / 0.85);
+}
+
+.s1Upgrade .count {
+  color: var(--palette-text-primary);
 }

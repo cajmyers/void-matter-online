@@ -1,5 +1,6 @@
 import { useId, type CSSProperties } from "react";
 import { seatShapePath } from "../game/SeatMark";
+import interactIcon from "../../assets/icons/actions/interact.png";
 import { resourceArt } from "../game/resourceArt";
 import { resourceIds, resourceInfo, seatNumbers, type ResourceId, type SeatNumber } from "../game/resources";
 import { isFullGateOnEdge } from "./gateConnection";
@@ -14,6 +15,7 @@ import {
   type EdgeName,
 } from "./hexGeometry";
 import {
+  hexTileAnomalyAbilityY,
   hexTileMarketDemandY,
   hexTileMarketLayout,
   hexTileMarketLockStackY,
@@ -50,6 +52,8 @@ export interface HexTileBodyProps {
   readonly lockedDemand?: number;
   /** Anomaly only: the two discovery-bonus resources. */
   readonly bonus?: readonly [ResourceId, ResourceId];
+  /** Anomaly only: bottom marker for Interact vs passive (`MSN-1`). */
+  readonly anomalyAbility?: "interact" | "passive";
   readonly selected?: boolean;
   /** Static specimen (gallery); live boards use `interactive` and CSS `:hover` instead. */
   readonly hovered?: boolean;
@@ -256,6 +260,29 @@ function HexTileClippedArt({
   );
 }
 
+/** Bottom-of-hex badge: Interact glyph or Passive label (`implementation-plan` 1b). */
+function AnomalyAbilityMarker({ ability, hexSize }: { readonly ability: "interact" | "passive"; readonly hexSize: number }) {
+  const { pillHeight, fontSize } = hexTileMarketLayout(hexSize);
+  const y = hexTileAnomalyAbilityY(hexSize);
+  const icon = Math.round(pillHeight * 0.82);
+  const passiveWidth = Math.round(pillHeight * 3.4);
+  const interactWidth = Math.round(pillHeight * 1.55);
+  const width = ability === "passive" ? passiveWidth : interactWidth;
+  return (
+    <g transform={`translate(0 ${y})`}>
+      <title>{ability === "interact" ? "Interact ability" : "Passive effect"}</title>
+      <rect x={-width / 2} y={-pillHeight / 2} width={width} height={pillHeight} rx={pillHeight / 2} className={styles.pill} />
+      {ability === "interact" ? (
+        <image href={interactIcon} x={-icon / 2} y={-icon / 2} width={icon} height={icon} aria-hidden="true" />
+      ) : (
+        <text y={0} textAnchor="middle" dominantBaseline="central" className={styles.anomalyAbilityLabel} fontSize={fontSize}>
+          Passive
+        </text>
+      )}
+    </g>
+  );
+}
+
 function rimColour(kind: TileKind, seat: SeatNumber | undefined, supply: readonly ResourceAmount[]): string {
   if (kind === "nexusCentral") return "var(--game-rim-nexus)";
   if (kind === "nexusRim" && seat) return `var(--game-seat-${seat})`;
@@ -279,6 +306,7 @@ export function HexTileBody(props: HexTileBodyProps) {
     lockedSupply = 0,
     lockedDemand = 0,
     bonus,
+    anomalyAbility,
     selected = false,
     hovered = false,
     interactive = false,
@@ -408,6 +436,9 @@ export function HexTileBody(props: HexTileBodyProps) {
                 );
               })}
             </g>
+          ) : null}
+          {anomalyAbility ? (
+            <AnomalyAbilityMarker ability={anomalyAbility} hexSize={size} />
           ) : null}
         </>
       ) : null}

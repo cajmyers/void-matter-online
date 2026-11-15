@@ -72,6 +72,14 @@
   font-family: var(--font-mono);
 }
 
+.anomalyAbilityLabel {
+  fill: var(--palette-text-primary);
+  font-family: var(--font-mono);
+  font-weight: var(--text-weight-strong);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .lock {
   fill: var(--game-state-locked);
 }

@@ -270,6 +270,8 @@
 
   --game-card-background: #0a1424;
   --game-card-border: #2e5578;
+  /* Playing cards: 65 × 100 mm print */
+  --card-aspect-ratio: 65 / 100;
   --game-market-pill-fill: #000;
 
   /* The space scene behind the table (SpaceBackdrop) */

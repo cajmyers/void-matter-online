@@ -1,0 +1,12 @@
+[
+  {
+    "id": "nomad-corvette",
+    "title": "Nomad-class Corvette",
+    "subtitle": "Starting ship",
+    "speed": 2,
+    "hull": 1,
+    "crewSlots": 1,
+    "cargo": 2,
+    "upgradeSlotsHalves": 8
+  }
+]

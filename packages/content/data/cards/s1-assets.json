@@ -1,0 +1,419 @@
+[
+  {
+    "id": "ai-guidance-suite",
+    "title": "AI Guidance Suite",
+    "sectorDeck": "s1",
+    "slotSize": 0.5,
+    "kind": "special",
+    "illustrationSlug": "ai-guidance-suite",
+    "costs": [
+      { "resource": "h3", "amount": 1 },
+      { "resource": "pc", "amount": 1 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "A dedicated heuristic processing node designed to govern autonomous systems.",
+    "rulesText": "Apply +1 to missile or drone weapon attacks."
+  },
+  {
+    "id": "ai-targeting-turrets",
+    "title": "AI-Targeting Turrets",
+    "sectorDeck": "s1",
+    "slotSize": 0.5,
+    "kind": "special",
+    "illustrationSlug": "ai-targeting-turrets",
+    "costs": [
+      { "resource": "tc", "amount": 4 },
+      { "resource": "pc", "amount": 2 }
+    ],
+    "flavorText": "Predictive fire-control meshes split salvos across several targets at once.",
+    "rulesText": "Your weapons gain Multi-Shot. You may split each weapon's dice among different targets."
+  },
+  {
+    "id": "beam-projector",
+    "title": "Beam Projector",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "beam-projector",
+    "costs": [
+      { "resource": "pc", "amount": 3 },
+      { "resource": "qp", "amount": 3 }
+    ],
+    "flavorText": "A singularity-tuned emitter that strikes across sector boundaries.",
+    "rulesText": "Tactical attack: one shot at an opposing ship in an adjacent sector. No combat rounds, return fire, retreat, or Spoils of War.",
+    "weapon": {
+      "diceCount": 1,
+      "hitLabel": "4+",
+      "archetype": "Energy"
+    }
+  },
+  {
+    "id": "compressor-gun",
+    "title": "Compressor",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "compressor-gun",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Magnetic rails crush slugs until the breech screams.",
+    "rulesText": "If you roll 1 or more natural 1, take 1 damage. Each natural 6 hits for 2 damage.",
+    "weapon": {
+      "diceCount": 4,
+      "hitLabel": "5+",
+      "archetype": "Mass Accelerator"
+    }
+  },
+  {
+    "id": "concussion-missiles",
+    "title": "Concussion",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "concussion-missiles",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Shaped charges meant to punch through layered hull lattice.",
+    "rulesText": "On 1 or more hits, if the target ship has 3 or more hull, apply 1 additional hit.",
+    "weapon": {
+      "diceCount": 2,
+      "hitLabel": "5+",
+      "archetype": "Drones and Missiles"
+    }
+  },
+  {
+    "id": "disrupter-lance",
+    "title": "Disrupter Lance",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "disrupter-lance",
+    "costs": [
+      { "resource": "h3", "amount": 1 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Phase shear tuned to rip shield harmonics apart.",
+    "rulesText": "",
+    "weapon": {
+      "diceCount": 1,
+      "hitLabel": "3+",
+      "archetype": "Energy"
+    }
+  },
+  {
+    "id": "drone-hangar",
+    "title": "Drone Hangar",
+    "sectorDeck": "s1",
+    "slotSize": 0.5,
+    "kind": "special",
+    "illustrationSlug": "drone-hangar",
+    "costs": [
+      { "resource": "tc", "amount": 3 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Rapid-deployment bays for escort drones that paint targets for the main battery.",
+    "rulesText": "On an attack action: spend 1 TC to deploy a drone. It adds +1 to your attack rolls until combat ends, then is discarded."
+  },
+  {
+    "id": "energy-focus-lens",
+    "title": "Energy Focus Lens",
+    "sectorDeck": "s1",
+    "slotSize": 0.5,
+    "kind": "special",
+    "illustrationSlug": "energy-focus-lens",
+    "costs": [
+      { "resource": "tc", "amount": 1 },
+      { "resource": "pc", "amount": 1 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Tunable optics that coax more coherent bursts from energy emitters.",
+    "rulesText": "Apply +1 to energy weapon attacks."
+  },
+  {
+    "id": "flak-burst-scattergun",
+    "title": "Flak",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "flak-burst-scattergun",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "A cloud of flechettes that only connect when fate swings true.",
+    "rulesText": "This gun only ever hits on a natural 6, regardless of any combat bonuses.",
+    "weapon": {
+      "diceCount": 6,
+      "hitLabel": "6+",
+      "archetype": "Mass Accelerator"
+    }
+  },
+  {
+    "id": "gauss-accelerator",
+    "title": "Gauss Accelerator",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "gauss-accelerator",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Hypervelocity slugs that punish a glancing strike.",
+    "rulesText": "If this weapon does exactly one hit, apply one damage cube (the defender cannot discard a component).",
+    "weapon": {
+      "diceCount": 3,
+      "hitLabel": "5+",
+      "archetype": "Mass Accelerator"
+    }
+  },
+  {
+    "id": "heavy-plasma-cannon",
+    "title": "Heavy Plasma Cannon",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "heavy-plasma-cannon",
+    "costs": [
+      { "resource": "h3", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Overfed magnetic bottles vent star-hot plasma in heavy bolts.",
+    "rulesText": "",
+    "weapon": {
+      "diceCount": 3,
+      "hitLabel": "4+",
+      "archetype": "Energy"
+    }
+  },
+  {
+    "id": "interceptor-drone-rig",
+    "title": "Interceptor Rig",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "interceptor-drone-rig",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Escort drones that leap to defence.",
+    "rulesText": "When attacked by a mass accelerator, missile, or drone weapon, after the attack roll, make a free 1-die attack at 5+ against the attacker.",
+    "weapon": {
+      "diceCount": 2,
+      "hitLabel": "5+",
+      "archetype": "Drones and Missiles"
+    }
+  },
+  {
+    "id": "mass-targeting-array",
+    "title": "Mass Targeting Array",
+    "sectorDeck": "s1",
+    "slotSize": 0.5,
+    "kind": "special",
+    "illustrationSlug": "mass-targeting-array",
+    "costs": [
+      { "resource": "tc", "amount": 1 },
+      { "resource": "h3", "amount": 1 },
+      { "resource": "pc", "amount": 1 }
+    ],
+    "flavorText": "Fire-control servos tuned for slug-throwers and drivers.",
+    "rulesText": "Apply +1 to mass accelerator weapon attacks."
+  },
+  {
+    "id": "minigun",
+    "title": "Minigun",
+    "sectorDeck": "s1",
+    "slotSize": 0.5,
+    "kind": "weapon",
+    "illustrationSlug": "minigun",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "A compact rotary cannon for sustained suppressive fire.",
+    "rulesText": "",
+    "weapon": {
+      "diceCount": 2,
+      "hitLabel": "6+",
+      "archetype": "Mass Accelerator"
+    }
+  },
+  {
+    "id": "nanite-swarm-drones",
+    "title": "Nanite Swarm",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "nanite-swarm-drones",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Grey-goo payloads that borrow your crew's focus for one decisive pass.",
+    "rulesText": "You may exhaust action tokens to increase the accuracy of this weapon by +1 for each token exhausted.",
+    "weapon": {
+      "diceCount": 2,
+      "hitLabel": "5+",
+      "archetype": "Drones and Missiles"
+    }
+  },
+  {
+    "id": "pneumatic-ram-loader",
+    "title": "Pneumatic Ram-Loader",
+    "sectorDeck": "s1",
+    "slotSize": 0.5,
+    "kind": "special",
+    "illustrationSlug": "ram-loader",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "h3", "amount": 1 }
+    ],
+    "flavorText": "Pneumatic feeds that shove extra mass rounds into the line.",
+    "rulesText": "Mass accelerator weapons on this ship get +1 die and +1 to hit. If any mass attack die is a natural 1, take 1 damage once per attack action."
+  },
+  {
+    "id": "rapid-fire-railgun",
+    "title": "Railgun",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "rapid-fire-railgun",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "Sequential rail pairs that only find slow prey.",
+    "rulesText": "Apply an additional −1 to hit for each speed of the target ship. Will still hit on the roll of 6.",
+    "weapon": {
+      "diceCount": 5,
+      "hitLabel": "4+",
+      "archetype": "Mass Accelerator"
+    }
+  },
+  {
+    "id": "side-mounted-laser",
+    "title": "Side-Mounted Laser",
+    "sectorDeck": "s1",
+    "slotSize": 0.5,
+    "kind": "weapon",
+    "illustrationSlug": "side-mounted-laser",
+    "costs": [
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "flavorText": "A sponson emitter for disciplined, low-footprint energy fire.",
+    "rulesText": "",
+    "weapon": {
+      "diceCount": 1,
+      "hitLabel": "5+",
+      "archetype": "Energy"
+    }
+  },
+  {
+    "id": "micro-missile",
+    "title": "Swarm Micro-Missile Pod",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "micro-missile",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 1 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Racks of micro-warheads that ripple across a target's face.",
+    "rulesText": "",
+    "weapon": {
+      "diceCount": 5,
+      "hitLabel": "6+",
+      "archetype": "Drones and Missiles"
+    }
+  },
+  {
+    "id": "apocalypse",
+    "title": "The Apocalypse",
+    "sectorDeck": "s1",
+    "slotSize": 2,
+    "kind": "weapon",
+    "illustrationSlug": "apocalypse",
+    "costs": [
+      { "resource": "tc", "amount": 5 },
+      { "resource": "qp", "amount": 3 }
+    ],
+    "flavorText": "A colossal kinetic launcher that hurls world-ending mass payloads across the void.",
+    "rulesText": "Each hit counts as 2 hits.",
+    "weapon": {
+      "diceCount": 5,
+      "hitLabel": "6+",
+      "archetype": "Mass Accelerator"
+    }
+  },
+  {
+    "id": "thermal-pyre",
+    "title": "Thermal Pyre",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "thermal-pyre-cannon",
+    "costs": [
+      { "resource": "pc", "amount": 4 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Thermal lances that leave targets sluggish in your wake.",
+    "rulesText": "Any ship damaged by this weapon has its speed reduced by 1 for the remainder of the round.",
+    "weapon": {
+      "diceCount": 2,
+      "hitLabel": "4+",
+      "archetype": "Energy"
+    }
+  },
+  {
+    "id": "torpedo-battery",
+    "title": "Torpedo Bay",
+    "sectorDeck": "s1",
+    "slotSize": 1,
+    "kind": "weapon",
+    "illustrationSlug": "torpedo-battery",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "Cluster dispensers sized for opportunistic cargo strikes.",
+    "rulesText": "On each hit, spend 1 H3 to force the target to remove 1 resource (other than void matter) from their cargo hold.",
+    "weapon": {
+      "diceCount": 2,
+      "hitLabel": "5+",
+      "archetype": "Drones and Missiles"
+    }
+  },
+  {
+    "id": "void-core-overdrive",
+    "title": "Void-Core Overdrive",
+    "sectorDeck": "s1",
+    "slotSize": 0.5,
+    "kind": "special",
+    "illustrationSlug": "void-core-overdrive",
+    "costs": [
+      { "resource": "pc", "amount": 3 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "flavorText": "A void-tapped reactor that trades hull integrity for overwhelming salvos.",
+    "rulesText": "Spend 1 H3 when using a weapon to double that weapon's dice for that attack. After the action, this ship takes 1 damage."
+  }
+]

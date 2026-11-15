@@ -597,7 +597,7 @@ Consequences for the design:
 - **Nexus tiles are fully connected where the map continues.** The Central Nexus has a gate on all six sides. Each Outer Rim Nexus has a gate on every side that faces a neighbouring hex and none facing off the map. So **Outer Rim Nexus gates are derived from the layout, not stored per tile**: `gatesOf(nexusHex) = the directions that have an on-map neighbour`. Computed from the axial layouts: on the 2-seat board each start Nexus sits in a corner and has **3 gates** (N1: R, BR, BL; N2: L, TL, TR); on the 4-seat board each start Nexus has **4 gates** (N1: R, TR, BL, BR; N2: L, TL, BL, BR; N3: R, TR, TL, BR; N4: L, TR, TL, BL). The 3-seat values come from the explicit rows. A start Nexus is therefore never a dead end, but it is not a full hub either, and the 4-seat starts are better connected than the 2-seat corners.
 - **Planets are placed face-down too.** The setup says to shuffle planets and Anomalies together and place them all face-down. So until a tile is flipped, nobody (human or bot) knows whether a hex is a planet or an Anomaly, and the bot's public-information rule covers this automatically. It also means the first moves of a game are exploration whether you like it or not, and that Long-range Sensor Specialist's peek has real value.
 - **Markets belong to Outer Rim Nexus tiles, and not one-to-one.** The diagrams assign the four sector markets to the start tiles by colour: with 2 seats Red has markets 1 and 2 and Green has 3 and 4; with 3 seats Red has market 1, Green has 2 and 3, Yellow has 4; with 4 seats one each. So a ship that wants a Weapons upgrade must go to *the* Nexus that holds market 1, and for 2 seats each Nexus offers two markets. This is data on the layout (`marketsAtNexus`), and the bot's "planned purchase" naturally includes "go to the right Nexus."
-- **Planet pool is the full 20 at 4 seats** (the appendix lists exactly 20), and a random subset of 10 or 15 otherwise. Anomaly pool is 6, 9 or 12 of the **21** remaining tiles (tile 4 is removed, `TIL-1`).
+- **Planet pool is the full 20 at 4 seats** (the appendix lists exactly 20), and a random subset of 10 or 15 otherwise. Anomaly pool is 6, 9 or 12 drawn from all **22** tiles (`TIL-2`).
 
 ### 9.2 What the map module should do
 
@@ -836,14 +836,14 @@ In axial coordinates (q, r) with the centre at (0, 0), the regular 2-seat board 
 
 ## Appendix B. Anomaly tiles (seed data from the old PDF)
 
-Gate edges are the **printed orientation**; the player rotates the tile on reveal (section 9.1). TL top left, TR top right, R right, BR bottom right, BL bottom left, L left. **Use only the structural columns.** The effect text in the PDF is superseded by the rulings in `design-decisions.md` (section 7) and some tiles were reworded. **Tile 4 is removed from the game for now (`TIL-1`), so it is struck through below and not in the pool.** The "(Nexus Tile)", "(Chokepoint Tile)" and "(Dense Terrain Tile)" labels are flavour only, as ruled.
+Gate edges are the **printed orientation**; the player rotates the tile on reveal (section 9.1). TL top left, TR top right, R right, BR bottom right, BL bottom left, L left. **Use only the structural columns.** The effect text in the PDF is superseded by the rulings in `design-decisions.md` (section 7) and some tiles were reworded. The "(Nexus Tile)", "(Chokepoint Tile)" and "(Dense Terrain Tile)" labels are flavour only, as ruled.
 
 | # | Tile | Discovery bonus | Gates | Warp-gate edges |
 |---|---|---|---|---|
 | 1 | The Scrap Reclamation Yard | 1 TC, 1 PC | 3 | TL, R, BL |
 | 2 | Black Market Trading Depot | 1 QP, 1 H3 | 3 | TR, BR, L |
 | 3 | EMP Array Substation | 1 PC, 1 QP | 3 | TL, BR, L |
-| ~~4~~ | ~~Overclocking Relay~~ (removed, `TIL-1`) | ~~1 PC, 1 H3~~ | ~~3~~ | ~~TR, R, BL~~ |
+| 4 | Overclocking Relay | 1 PC, 1 H3 | 3 | TR, R, BL |
 | 5 | Graviton Warp Conduit | 1 H3, 1 QP | 4 | TL, TR, BR, BL |
 | 6 | Automated Nanite Station | 1 TC, 1 QP | 3 | R, BL, L |
 | 7 | Solar Flare Sanctuary | 1 H3, 1 PC | 3 | TL, TR, BR |

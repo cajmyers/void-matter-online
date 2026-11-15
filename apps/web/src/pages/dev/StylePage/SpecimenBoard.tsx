@@ -44,7 +44,13 @@ function anomalyBody(name: string, title: string = name): SpecimenBody {
   const tile = anomalyFixtures.find((candidate) => candidate.name === name);
   if (!tile) throw new Error(`Unknown anomaly fixture: ${name}`);
   const detailArt = anomalyDetailArt(tile.name);
-  return { kind: "anomaly", title, bonus: tile.bonus, ...(detailArt ? { detailArt } : {}) };
+  return {
+    kind: "anomaly",
+    title,
+    bonus: tile.bonus,
+    anomalyAbility: tile.ability,
+    ...(detailArt ? { detailArt } : {}),
+  };
 }
 const board = hexDisc(2);
 const onMap = new Set(board.map((hex) => axialKey(hex.q, hex.r)));

@@ -13,6 +13,8 @@ const navLinks: readonly NavLink[] = [
   { path: "/", label: "Table" },
   { path: "/dev/style", label: "Style" },
   { path: "/dev/gallery", label: "Gallery" },
+  { path: "/dev/tiles", label: "Tiles" },
+  { path: "/dev/s1-cards", label: "S1 cards" },
   { path: "/dev/lab", label: "Motion lab" },
 ];
 

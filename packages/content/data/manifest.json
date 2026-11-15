@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "rulesVersion": "v5-owner",
+  "contentSetId": "void-matter-online",
+  "description": "Authoritative catalogue for tiles, cards, ships, and slice deck definitions. Same document shapes are intended for Firestore import later.",
+  "collections": {
+    "tiles/anomalies": "data/tiles/anomalies.json",
+    "tiles/planets": "data/tiles/planets.json",
+    "cards/s1-assets": "data/cards/s1-assets.json",
+    "cards/s2-assets": "data/cards/s2-assets.json",
+    "cards/s3-assets": "data/cards/s3-assets.json",
+    "cards/s4-assets": "data/cards/s4-assets.json",
+    "enemies/iron-syndicate": "data/enemies/iron-syndicate.json",
+    "ships/player": "data/ships/player-ships.json",
+    "crew/ensigns": "data/crew/ensigns.json",
+    "slices/first-playable": "data/slices/first-playable.json"
+  }
+}

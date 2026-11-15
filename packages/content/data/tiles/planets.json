@@ -1,0 +1,438 @@
+[
+  {
+    "id": "planet-aethel-9",
+    "name": "Aethel-9",
+    "group": "High metal",
+    "pattern": "cl",
+    "supply": [
+      {
+        "resource": "tc",
+        "amount": 4
+      }
+    ],
+    "demand": [
+      {
+        "resource": "h3",
+        "amount": 3
+      },
+      {
+        "resource": "qp",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "planet-vulkans-forge",
+    "name": "Vulkan's Forge",
+    "group": "High metal",
+    "pattern": "y",
+    "supply": [
+      {
+        "resource": "tc",
+        "amount": 4
+      },
+      {
+        "resource": "h3",
+        "amount": 2
+      }
+    ],
+    "demand": [
+      {
+        "resource": "pc",
+        "amount": 2
+      },
+      {
+        "resource": "qp",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "planet-gorgon-prime",
+    "name": "Gorgon Prime",
+    "group": "High metal",
+    "pattern": "ar",
+    "supply": [
+      {
+        "resource": "tc",
+        "amount": 5
+      }
+    ],
+    "demand": [
+      {
+        "resource": "h3",
+        "amount": 3
+      },
+      {
+        "resource": "pc",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "planet-caelum-mining-hub",
+    "name": "Caelum Mining Hub",
+    "group": "High metal",
+    "pattern": "al",
+    "supply": [
+      {
+        "resource": "tc",
+        "amount": 4
+      }
+    ],
+    "demand": [
+      {
+        "resource": "qp",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "planet-the-iron-ring",
+    "name": "The Iron Ring",
+    "group": "High metal",
+    "pattern": "cl",
+    "supply": [
+      {
+        "resource": "tc",
+        "amount": 4
+      },
+      {
+        "resource": "pc",
+        "amount": 2
+      }
+    ],
+    "demand": [
+      {
+        "resource": "h3",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "planet-zephyrus-minor",
+    "name": "Zephyrus Minor",
+    "group": "High fuel",
+    "pattern": "ar",
+    "supply": [
+      {
+        "resource": "h3",
+        "amount": 4
+      }
+    ],
+    "demand": [
+      {
+        "resource": "tc",
+        "amount": 4
+      },
+      {
+        "resource": "qp",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "planet-krakens-breath",
+    "name": "Kraken's Breath",
+    "group": "High fuel",
+    "pattern": "al",
+    "supply": [
+      {
+        "resource": "h3",
+        "amount": 5
+      }
+    ],
+    "demand": [
+      {
+        "resource": "tc",
+        "amount": 3
+      },
+      {
+        "resource": "pc",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "planet-osiris-4",
+    "name": "Osiris-4",
+    "group": "High fuel",
+    "pattern": "cl",
+    "supply": [
+      {
+        "resource": "h3",
+        "amount": 4
+      },
+      {
+        "resource": "tc",
+        "amount": 2
+      }
+    ],
+    "demand": [
+      {
+        "resource": "qp",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "planet-boreas-station",
+    "name": "Boreas Station",
+    "group": "High fuel",
+    "pattern": "y",
+    "supply": [
+      {
+        "resource": "h3",
+        "amount": 4
+      }
+    ],
+    "demand": [
+      {
+        "resource": "tc",
+        "amount": 2
+      },
+      {
+        "resource": "pc",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "planet-neptunia-prime",
+    "name": "Neptunia Prime",
+    "group": "High fuel",
+    "pattern": "ar",
+    "supply": [
+      {
+        "resource": "h3",
+        "amount": 4
+      },
+      {
+        "resource": "pc",
+        "amount": 2
+      }
+    ],
+    "demand": [
+      {
+        "resource": "tc",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "planet-nova-forge",
+    "name": "Nova Forge",
+    "group": "High component",
+    "pattern": "al",
+    "supply": [
+      {
+        "resource": "pc",
+        "amount": 4
+      },
+      {
+        "resource": "tc",
+        "amount": 2
+      }
+    ],
+    "demand": [
+      {
+        "resource": "h3",
+        "amount": 4
+      },
+      {
+        "resource": "qp",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "planet-stallos-prime",
+    "name": "Stallos Prime",
+    "group": "High component",
+    "pattern": "cl",
+    "supply": [
+      {
+        "resource": "pc",
+        "amount": 4
+      }
+    ],
+    "demand": [
+      {
+        "resource": "tc",
+        "amount": 4
+      },
+      {
+        "resource": "h3",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "planet-ares-citadel",
+    "name": "Ares Citadel",
+    "group": "High component",
+    "pattern": "ar",
+    "supply": [
+      {
+        "resource": "pc",
+        "amount": 5
+      },
+      {
+        "resource": "tc",
+        "amount": 2
+      }
+    ],
+    "demand": [
+      {
+        "resource": "h3",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "planet-steelhold-alpha",
+    "name": "Steelhold Alpha",
+    "group": "High component",
+    "pattern": "al",
+    "supply": [
+      {
+        "resource": "pc",
+        "amount": 5
+      }
+    ],
+    "demand": [
+      {
+        "resource": "tc",
+        "amount": 4
+      },
+      {
+        "resource": "qp",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "planet-vanguard-station",
+    "name": "Vanguard Station",
+    "group": "High component",
+    "pattern": "cl",
+    "supply": [
+      {
+        "resource": "pc",
+        "amount": 4
+      },
+      {
+        "resource": "h3",
+        "amount": 2
+      }
+    ],
+    "demand": [
+      {
+        "resource": "tc",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "planet-solaria-prime",
+    "name": "Solaria Prime",
+    "group": "High tech",
+    "pattern": "ar",
+    "supply": [
+      {
+        "resource": "qp",
+        "amount": 4
+      }
+    ],
+    "demand": [
+      {
+        "resource": "tc",
+        "amount": 2
+      },
+      {
+        "resource": "h3",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "planet-xanadu-core",
+    "name": "Xanadu Core",
+    "group": "High tech",
+    "pattern": "al",
+    "supply": [
+      {
+        "resource": "qp",
+        "amount": 4
+      },
+      {
+        "resource": "pc",
+        "amount": 2
+      }
+    ],
+    "demand": [
+      {
+        "resource": "h3",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "planet-apex-laboratories",
+    "name": "Apex Laboratories",
+    "group": "High tech",
+    "pattern": "cl",
+    "supply": [
+      {
+        "resource": "qp",
+        "amount": 5
+      }
+    ],
+    "demand": [
+      {
+        "resource": "pc",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "planet-elysium-nexus",
+    "name": "Elysium Nexus",
+    "group": "High tech",
+    "pattern": "ar",
+    "supply": [
+      {
+        "resource": "qp",
+        "amount": 4
+      },
+      {
+        "resource": "h3",
+        "amount": 2
+      }
+    ],
+    "demand": [
+      {
+        "resource": "tc",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "planet-chronos-research-outpost",
+    "name": "Chronos Research Outpost",
+    "group": "High tech",
+    "pattern": "al",
+    "supply": [
+      {
+        "resource": "qp",
+        "amount": 4
+      }
+    ],
+    "demand": [
+      {
+        "resource": "h3",
+        "amount": 4
+      }
+    ]
+  }
+]

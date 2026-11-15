@@ -1,4 +1,6 @@
 import { ActionToken } from "../../../components/game/ActionToken";
+import { AttackDieIcon } from "../../../components/game/AttackDieIcon";
+import { UpgradeSlotMarker } from "../../../components/game/UpgradeSlotMarker";
 import { ResourceCube } from "../../../components/game/ResourceCube";
 import { SeatMark } from "../../../components/game/SeatMark";
 import {
@@ -76,6 +78,32 @@ export function GamePaletteSection() {
             <Typography variant="caption">{faction.note}</Typography>
           </div>
         ))}
+      </div>
+
+      <Typography variant="overline">Upgrade slot marker</Typography>
+      <div className={styles.itemRow}>
+        <div className={styles.item}>
+          <div className={styles.iconSizes}>
+            <UpgradeSlotMarker slotSize={0.5} size={32} />
+            <UpgradeSlotMarker slotSize={1} size={32} />
+            <UpgradeSlotMarker slotSize={2} size={32} />
+          </div>
+          <Typography variant="subtitle1">Module slots</Typography>
+          <Typography variant="caption">Overlaid on asset art (`SLT-1`).</Typography>
+        </div>
+      </div>
+
+      <Typography variant="overline">Attack die (weapon cards)</Typography>
+      <div className={styles.itemRow}>
+        <div className={styles.item}>
+          <div className={styles.iconSizes}>
+            {iconSizes.map((size) => (
+              <AttackDieIcon key={size} size={Math.round(size * 0.45)} />
+            ))}
+          </div>
+          <Typography variant="subtitle1">Attack die</Typography>
+          <Typography variant="caption">One icon per die on asset cards. Drop attack.png in assets/icons/dice/ to override.</Typography>
+        </div>
       </div>
 
       <Typography variant="overline">Action icons (ready, exhausted, at four sizes)</Typography>

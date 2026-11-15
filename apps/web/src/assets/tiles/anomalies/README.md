@@ -8,7 +8,7 @@ The discovery-bonus pill and warp gates are always drawn on top of the art.
 
 ## File names
 
-Use a **slug** derived from the tile name in `fixtures/tiles.ts` (lowercase, apostrophes dropped, other non-alphanumerics become hyphens). Tile 4 was removed (`TIL-1`), so there are 21 images.
+Use a **slug** derived from the tile name in `fixtures/tiles.ts` (lowercase, apostrophes dropped, other non-alphanumerics become hyphens). All **22** anomaly tiles, including Overclocking Relay (`overclocking-relay.webp`).
 
 | Tile | Filename |
 |------|----------|

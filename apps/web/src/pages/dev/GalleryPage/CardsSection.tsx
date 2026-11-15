@@ -1,0 +1,305 @@
+import { firstPlayableSlice } from "@void-matter/content";
+import { AssetCard } from "../../../components/game/AssetCard";
+import { CrewCard } from "../../../components/game/CrewCard";
+import { DeckBack } from "../../../components/game/DeckBack";
+import { EnemyCard } from "../../../components/game/EnemyCard";
+import { MissionCard } from "../../../components/game/MissionCard";
+import { ReferenceCard } from "../../../components/game/ReferenceCard";
+import { ShipCard } from "../../../components/game/ShipCard";
+import { resourceInfo, type ResourceId } from "../../../components/game/resources";
+import { Typography } from "../../../components/Typography/Typography";
+import {
+  assetCommonTechSpecimens,
+  assetDefenceSpecimens,
+  assetPatternSpecimens,
+  assetProps,
+  assetSectorSpecimens,
+  assetSlotSpecimens,
+  assetUniqueSpecimens,
+  assetWeaponSpecimens,
+} from "../../../fixtures/assetCardGallery";
+import type { AssetCardFixture } from "../../../fixtures/assetCardFixtures";
+import { enemyFixtures, ensignFixtures } from "../../../fixtures/cards";
+import { hrefFor } from "../../../app/useHashRoute";
+import { ownerSectorGalleryGroups } from "../../../fixtures/sectorAssetCards";
+import { CardScalesFigure } from "./Figure";
+import styles from "./GalleryPage.module.css";
+
+function renderAsset(fixture: AssetCardFixture, width: number) {
+  return <AssetCard {...assetProps(fixture)} width={width} />;
+}
+
+const sectorDeckLabels: readonly { readonly sector: ResourceId; readonly count: number; readonly useS1Back: boolean }[] = [
+  { sector: firstPlayableSlice.sectorMarkets.s1.resource, count: firstPlayableSlice.sectorMarkets.s1.deckSize, useS1Back: true },
+  { sector: firstPlayableSlice.sectorMarkets.s2.resource, count: firstPlayableSlice.sectorMarkets.s2.deckSize, useS1Back: false },
+  { sector: firstPlayableSlice.sectorMarkets.s3.resource, count: firstPlayableSlice.sectorMarkets.s3.deckSize, useS1Back: false },
+  { sector: firstPlayableSlice.sectorMarkets.s4.resource, count: firstPlayableSlice.sectorMarkets.s4.deckSize, useS1Back: false },
+];
+
+const enemyDeckCount =
+  firstPlayableSlice.enemyDecks["iron-syndicate"].explorationSize +
+  firstPlayableSlice.enemyDecks["iron-syndicate"].reinforcementSize;
+
+export function CardsSection() {
+  return (
+    <section className={styles.section} id="cards">
+      <Typography variant="h3">Cards</Typography>
+      <Typography variant="body2">
+        All sector asset cards share one layout (`AssetCard`): ship module header, cost pips, art window, rules panel,
+        and slot marker on art. Rim colour follows the sector (`MAP-4`). Print 65 × 100 mm; hand 118px wide, inspect
+        220px.{" "}
+        <a className={styles.inlineLink} href={hrefFor("/dev/s1-cards")}>
+          Full S1 deck
+        </a>
+        .
+      </Typography>
+
+      <div className={styles.group}>
+        <Typography variant="overline">Asset card pattern (weapon · defence · module)</Typography>
+        <div className={styles.grid}>
+          {assetPatternSpecimens.map((fixture) => (
+            <CardScalesFigure
+              key={fixture.title}
+              name={fixture.title}
+              note={fixture.category}
+              render={(width) => renderAsset(fixture, width)}
+            />
+          ))}
+        </div>
+      </div>
+
+      {ownerSectorGalleryGroups.filter((group) => group.deck !== "s1").map((group) =>
+        group.cards.length > 0 ? (
+          <div className={styles.group} key={group.deck}>
+            <Typography variant="overline">{group.label} — owner illustrations</Typography>
+            <div className={styles.grid}>
+              {group.cards.map((card) => (
+                <CardScalesFigure
+                  key={card.catalogueId}
+                  name={card.title}
+                  note={card.category}
+                  render={(width) => <AssetCard {...card} width={width} />}
+                />
+              ))}
+            </div>
+          </div>
+        ) : null,
+      )}
+
+      <div className={styles.group}>
+        <Typography variant="overline">Four sector rims</Typography>
+        <div className={styles.grid}>
+          {assetSectorSpecimens.map((fixture) => (
+            <CardScalesFigure
+              key={fixture.title}
+              name={fixture.title}
+              note={resourceInfo[fixture.sector].name}
+              render={(width) => renderAsset(fixture, width)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.group}>
+        <Typography variant="overline">Slot sizes (`SLT-1`)</Typography>
+        <div className={styles.grid}>
+          {assetSlotSpecimens.map((fixture) => (
+            <CardScalesFigure
+              key={fixture.title}
+              name={fixture.title}
+              note={fixture.slotSize === 0.5 ? "Half slot" : fixture.slotSize === 2 ? "Two slots" : "One slot"}
+              render={(width) => renderAsset(fixture, width)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.group}>
+        <Typography variant="overline">Weapons and defences</Typography>
+        <div className={styles.grid}>
+          {assetWeaponSpecimens.map((fixture) => (
+            <CardScalesFigure key={fixture.title} name={fixture.title} render={(width) => renderAsset(fixture, width)} />
+          ))}
+          {assetDefenceSpecimens.map((fixture) => (
+            <CardScalesFigure
+              key={fixture.title}
+              name={fixture.title}
+              note="Defence"
+              render={(width) => renderAsset(fixture, width)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.group}>
+        <Typography variant="overline">Unique and common technology</Typography>
+        <div className={styles.grid}>
+          {assetUniqueSpecimens.map((fixture) => (
+            <CardScalesFigure key={fixture.title} name={fixture.title} render={(width) => renderAsset(fixture, width)} />
+          ))}
+          {assetCommonTechSpecimens.map((fixture) => (
+            <CardScalesFigure
+              key={fixture.title}
+              name={fixture.title}
+              note="Not in a sector deck"
+              render={(width) => renderAsset(fixture, width)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.group}>
+        <Typography variant="overline">Crew ensigns (first slice, `ACT-1`)</Typography>
+        <div className={styles.grid}>
+          {ensignFixtures.map((crew) => (
+            <CardScalesFigure
+              key={crew.title}
+              name={crew.title}
+              note="Officer token on this ship only"
+              render={(width) => (
+                <CrewCard title={crew.title} text={crew.text} cost={crew.cost} action={crew.action} width={width} />
+              )}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.group}>
+        <Typography variant="overline">Missions</Typography>
+        <div className={styles.grid}>
+          <CardScalesFigure
+            name="Syndicate Bust (in progress)"
+            note="Combat mission, slice deck"
+            render={(width) => (
+              <MissionCard
+                title="Syndicate Bust"
+                text="Destroy 2 Iron Syndicate ships in one globalRound."
+                voidMatter={1}
+                width={width}
+              />
+            )}
+          />
+          <CardScalesFigure
+            name="Syndicate Bust (complete)"
+            render={(width) => (
+              <MissionCard
+                title="Syndicate Bust"
+                text="Destroy 2 Iron Syndicate ships in one globalRound."
+                voidMatter={1}
+                complete
+                width={width}
+              />
+            )}
+          />
+        </div>
+      </div>
+
+      <div className={styles.group}>
+        <Typography variant="overline">Enemy ships (Iron Syndicate slice)</Typography>
+        <div className={styles.grid}>
+          {enemyFixtures.map((enemy) => (
+            <CardScalesFigure
+              key={enemy.name}
+              name={enemy.name}
+              note={`Level ${enemy.tier} · ${enemy.tier} reward card${enemy.tier === 1 ? "" : "s"}`}
+              render={(width) => (
+                <EnemyCard
+                  name={enemy.name}
+                  tier={enemy.tier}
+                  hull={enemy.hull}
+                  speed={enemy.speed}
+                  weapons={enemy.weapons}
+                  special={enemy.special}
+                  width={width}
+                />
+              )}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.group}>
+        <Typography variant="overline">Ship card (`SLT-1` halves)</Typography>
+        <div className={styles.grid}>
+          <CardScalesFigure
+            name="Nomad-class Corvette"
+            note="Sample install: ½ + ½ in slot 1, one full slot used"
+            render={(width) => (
+              <ShipCard
+                name="Nomad-class Corvette"
+                subtitle="Starting ship"
+                speed={2}
+                hull={1}
+                crew={1}
+                cargo={2}
+                slotFill={[2, 0, 1, 0]}
+                width={width}
+              />
+            )}
+          />
+        </div>
+      </div>
+
+      <div className={styles.group}>
+        <Typography variant="overline">Reference</Typography>
+        <div className={styles.grid}>
+          <CardScalesFigure
+            name="Dice reference"
+            render={(width) => (
+              <ReferenceCard
+                title="Natural 6"
+                text="A natural 6 always hits. A natural 1 always misses, even with accuracy bonuses."
+                width={width}
+              />
+            )}
+          />
+        </div>
+      </div>
+
+      <div className={styles.group}>
+        <Typography variant="overline">Deck backs (slice counts)</Typography>
+        <div className={styles.grid}>
+          {sectorDeckLabels.map(({ sector, count, useS1Back }) => (
+            <FigureDeck key={sector} sector={sector} count={count} useS1Back={useS1Back} />
+          ))}
+          <FigureDeck sector={null} label="Enemy" count={enemyDeckCount} rim="var(--game-faction-iron)" />
+          <FigureDeck sector={null} label="Missions" count={firstPlayableSlice.missionDeckSize} rim="var(--palette-primary-main)" />
+          <FigureDeck sector={null} label="Crew" count={firstPlayableSlice.crewDeckSize} rim="var(--palette-primary-light)" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FigureDeck({
+  sector,
+  count,
+  label,
+  rim,
+  useS1Back = false,
+}: {
+  readonly sector: ResourceId | null;
+  readonly count: number;
+  readonly label?: string;
+  readonly rim?: string;
+  readonly useS1Back?: boolean;
+}) {
+  const deckLabel = label ?? (sector ? resourceInfo[sector].name : "Deck");
+  const deckRim = rim ?? (sector ? `var(--game-resource-${sector})` : "var(--palette-primary-main)");
+  const backNote = useS1Back ? `${count} cards · red upgrade back` : `${count} cards · order hidden`;
+  return (
+    <CardScalesFigure
+      name={deckLabel}
+      note={backNote}
+      render={(width) => (
+        <DeckBack
+          label={deckLabel}
+          count={count}
+          rim={deckRim}
+          width={width}
+          {...(useS1Back ? { variant: "s1-upgrade" as const } : {})}
+        />
+      )}
+    />
+  );
+}

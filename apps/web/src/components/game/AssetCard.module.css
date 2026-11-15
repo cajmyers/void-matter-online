@@ -1,0 +1,367 @@
+.card {
+  --asset-rim: var(--game-resource-pc);
+  --asset-accent: var(--asset-rim);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  aspect-ratio: var(--card-aspect-ratio);
+  overflow: hidden;
+  background-color: var(--game-card-background);
+  background-image: var(--asset-face-texture, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 2px solid var(--asset-rim);
+  border-radius: var(--shape-border-radius-lg);
+  box-shadow:
+    var(--shadow-3),
+    0 0 14px color-mix(in srgb, var(--asset-rim) var(--glow-strength), transparent),
+    inset 0 0 12px color-mix(in srgb, var(--asset-rim) 18%, transparent);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 6px 6px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--asset-rim) 22%, var(--game-card-background)), var(--game-card-background));
+}
+
+.withFaceTexture .header {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--asset-rim) 28%, rgb(6 10 16 / 0.72)),
+    color-mix(in srgb, var(--game-card-background) 55%, transparent)
+  );
+}
+
+.moduleTag {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.48rem;
+  opacity: 0.88;
+}
+
+.title {
+  min-width: 0;
+  font-size: 0.72rem;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.costRail {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 3px;
+  border-radius: var(--shape-border-radius-sm);
+  background: rgb(6 10 16 / 0.92);
+  box-shadow:
+    var(--shadow-2),
+    0 0 0 1px rgb(255 255 255 / 0.14),
+    inset 0 0 8px rgb(0 0 0 / 0.35);
+  pointer-events: none;
+}
+
+.costRail > * {
+  pointer-events: auto;
+}
+
+.slotOnArt {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 3;
+}
+
+.artPlate {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: var(--art-plate-height);
+  margin: 0 6px;
+  padding: 4px;
+  border-radius: var(--shape-border-radius-sm);
+  background: var(--game-space-deep);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--asset-rim) 30%, transparent);
+  overflow: hidden;
+}
+
+.artPlate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at 50% 20%, color-mix(in srgb, var(--asset-rim) 25%, transparent), transparent 65%);
+  pointer-events: none;
+}
+
+.illustration {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: calc(var(--shape-border-radius-sm) - 2px);
+}
+
+/* Placeholder scenes (no owner bitmap). */
+.placeholderArt {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--shape-border-radius-sm) - 2px);
+  background: var(--game-space-deep);
+  overflow: hidden;
+}
+
+.placeholderArt::before,
+.placeholderArt::after {
+  content: "";
+  position: absolute;
+}
+
+.planet {
+  background:
+    radial-gradient(ellipse 80% 70% at 78% 24%, color-mix(in srgb, var(--game-space-blue) 80%, transparent), transparent 70%),
+    var(--game-space-deep);
+}
+
+.planet::before {
+  left: 18%;
+  top: 24%;
+  width: 58%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--asset-rim) 45%, white), var(--asset-rim) 42%, color-mix(in srgb, var(--asset-rim) 16%, black) 100%);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--asset-rim) 60%, transparent);
+}
+
+.nebula {
+  background:
+    radial-gradient(ellipse 60% 55% at 35% 40%, color-mix(in srgb, var(--asset-rim) 70%, transparent), transparent 70%),
+    radial-gradient(ellipse 55% 60% at 70% 62%, color-mix(in srgb, var(--game-space-purple) 85%, transparent), transparent 72%),
+    var(--game-space-deep);
+}
+
+.ship {
+  background:
+    radial-gradient(ellipse 90% 70% at 20% 80%, color-mix(in srgb, var(--asset-rim) 45%, transparent), transparent 72%),
+    var(--game-space-deep);
+}
+
+.ship::before {
+  left: 20%;
+  top: 34%;
+  width: 62%;
+  height: 26%;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--asset-rim) 40%, black), color-mix(in srgb, var(--asset-rim) 70%, white));
+  clip-path: polygon(0 50%, 22% 12%, 100% 40%, 100% 60%, 22% 88%);
+  filter: drop-shadow(0 0 6px var(--asset-rim));
+}
+
+.textBlock {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: var(--text-block-height);
+  margin: 4px 6px 0;
+  padding: 6px 8px;
+  border-radius: var(--shape-border-radius-sm);
+  background: color-mix(in srgb, var(--palette-grey-100) 55%, white);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--palette-grey-300) 35%, transparent);
+  text-align: center;
+  overflow: hidden;
+}
+
+.flavor {
+  flex: none;
+  align-self: stretch;
+  font-size: 0.62rem;
+  line-height: 1.28;
+  color: var(--palette-grey-600);
+}
+
+.rules {
+  flex: none;
+  margin-top: auto;
+  align-self: stretch;
+  overflow: hidden;
+  font-size: 0.66rem;
+  line-height: 1.32;
+  font-weight: 600;
+  color: var(--palette-grey-900);
+}
+
+.detail .flavor {
+  font-size: 0.68rem;
+}
+
+.detail .rules {
+  font-size: 0.72rem;
+}
+
+.footerReserve {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: var(--footer-reserve-height);
+  min-height: 0;
+  padding: 0 6px 2px;
+  box-sizing: border-box;
+}
+
+.withFaceTexture .footerReserve {
+  margin: 0 6px 4px;
+  padding: 4px 8px 6px;
+  border-radius: var(--shape-border-radius-sm);
+  background: rgb(6 10 16 / 0.62);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.08),
+    0 1px 4px rgb(0 0 0 / 0.2);
+}
+
+.typeRibbon {
+  padding: 2px 12px;
+  border-radius: var(--shape-border-radius-sm);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: white;
+  background: var(--asset-accent);
+}
+
+.statsRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  padding-top: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  text-transform: uppercase;
+}
+
+.weaponFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 100%;
+}
+
+.weaponType {
+  width: 100%;
+  font-family: var(--font-text);
+  font-size: 0.52rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--palette-text-primary);
+}
+
+.weaponTypeCompact {
+  font-size: 0.46rem;
+}
+
+/* Inspect / detail card (220px): extra footer band height — bump weapon line. */
+.detail .weaponFooter {
+  gap: 4px;
+}
+
+.detail .weaponType {
+  font-size: 0.7rem;
+  line-height: 1.25;
+}
+
+.detail .weaponRow {
+  font-size: 0.64rem;
+  gap: 6px;
+}
+
+.detail .attackDice {
+  gap: 4px;
+  max-width: 10rem;
+}
+
+.weaponRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  text-transform: uppercase;
+}
+
+.hitLabel {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.hitThreshold {
+  font-family: inherit;
+  font-size: 1.38em;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.detail .hitThreshold {
+  font-size: 1.45em;
+}
+
+.attackDice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  max-width: 5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.footerNote {
+  font-size: 0.48rem;
+  opacity: 0.85;
+  text-align: center;
+}
+
+.compact .title {
+  font-size: 0.6rem;
+}
+
+.compact .textBlock {
+  padding: 4px 6px;
+}
+
+.compact .rules {
+  font-size: 0.52rem;
+}
+
+.compact .hitLabel {
+  font-size: 0.46rem;
+}
+
+.compact .hitThreshold {
+  font-size: 1.32em;
+}

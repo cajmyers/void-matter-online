@@ -1,0 +1,19 @@
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-xs);
+  padding: var(--spacing-0-5) var(--spacing-1);
+  background: color-mix(in srgb, var(--palette-primary-main) 22%, var(--game-card-background));
+  border-bottom: 1px solid color-mix(in srgb, var(--palette-primary-main) 35%, transparent);
+}
+
+.rank {
+  letter-spacing: 0.12em;
+}
+
+.cost {
+  display: inline-flex;
+  gap: var(--gap-xs);
+  margin-left: auto;
+}

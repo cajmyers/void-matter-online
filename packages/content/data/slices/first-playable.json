@@ -1,0 +1,25 @@
+{
+  "id": "first-playable",
+  "label": "First content slice",
+  "sectorMarkets": {
+    "s1": { "resource": "pc", "label": "S1 Weapons / Offensive", "deckSize": 10, "deckBack": "s1-upgrade" },
+    "s2": { "resource": "h3", "label": "S2 Propulsion / Utility", "deckSize": 2, "deckBack": "procedural" },
+    "s3": { "resource": "qp", "label": "S3 Cargo / Life Support", "deckSize": 8, "deckBack": "procedural" },
+    "s4": { "resource": "tc", "label": "S4 Hull / Defensive", "deckSize": 12, "deckBack": "procedural" }
+  },
+  "enemyDecks": {
+    "iron-syndicate": {
+      "explorationSize": 6,
+      "reinforcementSize": 5,
+      "cardIds": ["iron-skiff", "iron-enforcer", "iron-goliath"]
+    }
+  },
+  "missionDeckSize": 27,
+  "crewDeckSize": 16,
+  "includedCardIds": {
+    "s1": ["ai-guidance-suite", "apocalypse"]
+  },
+  "includedCrewIds": ["pilot", "merchant", "tactical", "scout"],
+  "includedEnemyIds": ["iron-skiff", "iron-enforcer", "iron-goliath"],
+  "includedPlayerShipIds": ["nomad-corvette"]
+}

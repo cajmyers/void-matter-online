@@ -100,3 +100,12 @@ export function hexTileMarketDemandY(hexSize: number): number {
   const rim = hexSize * hexTileMarketRimInset;
   return rim - pillHeight / 2 - hexTileMarketEdgePad - hexTileMarketRowInsetTotal(hexSize);
 }
+
+/** Extra inset below the demand row for the Anomaly Interact / passive marker (toward the hex bottom). */
+export const hexTileAnomalyAbilityExtraInset = 6;
+
+/** Centre y for the Anomaly ability marker at the bottom of the hex. */
+export function hexTileAnomalyAbilityY(hexSize: number): number {
+  const scale = hexSize >= hexTileSizeDetail ? hexTileMarketPillScaleDetail : 1;
+  return hexTileMarketDemandY(hexSize) + Math.round(hexTileAnomalyAbilityExtraInset * scale);
+}

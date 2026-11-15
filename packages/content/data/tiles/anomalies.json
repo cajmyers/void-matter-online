@@ -1,0 +1,332 @@
+[
+  {
+    "id": "anomaly-1",
+    "number": 1,
+    "name": "The Scrap Reclamation Yard",
+    "bonus": [
+      "tc",
+      "pc"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TL",
+      "R",
+      "BL"
+    ]
+  },
+  {
+    "id": "anomaly-2",
+    "number": 2,
+    "name": "Black Market Trading Depot",
+    "bonus": [
+      "qp",
+      "h3"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TR",
+      "BR",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-3",
+    "number": 3,
+    "name": "EMP Array Substation",
+    "bonus": [
+      "pc",
+      "qp"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TL",
+      "BR",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-4",
+    "number": 4,
+    "name": "Overclocking Relay",
+    "bonus": [
+      "pc",
+      "h3"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TR",
+      "R",
+      "BL"
+    ]
+  },
+  {
+    "id": "anomaly-5",
+    "number": 5,
+    "name": "Graviton Warp Conduit",
+    "bonus": [
+      "h3",
+      "qp"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TL",
+      "TR",
+      "BR",
+      "BL"
+    ]
+  },
+  {
+    "id": "anomaly-6",
+    "number": 6,
+    "name": "Automated Nanite Station",
+    "bonus": [
+      "tc",
+      "qp"
+    ],
+    "ability": "passive",
+    "gates": [
+      "R",
+      "BL",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-7",
+    "number": 7,
+    "name": "Solar Flare Sanctuary",
+    "bonus": [
+      "h3",
+      "pc"
+    ],
+    "ability": "passive",
+    "gates": [
+      "TL",
+      "TR",
+      "BR"
+    ]
+  },
+  {
+    "id": "anomaly-8",
+    "number": 8,
+    "name": "Deep-Space Tactical Sensor Array",
+    "bonus": [
+      "qp",
+      "tc"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TR",
+      "BL",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-9",
+    "number": 9,
+    "name": "Encrypted Archives Station",
+    "bonus": [
+      "qp",
+      "h3"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TL",
+      "R",
+      "BR"
+    ]
+  },
+  {
+    "id": "anomaly-10",
+    "number": 10,
+    "name": "System Defence Grid",
+    "bonus": [
+      "tc",
+      "pc"
+    ],
+    "ability": "passive",
+    "gates": [
+      "TL",
+      "BR"
+    ]
+  },
+  {
+    "id": "anomaly-11",
+    "number": 11,
+    "name": "Sensor Buoy Network",
+    "bonus": [
+      "qp",
+      "pc"
+    ],
+    "ability": "passive",
+    "gates": [
+      "TR",
+      "R",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-12",
+    "number": 12,
+    "name": "Volatile Helium Nebula",
+    "bonus": [
+      "h3",
+      "tc"
+    ],
+    "ability": "passive",
+    "gates": [
+      "TL",
+      "BR",
+      "BL"
+    ]
+  },
+  {
+    "id": "anomaly-13",
+    "number": 13,
+    "name": "Dense Asteroid Field",
+    "bonus": [
+      "tc",
+      "h3"
+    ],
+    "ability": "passive",
+    "gates": [
+      "R",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-14",
+    "number": 14,
+    "name": "Fleet Command Substation",
+    "bonus": [
+      "pc",
+      "tc"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TR",
+      "BL",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-15",
+    "number": 15,
+    "name": "Free-Trade Logistics Hub",
+    "bonus": [
+      "h3",
+      "qp"
+    ],
+    "ability": "passive",
+    "gates": [
+      "TL",
+      "R",
+      "BR",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-16",
+    "number": 16,
+    "name": "Smuggler's Foundry",
+    "bonus": [
+      "tc",
+      "h3"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TR",
+      "BR",
+      "BL"
+    ]
+  },
+  {
+    "id": "anomaly-17",
+    "number": 17,
+    "name": "Intelligence Bureau",
+    "bonus": [
+      "qp",
+      "tc"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TL",
+      "R",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-18",
+    "number": 18,
+    "name": "Subspace Disruption Array",
+    "bonus": [
+      "pc",
+      "qp"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TR",
+      "BL",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-19",
+    "number": 19,
+    "name": "System Regulator Node",
+    "bonus": [
+      "h3",
+      "pc"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TL",
+      "R",
+      "BR"
+    ]
+  },
+  {
+    "id": "anomaly-20",
+    "number": 20,
+    "name": "Personnel Transporter",
+    "bonus": [
+      "qp",
+      "h3"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TR",
+      "BR",
+      "L"
+    ]
+  },
+  {
+    "id": "anomaly-21",
+    "number": 21,
+    "name": "Officer Training Command",
+    "bonus": [
+      "tc",
+      "pc"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TL",
+      "R",
+      "BL"
+    ]
+  },
+  {
+    "id": "anomaly-22",
+    "number": 22,
+    "name": "Commerce Guild Outpost",
+    "bonus": [
+      "tc",
+      "qp"
+    ],
+    "ability": "interact",
+    "gates": [
+      "TR",
+      "BR",
+      "BL"
+    ]
+  }
+]

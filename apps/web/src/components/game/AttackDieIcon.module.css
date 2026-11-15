@@ -1,0 +1,24 @@
+.wrap,
+.masked {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, currentColor 55%, transparent));
+}
+
+.svg {
+  display: block;
+}
+
+.masked {
+  background-color: currentColor;
+  mask-image: var(--attack-die-icon);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: var(--attack-die-icon);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}

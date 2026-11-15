@@ -1,0 +1,134 @@
+[
+  {
+    "id": "nano-bonding",
+    "title": "Nano Bonding",
+    "sectorDeck": "s4",
+    "slotSize": 0.5,
+    "kind": "defence",
+    "illustrationSlug": "nano-bonding",
+    "costs": [{ "resource": "tc", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "magnetic-shields",
+    "title": "Magnetic Shields",
+    "sectorDeck": "s4",
+    "slotSize": 1,
+    "kind": "defence",
+    "illustrationSlug": "magnetic-shields",
+    "costs": [{ "resource": "tc", "amount": 2 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "energy-shields",
+    "title": "Energy Shields",
+    "sectorDeck": "s4",
+    "slotSize": 1,
+    "kind": "defence",
+    "illustrationSlug": "energy-shields",
+    "costs": [{ "resource": "tc", "amount": 2 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "thermal-sinks",
+    "title": "Thermal Sinks",
+    "sectorDeck": "s4",
+    "slotSize": 0.5,
+    "kind": "defence",
+    "illustrationSlug": "thermal-sinks",
+    "costs": [{ "resource": "tc", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "inertial-dampener",
+    "title": "Inertial Dampener",
+    "sectorDeck": "s4",
+    "slotSize": 0.5,
+    "kind": "defence",
+    "illustrationSlug": "inertial-dampener",
+    "costs": [{ "resource": "tc", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "reactive-plating",
+    "title": "Reactive Plating",
+    "sectorDeck": "s4",
+    "slotSize": 1,
+    "kind": "defence",
+    "illustrationSlug": "reactive-plating",
+    "costs": [{ "resource": "tc", "amount": 2 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "pulse-defense-grid",
+    "title": "Pulse Defense Grid",
+    "sectorDeck": "s4",
+    "slotSize": 1,
+    "kind": "defence",
+    "illustrationSlug": "pulse-defense-grid",
+    "costs": [{ "resource": "tc", "amount": 2 }, { "resource": "pc", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "decoy-launcher",
+    "title": "Decoy Launcher",
+    "sectorDeck": "s4",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "decoy-launcher",
+    "costs": [{ "resource": "tc", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "diamond-hull",
+    "title": "Diamond Hull",
+    "sectorDeck": "s4",
+    "slotSize": 2,
+    "kind": "defence",
+    "illustrationSlug": "diamond-hull",
+    "costs": [{ "resource": "tc", "amount": 3 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "nano-repair-bots",
+    "title": "Nano Repair Bots",
+    "sectorDeck": "s4",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "nano-repair-bots",
+    "costs": [{ "resource": "tc", "amount": 2 }, { "resource": "qp", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "self-destruct-protocol",
+    "title": "Self-destruct Protocol",
+    "sectorDeck": "s4",
+    "slotSize": 0.5,
+    "kind": "special",
+    "illustrationSlug": "self-destruct-protocol",
+    "costs": [{ "resource": "tc", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "mag-repulsor-grid",
+    "title": "Magnetic Repulsor Grid",
+    "sectorDeck": "s4",
+    "slotSize": 1,
+    "kind": "defence",
+    "illustrationSlug": "mag-repulsor-grid",
+    "costs": [{ "resource": "tc", "amount": 2 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  }
+]

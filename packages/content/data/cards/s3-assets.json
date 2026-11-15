@@ -1,0 +1,101 @@
+[
+  {
+    "id": "compact-storage",
+    "title": "Compact Storage",
+    "sectorDeck": "s3",
+    "slotSize": 0.5,
+    "kind": "module",
+    "illustrationSlug": "compact-storage",
+    "costs": [{ "resource": "qp", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "expanded-cargo-bay",
+    "title": "Expanded Cargo Bay",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "expanded-cargo-bay",
+    "costs": [{ "resource": "qp", "amount": 2 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "bulk-storage",
+    "title": "Bulk Storage",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "bulk-storage",
+    "costs": [{ "resource": "qp", "amount": 2 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "subspace-relay",
+    "title": "Subspace Relay",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "special",
+    "illustrationSlug": "subspace-relay",
+    "costs": [{ "resource": "qp", "amount": 2 }, { "resource": "h3", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "data-siphon",
+    "title": "Data Siphon",
+    "sectorDeck": "s3",
+    "slotSize": 0.5,
+    "kind": "module",
+    "illustrationSlug": "data-siphon",
+    "costs": [{ "resource": "qp", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "luxury-quarters",
+    "title": "Luxury Quarters",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "luxury-quarters",
+    "costs": [{ "resource": "qp", "amount": 2 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "habitation-block",
+    "title": "Habitation Block",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "habitation-block",
+    "costs": [{ "resource": "qp", "amount": 2 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "habitation-block-alt",
+    "title": "Habitation Block",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "habitation-block-2",
+    "costs": [{ "resource": "qp", "amount": 2 }],
+    "flavorText": "(Proposed — alternate art only; merge or remove duplicate.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  },
+  {
+    "id": "smugglers-hold",
+    "title": "Smuggler's Hold",
+    "sectorDeck": "s3",
+    "slotSize": 1,
+    "kind": "module",
+    "illustrationSlug": "smugglers-hold",
+    "costs": [{ "resource": "qp", "amount": 2 }, { "resource": "h3", "amount": 1 }],
+    "flavorText": "(Proposed — awaiting owner text.)",
+    "rulesText": "(Proposed — awaiting owner ruling.)"
+  }
+]

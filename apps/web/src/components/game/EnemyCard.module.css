@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-xs);
+  padding: var(--spacing-0-5) var(--spacing-1) 0;
+}
+
+.stats {
+  opacity: 0.95;
+}
+
+.art {
+  flex-basis: 30%;
+}
+
+.rewards {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  width: 100%;
+}
+
+.rewardBack {
+  flex: none;
+  aspect-ratio: var(--card-aspect-ratio);
+  border-radius: var(--shape-border-radius-sm);
+  border: 1px solid var(--palette-divider);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--game-faction-iron) 25%, var(--game-card-background)), var(--game-card-background)),
+    repeating-linear-gradient(-12deg, transparent, transparent 4px, color-mix(in srgb, var(--palette-divider) 35%, transparent) 4px, transparent 8px);
+  box-shadow: var(--shadow-1);
+}
+
+.rewardNote {
+  margin-left: auto;
+  opacity: 0.85;
+}
