@@ -1,12 +1,3 @@
-import type { ActionTokenKind, ResourceId } from "../components/game/resources";
-
-export interface CrewCardFixture {
-  readonly title: string;
-  readonly text: string;
-  readonly cost: readonly ResourceId[];
-  readonly action: ActionTokenKind;
-}
-
 export const enemyFixtures = [
   {
     name: "Iron Skiff",
@@ -33,30 +24,3 @@ export const enemyFixtures = [
     special: "Underworld Extortion 3: destroyer pays 3 resources from their faction pool.",
   },
 ] as const;
-
-export const ensignFixtures: readonly CrewCardFixture[] = [
-  {
-    title: "Pilot",
-    text: "Grants a Move token on this ship only.",
-    cost: ["h3", "h3", "h3"],
-    action: "move",
-  },
-  {
-    title: "Merchant",
-    text: "Grants a Trade token on this ship only.",
-    cost: ["h3", "qp", "qp"],
-    action: "trade",
-  },
-  {
-    title: "Tactical",
-    text: "Grants a Tactical token on this ship only.",
-    cost: ["pc", "pc", "pc"],
-    action: "tactical",
-  },
-  {
-    title: "Scout",
-    text: "Grants an Interact token on this ship only.",
-    cost: ["pc", "qp", "qp"],
-    action: "interact",
-  },
-];

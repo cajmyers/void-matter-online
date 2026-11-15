@@ -1,8 +1,11 @@
+import { commanderCrew, ensignCrew } from "@void-matter/content";
 import { describe, expect, it } from "vitest";
 import {
   cardIllustrationArt,
   cardIllustrationArtForDeck,
   cardIllustrationSlug,
+  crewCardFaceTexture,
+  crewCardPortraitArt,
   sectorCardFaceTexture,
 } from "./assetCardArt";
 
@@ -32,5 +35,21 @@ describe("assetCardArt", () => {
     expect(sectorCardFaceTexture("s2")).toMatch(/s2\/fronts\/s2-texture/);
     expect(sectorCardFaceTexture("s3")).toMatch(/s3\/fronts\/s3-texture/);
     expect(sectorCardFaceTexture("s4")).toMatch(/s4\/fronts\/s4-texture/);
+  });
+
+  it("loads crew face texture", () => {
+    expect(crewCardFaceTexture()).toMatch(/crew\/fronts\/crew-texture/);
+  });
+
+  it("loads crew portraits by catalogue id", () => {
+    expect(crewCardPortraitArt("pilot")).toMatch(/crew\/fronts\/art\/pilot/);
+    expect(crewCardPortraitArt("merchant")).toMatch(/crew\/fronts\/art\/merchant/);
+    expect(crewCardPortraitArt("unknown")).toBeUndefined();
+  });
+
+  it("loads a portrait file for every catalogue crew id", () => {
+    const ids = [...ensignCrew, ...commanderCrew].map((row) => row.id);
+    const missing = ids.filter((id) => crewCardPortraitArt(id) === undefined);
+    expect(missing).toEqual([]);
   });
 });

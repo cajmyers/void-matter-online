@@ -1,0 +1,27 @@
+{
+  "id": "full-game",
+  "label": "Full game crew recruitment deck (`DCK-5`, `content-data.md` §2)",
+  "deckSize": 32,
+  "cards": [
+    { "crewId": "merchant", "copies": 4 },
+    { "crewId": "pilot", "copies": 4 },
+    { "crewId": "scout", "copies": 4 },
+    { "crewId": "tactical", "copies": 4 },
+    { "crewId": "black-marketeer", "copies": 1 },
+    { "crewId": "bounty-hunter", "copies": 1 },
+    { "crewId": "comms-specialist", "copies": 1 },
+    { "crewId": "expert-marksman", "copies": 1 },
+    { "crewId": "logistics-officer", "copies": 1 },
+    { "crewId": "long-range-sensor-specialist", "copies": 1 },
+    { "crewId": "piloting-ace", "copies": 1 },
+    { "crewId": "profit-chaser", "copies": 1 },
+    { "crewId": "quartermaster", "copies": 1 },
+    { "crewId": "salvage-expert", "copies": 1 },
+    { "crewId": "shield-specialist", "copies": 1 },
+    { "crewId": "trade-expert", "copies": 1 },
+    { "crewId": "void-scout", "copies": 1 },
+    { "crewId": "warp-engineer", "copies": 1 },
+    { "crewId": "weapons-officer", "copies": 1 },
+    { "crewId": "xeno-scientist", "copies": 1 }
+  ]
+}

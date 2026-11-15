@@ -5,7 +5,11 @@
   flex: none;
   aspect-ratio: var(--card-aspect-ratio);
   overflow: hidden;
-  background: var(--game-card-background);
+  background-color: var(--game-card-background);
+  background-image: var(--card-face-texture, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border: 2px solid var(--rim);
   border-radius: var(--shape-border-radius-lg);
   box-shadow:
@@ -38,6 +42,14 @@
   padding: var(--spacing-0-5) var(--spacing-1);
   background: linear-gradient(180deg, color-mix(in srgb, var(--rim) 28%, var(--game-card-background)), var(--game-card-background));
   border-bottom: 1px solid color-mix(in srgb, var(--rim) 40%, transparent);
+}
+
+.withFaceTexture .titleBar {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--rim) 32%, rgb(6 10 16 / 0.72)),
+    color-mix(in srgb, var(--game-card-background) 55%, transparent)
+  );
 }
 
 .titleBar > :first-child {

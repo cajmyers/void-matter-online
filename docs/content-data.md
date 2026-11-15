@@ -113,7 +113,7 @@ Purpose: a small, fully playable game to prove the engine, the bot and the simul
 | S4 deck | Nano Bonding (4), Magnetic Shields (2), Energy Shields, Thermal Sinks, Reactive Plating (1 each) = 9 cards |
 | Enemies | **Iron Syndicate only** (Skiff, Enforcer, Goliath), see section 3 |
 | Anomaly tiles | all **22** are loaded under their normal rules (`TIL-2` reinstated tile 4). **Tile 20 (Personnel Transporter) does nothing without crew**, so it is inert in the slice. *(Check the other tiles for dependencies on unloaded content when the data files are written.)* |
-| Crew | the four plain Ensigns (Pilot, Merchant, Tactical, Scout), section 2a. The Recruit action is enabled. Other Ensigns and all Commanders are not loaded (costs pending). |
+| Crew | the four plain Ensigns (Pilot, Merchant, Tactical, Scout), section 2a. The Recruit action is enabled. Commander catalogue (`CRE-2`) is not loaded in the slice (scope only). |
 | Missions | the 27-card filtered deck, section 4 |
 | Bots | the bot design in `design-decisions.md` section 11 (a Monte Carlo strength check against the real engine) |
 
@@ -130,7 +130,30 @@ Each crew member brings one action token, usable only on its own ship. Costs are
 | Tactical | 3 PC | Tactical |
 | Scout | 1 PC + 2 QP | Interact |
 
-Crew deck size is **not specified**; placeholder: **4 copies of each (16 cards)**, with 4 face-up in the crew market (recruitment refills to 4, `DCK-2` reshuffles an empty deck). Crew capacity comes from the ship (the Corvette has 1 slot) and **Crew Quarters** (S3 deck).
+**Full game crew deck (`DCK-5`):** **4×** each Ensign + **1×** each Commander = **32** physical cards (`decks/crew-deck.json`). **Slice crew deck:** **4×** each of the four plain Ensigns only = **16** cards (`first-playable.json` `crewComposition`). The crew market shows **4** face-up cards; recruitment refills to 4 (`DCK-2` reshuffles an empty deck). Crew capacity comes from the ship (the Corvette has 1 slot) and **Crew Quarters** (S3 deck).
+
+### 2b. Commander catalogue (not in slice, `CRE-2`)
+
+Sixteen Commander rows in `packages/content/data/crew/commanders.json` (UI and full-game deck build). **Every named character is a Commander card**; Ensigns in `ensigns.json` are the four plain action-token types only. Each Commander recruit costs **5** resources total (splits below). They are **not** in `first-playable.json` `includedCrewIds`.
+
+| Commander | Cost | Action token |
+|---|---|---|
+| Black Marketeer | 2 H3 + 2 QP + 1 TC | Trade |
+| Bounty Hunter | 3 PC + 2 QP | Tactical |
+| Comms Specialist | 2 QP + 2 PC + 1 H3 | Interact |
+| Expert Marksman | 3 PC + 1 TC + 1 QP | Tactical |
+| Logistics Officer | 2 H3 + 2 QP + 1 TC | Trade |
+| Long-range Sensor Specialist | 2 QP + 2 PC + 1 H3 | Move |
+| Piloting Ace | 3 H3 + 1 PC + 1 QP | Move |
+| Profit-Chaser | 2 H3 + 2 QP + 1 PC | Trade |
+| Quartermaster | 2 TC + 2 QP + 1 H3 | Interact |
+| Salvage Expert | 2 TC + 2 PC + 1 H3 | Tactical |
+| Shield Specialist | 3 PC + 2 TC | Tactical |
+| Trade Expert | 3 H3 + 2 QP | Trade |
+| Void Scout | 3 H3 + 2 QP | Move |
+| Warp Engineer | 3 H3 + 2 QP | Move |
+| Weapons Officer | 4 PC + 1 TC | Tactical |
+| Xeno Scientist | 2 PC + 2 QP + 1 H3 | Interact |
 
 The slice market decks have fewer cards than the full game, so S2 holds only 2 cards; reshuffle (`DCK-2`) keeps the market full.
 
@@ -174,7 +197,7 @@ The bot's mission nudge groups (design-decisions section 11) become **Build/stat
 - Every card name appears in exactly one sector deck (S1–S4).
 - Slice enemy deck sizes: 6 and 5.
 - Mission slice size: 27, types 24.
-- Crew slice: 4 types, 16 cards (placeholder counts).
+- Crew: full game 20 types / 32 cards (`DCK-5`); slice 4 types / 16 cards (4× Ensign only).
 - No card in the slice refers to unloaded content (Commander and special Ensign traits, Prism or Hive enemies).
 
 ## 6. Known weaknesses of this proposal

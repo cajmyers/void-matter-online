@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { sliceSectorMarketCompositionSchema } from "./decks";
+import { crewDeckCardEntrySchema, sliceSectorMarketCompositionSchema } from "./decks";
 import { resourceIdSchema } from "./primitives";
 
 const sectorMarketSchema = z.object({
@@ -27,6 +27,8 @@ export const firstPlayableSliceSchema = z.object({
   }),
   missionDeckSize: z.number().int().positive(),
   crewDeckSize: z.number().int().positive(),
+  /** Physical cards in the slice crew deck (`DCK-5` subset). */
+  crewComposition: z.array(crewDeckCardEntrySchema).min(1),
   includedCardIds: z.object({
     s1: z.array(z.string().min(1)),
   }),

@@ -11,7 +11,9 @@ Authoritative **game catalogue** as JSON, validated with Zod at load time. The e
 | S1–S4 asset cards | `data/cards/s1-assets.json` … `s4-assets.json` |
 | Iron Syndicate enemies | `data/enemies/iron-syndicate.json` |
 | Player ships | `data/ships/player-ships.json` |
-| Ensign crew (slice) | `data/crew/ensigns.json` |
+| Ensign crew (4 plain types, 3 resources each, `CRE-2`) | `data/crew/ensigns.json` |
+| Commander crew (16 types, 5 resources each, `CRE-2`) | `data/crew/commanders.json` |
+| Full game crew deck (`DCK-5`) | `data/decks/crew-deck.json` |
 | First playable slice | `data/slices/first-playable.json` |
 
 Every row has a stable **`id`** (future Firestore document id). After edits:
@@ -38,4 +40,4 @@ Game **saves** stay separate (`users/{uid}/games/{gameId}`); this package is onl
 
 ## Status
 
-Tiles, slice metadata, S1 specimens, enemies, Corvette, and ensigns are loaded. More S1 card rows and mission definitions will land as JSON in later commits (`content-data.md`).
+Tiles, slice metadata, S1–S4 assets, full-game sector and crew deck composition (`DCK-5`), enemies, Corvette, ensigns, and the Commander catalogue are loaded. Mission definitions will land as JSON in later commits (`content-data.md`).

@@ -13,7 +13,9 @@
     "enemies/iron-syndicate": "data/enemies/iron-syndicate.json",
     "ships/player": "data/ships/player-ships.json",
     "crew/ensigns": "data/crew/ensigns.json",
+    "crew/commanders": "data/crew/commanders.json",
     "slices/first-playable": "data/slices/first-playable.json",
-    "decks/sector-markets": "data/decks/sector-markets.json"
+    "decks/sector-markets": "data/decks/sector-markets.json",
+    "decks/crew": "data/decks/crew-deck.json"
   }
 }

@@ -1,0 +1,188 @@
+[
+  {
+    "id": "shield-specialist",
+    "name": "Elias Weyne",
+    "title": "Shield Specialist",
+    "text": "In combats you start with a Tactical action: once per damage event, reduce total hits by 1 (minimum 0), after other defences.",
+    "costs": [
+      { "resource": "pc", "amount": 3 },
+      { "resource": "tc", "amount": 2 }
+    ],
+    "actionToken": "tactical"
+  },
+  {
+    "id": "bounty-hunter",
+    "name": "Hesta Kraw",
+    "title": "Bounty Hunter",
+    "text": "In combats you start with Tactical: whenever a rival discards a component in this combat, gain 1 resource (any type) to the faction pool.",
+    "costs": [
+      { "resource": "pc", "amount": 3 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "actionToken": "tactical"
+  },
+  {
+    "id": "weapons-officer",
+    "name": "Soren Krell",
+    "title": "Weapons Officer",
+    "text": "+1 to attack rolls for every weapon on this ship (stacks with other Weapons Officers and accuracy gear).",
+    "costs": [
+      { "resource": "pc", "amount": 4 },
+      { "resource": "tc", "amount": 1 }
+    ],
+    "actionToken": "tactical"
+  },
+  {
+    "id": "expert-marksman",
+    "name": "Aris Thorne",
+    "title": "Expert Marksman",
+    "text": "When a rival loses a component in combat with you, split their installed components into two piles; you choose a pile and they lose a random component from it.",
+    "costs": [
+      { "resource": "pc", "amount": 3 },
+      { "resource": "tc", "amount": 1 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "actionToken": "tactical"
+  },
+  {
+    "id": "salvage-expert",
+    "name": "Luciana Zavaleta",
+    "title": "Salvage Expert",
+    "text": "When this ship loses a component in combat, gain 2 resources (your choice) to the faction pool (voluntary discards do not count).",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "h3", "amount": 1 }
+    ],
+    "actionToken": "tactical"
+  },
+  {
+    "id": "quartermaster",
+    "name": "Mateo Belgrano",
+    "title": "Quartermaster",
+    "text": "On each upgrade for this ship, remove 1 resource of your choice from the cost (minimum 0; several Quartermasters stack).",
+    "costs": [
+      { "resource": "tc", "amount": 2 },
+      { "resource": "qp", "amount": 2 },
+      { "resource": "h3", "amount": 1 }
+    ],
+    "actionToken": "interact"
+  },
+  {
+    "id": "logistics-officer",
+    "name": "Sun-Hi Choi",
+    "title": "Logistics Officer",
+    "text": "+1 cargo capacity.",
+    "costs": [
+      { "resource": "h3", "amount": 2 },
+      { "resource": "qp", "amount": 2 },
+      { "resource": "tc", "amount": 1 }
+    ],
+    "actionToken": "trade"
+  },
+  {
+    "id": "profit-chaser",
+    "name": "Bramm Zekk",
+    "title": "Profit-Chaser",
+    "text": "+1 speed while this ship's cargo hold is full.",
+    "costs": [
+      { "resource": "h3", "amount": 2 },
+      { "resource": "qp", "amount": 2 },
+      { "resource": "pc", "amount": 1 }
+    ],
+    "actionToken": "trade"
+  },
+  {
+    "id": "black-marketeer",
+    "name": "Caspian Frey",
+    "title": "Black Marketeer",
+    "text": "On Trade: deliver one resource to a planet that does not demand it; it goes to the pool with no price or market effect.",
+    "costs": [
+      { "resource": "h3", "amount": 2 },
+      { "resource": "qp", "amount": 2 },
+      { "resource": "tc", "amount": 1 }
+    ],
+    "actionToken": "trade"
+  },
+  {
+    "id": "trade-expert",
+    "name": "Syra Nelos",
+    "title": "Trade Expert",
+    "text": "Once per Trade action: when delivering demand, gain 1 extra resource to the pool (must be one you are trading).",
+    "costs": [
+      { "resource": "h3", "amount": 3 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "actionToken": "trade"
+  },
+  {
+    "id": "xeno-scientist",
+    "name": "Priya Chaudhary",
+    "title": "Xeno Scientist",
+    "text": "When drawing enemy cards, draw 2 cards, choose 1 and return the other to the bottom of the deck.",
+    "costs": [
+      { "resource": "pc", "amount": 2 },
+      { "resource": "qp", "amount": 2 },
+      { "resource": "h3", "amount": 1 }
+    ],
+    "actionToken": "interact"
+  },
+  {
+    "id": "comms-specialist",
+    "name": "Sari Dewi",
+    "title": "Comms Specialist",
+    "text": "On Interact: use the Interact effect of an adjacent revealed hex, even if opposing ships are there (includes Nexuses).",
+    "costs": [
+      { "resource": "qp", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "h3", "amount": 1 }
+    ],
+    "actionToken": "interact"
+  },
+  {
+    "id": "void-scout",
+    "name": "Kora Nyx",
+    "title": "Void Scout",
+    "text": "After this ship completes a Move action, take one free Interact at the destination (once per Move; normal Interact rules apply).",
+    "costs": [
+      { "resource": "h3", "amount": 3 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "actionToken": "move"
+  },
+  {
+    "id": "long-range-sensor-specialist",
+    "name": "Hiroshi Kang",
+    "title": "Long-range Sensor Specialist",
+    "text": "Before a Move action, peek at two unrevealed adjacent tiles.",
+    "costs": [
+      { "resource": "qp", "amount": 2 },
+      { "resource": "pc", "amount": 2 },
+      { "resource": "h3", "amount": 1 }
+    ],
+    "actionToken": "move"
+  },
+  {
+    "id": "warp-engineer",
+    "name": "Orin Tals",
+    "title": "Warp Engineer",
+    "text": "Once per Move action, move along a warp link that is gated on only one side (MAP-7).",
+    "costs": [
+      { "resource": "h3", "amount": 3 },
+      { "resource": "qp", "amount": 2 }
+    ],
+    "actionToken": "move"
+  },
+  {
+    "id": "piloting-ace",
+    "name": "Nomi Trask",
+    "title": "Piloting Ace",
+    "text": "+1 speed.",
+    "costs": [
+      { "resource": "h3", "amount": 3 },
+      { "resource": "pc", "amount": 1 },
+      { "resource": "qp", "amount": 1 }
+    ],
+    "actionToken": "move"
+  }
+]

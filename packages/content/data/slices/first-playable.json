@@ -33,6 +33,12 @@
   },
   "missionDeckSize": 27,
   "crewDeckSize": 16,
+  "crewComposition": [
+    { "crewId": "pilot", "copies": 4 },
+    { "crewId": "merchant", "copies": 4 },
+    { "crewId": "tactical", "copies": 4 },
+    { "crewId": "scout", "copies": 4 }
+  ],
   "includedCardIds": {
     "s1": ["ai-guidance-suite", "apocalypse"]
   },

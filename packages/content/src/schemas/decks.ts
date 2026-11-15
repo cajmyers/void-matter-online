@@ -32,3 +32,17 @@ export const sliceSectorMarketCompositionSchema = z.object({
   s4: z.array(marketDeckCardEntrySchema).optional(),
 });
 export type SliceSectorMarketComposition = z.infer<typeof sliceSectorMarketCompositionSchema>;
+
+export const crewDeckCardEntrySchema = z.object({
+  crewId: z.string().min(1),
+  copies: z.number().int().positive(),
+});
+export type CrewDeckCardEntry = z.infer<typeof crewDeckCardEntrySchema>;
+
+export const fullGameCrewDeckSchema = z.object({
+  id: z.literal("full-game"),
+  label: z.string().min(1),
+  deckSize: z.number().int().positive(),
+  cards: z.array(crewDeckCardEntrySchema).min(1),
+});
+export type FullGameCrewDeck = z.infer<typeof fullGameCrewDeckSchema>;

@@ -7,7 +7,9 @@ import s3AssetsJson from "../data/cards/s3-assets.json";
 import s4AssetsJson from "../data/cards/s4-assets.json";
 import ironSyndicateJson from "../data/enemies/iron-syndicate.json";
 import playerShipsJson from "../data/ships/player-ships.json";
+import commandersJson from "../data/crew/commanders.json";
 import ensignsJson from "../data/crew/ensigns.json";
+import crewDeckJson from "../data/decks/crew-deck.json";
 import sectorMarketsJson from "../data/decks/sector-markets.json";
 import firstPlayableJson from "../data/slices/first-playable.json";
 import { z } from "zod";
@@ -18,9 +20,14 @@ import {
   type AssetCard,
   type S1AssetCard,
 } from "./schemas/cards";
-import { ensignCrewSchema, type EnsignCrew } from "./schemas/crew";
+import { commanderCrewSchema, ensignCrewSchema, type CommanderCrew, type EnsignCrew } from "./schemas/crew";
 import { enemyShipSchema, type EnemyShip } from "./schemas/enemies";
-import { fullGameSectorMarketsSchema, type FullGameSectorMarkets } from "./schemas/decks";
+import {
+  fullGameCrewDeckSchema,
+  fullGameSectorMarketsSchema,
+  type FullGameCrewDeck,
+  type FullGameSectorMarkets,
+} from "./schemas/decks";
 import { firstPlayableSliceSchema, type FirstPlayableSlice } from "./schemas/slices";
 import { playerShipSchema, type PlayerShip } from "./schemas/ships";
 import { anomalyTileSchema, type AnomalyTile } from "./schemas/tiles";
@@ -66,8 +73,10 @@ export const sectorAssetCards: readonly AssetCard[] = [
 export const ironSyndicateEnemies: readonly EnemyShip[] = parseArray(enemyShipSchema, ironSyndicateJson, "iron-syndicate");
 export const playerShips: readonly PlayerShip[] = parseArray(playerShipSchema, playerShipsJson, "player-ships");
 export const ensignCrew: readonly EnsignCrew[] = parseArray(ensignCrewSchema, ensignsJson, "ensigns");
+export const commanderCrew: readonly CommanderCrew[] = parseArray(commanderCrewSchema, commandersJson, "commanders");
 export const firstPlayableSlice: FirstPlayableSlice = firstPlayableSliceSchema.parse(firstPlayableJson);
 export const fullGameSectorMarkets: FullGameSectorMarkets = fullGameSectorMarketsSchema.parse(sectorMarketsJson);
+export const fullGameCrewDeck: FullGameCrewDeck = fullGameCrewDeckSchema.parse(crewDeckJson);
 
 assertUniqueIds(anomalies, "anomalies");
 assertUniqueIds(planets, "planets");
@@ -79,6 +88,7 @@ assertUniqueIds(sectorAssetCards, "sector-asset-cards");
 assertUniqueIds(ironSyndicateEnemies, "iron-syndicate");
 assertUniqueIds(playerShips, "player-ships");
 assertUniqueIds(ensignCrew, "ensigns");
+assertUniqueIds(commanderCrew, "commanders");
 
 /** Passive-only Anomaly numbers (`MSN-1`). */
 export const passiveAnomalyNumbers: ReadonlySet<number> = new Set(

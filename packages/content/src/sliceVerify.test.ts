@@ -15,6 +15,17 @@ describe("first-playable slice verification", () => {
     expect(firstPlayableSlice.enemyDecks["iron-syndicate"].reinforcementSize).toBe(5);
   });
 
+  it("crew composition matches crewDeckSize (Ensigns only, 4 copies each)", () => {
+    const total = firstPlayableSlice.crewComposition.reduce((sum, row) => sum + row.copies, 0);
+    expect(total).toBe(firstPlayableSlice.crewDeckSize);
+    expect(firstPlayableSlice.crewDeckSize).toBe(16);
+    for (const row of firstPlayableSlice.crewComposition) {
+      expect(row.copies).toBe(4);
+    }
+    const compositionIds = firstPlayableSlice.crewComposition.map((row) => row.crewId).sort();
+    expect(compositionIds).toEqual([...firstPlayableSlice.includedCrewIds].sort());
+  });
+
   it("references loaded catalogue rows by id", () => {
     const s1Ids = new Set(s1AssetCards.map((card) => card.id));
     for (const id of firstPlayableSlice.includedCardIds.s1) {

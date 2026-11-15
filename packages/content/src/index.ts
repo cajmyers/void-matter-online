@@ -1,8 +1,10 @@
 export {
   anomalies,
   contentManifest,
+  commanderCrew,
   ensignCrew,
   firstPlayableSlice,
+  fullGameCrewDeck,
   fullGameSectorMarkets,
   ironSyndicateEnemies,
   passiveAnomalyNumbers,
@@ -30,9 +32,11 @@ export type {
 } from "./schemas/cards";
 export type { EnemyShip } from "./schemas/enemies";
 export type { PlayerShip } from "./schemas/ships";
-export type { EnsignCrew } from "./schemas/crew";
+export type { CommanderCrew, EnsignCrew } from "./schemas/crew";
 export type { FirstPlayableSlice } from "./schemas/slices";
 export type {
+  CrewDeckCardEntry,
+  FullGameCrewDeck,
   FullGameSectorMarkets,
   MarketDeckCardEntry,
   SectorMarketDeck,

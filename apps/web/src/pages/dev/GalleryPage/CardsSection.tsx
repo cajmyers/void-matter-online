@@ -1,4 +1,4 @@
-import { firstPlayableSlice } from "@void-matter/content";
+import { commanderCrew, ensignCrew, firstPlayableSlice } from "@void-matter/content";
 import { AssetCard } from "../../../components/game/AssetCard";
 import { CrewCard } from "../../../components/game/CrewCard";
 import { DeckBack } from "../../../components/game/DeckBack";
@@ -8,7 +8,8 @@ import { ReferenceCard } from "../../../components/game/ReferenceCard";
 import { ShipCard } from "../../../components/game/ShipCard";
 import { resourceInfo, type ResourceId } from "../../../components/game/resources";
 import { Typography } from "../../../components/Typography/Typography";
-import { enemyFixtures, ensignFixtures } from "../../../fixtures/cards";
+import { enemyFixtures } from "../../../fixtures/cards";
+import { galleryCrewCardsFromCatalogue } from "../../../fixtures/crewCardFixtures";
 import { hrefFor } from "../../../app/useHashRoute";
 import {
   galleryExampleAssetCardsForSectorMarkets,
@@ -18,6 +19,13 @@ import { CardScalesFigure } from "./Figure";
 import styles from "./GalleryPage.module.css";
 
 const sectorMarketGalleryExamples = galleryExampleAssetCardsForSectorMarkets();
+const ensignGalleryCards = galleryCrewCardsFromCatalogue(ensignCrew, "ensign");
+const commanderGalleryExamples = galleryCrewCardsFromCatalogue(
+  commanderCrew.filter((row) =>
+    ["weapons-officer", "quartermaster", "trade-expert", "void-scout"].includes(row.id),
+  ),
+  "commander",
+);
 
 const sectorDeckLabels: readonly { readonly sector: ResourceId; readonly count: number; readonly useS1Back: boolean }[] = [
   { sector: firstPlayableSlice.sectorMarkets.s1.resource, count: firstPlayableSlice.sectorMarkets.s1.deckSize, useS1Back: true },
@@ -71,16 +79,38 @@ export function CardsSection() {
       </div>
 
       <div className={styles.group}>
-        <Typography variant="overline">Crew ensigns (first slice, `ACT-1`)</Typography>
+        <Typography variant="overline">
+          Crew ensigns (first slice, `ACT-1`) —{" "}
+          <a className={styles.inlineLink} href={hrefFor("/dev/crew-cards")}>
+            full catalogue
+          </a>
+        </Typography>
         <div className={styles.grid}>
-          {ensignFixtures.map((crew) => (
+          {ensignGalleryCards.map((crew) => (
             <CardScalesFigure
-              key={crew.title}
-              name={crew.title}
-              note="Officer token on this ship only"
-              render={(width) => (
-                <CrewCard title={crew.title} text={crew.text} cost={crew.cost} action={crew.action} width={width} />
-              )}
+              key={crew.catalogueId}
+              name={crew.name ?? crew.title}
+              note="Ensign · officer token on this ship only"
+              render={(width) => <CrewCard {...crew} width={width} />}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.group}>
+        <Typography variant="overline">
+          Crew commanders (catalogue sample) —{" "}
+          <a className={styles.inlineLink} href={hrefFor("/dev/crew-cards")}>
+            full catalogue
+          </a>
+        </Typography>
+        <div className={styles.grid}>
+          {commanderGalleryExamples.map((crew) => (
+            <CardScalesFigure
+              key={crew.catalogueId}
+              name={crew.name ?? crew.title}
+              note="Commander · trait + officer token"
+              render={(width) => <CrewCard {...crew} width={width} />}
             />
           ))}
         </div>

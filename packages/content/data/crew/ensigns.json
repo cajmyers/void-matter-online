@@ -2,14 +2,14 @@
   {
     "id": "pilot",
     "title": "Pilot",
-    "text": "Grants a Move token on this ship only.",
+    "text": "",
     "costs": [{ "resource": "h3", "amount": 3 }],
     "actionToken": "move"
   },
   {
     "id": "merchant",
     "title": "Merchant",
-    "text": "Grants a Trade token on this ship only.",
+    "text": "",
     "costs": [
       { "resource": "h3", "amount": 1 },
       { "resource": "qp", "amount": 2 }
@@ -19,14 +19,14 @@
   {
     "id": "tactical",
     "title": "Tactical",
-    "text": "Grants a Tactical token on this ship only.",
+    "text": "",
     "costs": [{ "resource": "pc", "amount": 3 }],
     "actionToken": "tactical"
   },
   {
     "id": "scout",
     "title": "Scout",
-    "text": "Grants an Interact token on this ship only.",
+    "text": "",
     "costs": [
       { "resource": "pc", "amount": 1 },
       { "resource": "qp", "amount": 2 }

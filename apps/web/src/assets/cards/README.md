@@ -15,3 +15,8 @@ Slug = `cardIllustrationSlug(card title)` in `assetCardArt.ts`. Match `illustrat
 | `s4/` | Hull / Defensive (TC) |
 
 All four decks ship face textures (`s1-texture.webp` … `s4-texture.webp`). Deck backs and reference scans stay under `s1/` until other sector backs exist.
+
+## Crew cards
+
+- `crew/fronts/crew-texture.webp` — face stock for Ensign and Commander cards (`crewCardFaceTexture` in `assetCardArt.ts`).
+- `crew/fronts/art/<catalogueId>.webp` — Crew portraits; basename is the catalogue `id` (kebab-case), not card title or character name — e.g. `xeno-scientist.webp`, not `xeno biologist.webp`. Wired by `crewCardPortraitArt` in `assetCardArt.ts`.
