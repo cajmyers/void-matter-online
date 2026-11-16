@@ -219,6 +219,15 @@
   --game-resource-pc: #ea453f;
   --game-resource-qp: #3f95d0;
   --game-resource-vm: #a97cf0;
+  /* Mission card chrome and deck pile rim (matches VM accent). */
+  --game-mission-rim: var(--game-resource-vm);
+  --game-mission-rim-light: #d4b5ff;
+  /* Player ship cards and ship deck pile back */
+  --game-ship-rim: #6ec4f5;
+  --game-ship-rim-light: #a8e0ff;
+  /* Crew recruitment cards and crew market deck back */
+  --game-crew-rim: #e4b84a;
+  --game-crew-rim-light: #f5d78a;
   /* The VM star art is dark purple, so on dark surfaces it is lightened and given a thin pale
      outline (owner ruling, see implementation-plan section 13). Shared by every place the VM art is drawn. */
   --game-vm-filter: brightness(1.55) saturate(1.1) drop-shadow(0 0 0.6px #e9dcff) drop-shadow(0 0 0.6px #e9dcff);

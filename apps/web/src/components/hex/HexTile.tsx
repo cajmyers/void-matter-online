@@ -46,7 +46,7 @@ export interface HexTileBodyProps {
   readonly demand?: readonly ResourceAmount[];
   /**
    * Planet only: damage cubes on the supply or demand area (harvest/fulfil each add 2; blocked while any remain;
-   * Market Shift removes 1 per globalRound — design-decisions harvest/fulfil + Market Shift).
+   * Market Shift removes 1 per game round — design-decisions harvest/fulfil + Market Shift).
    */
   readonly lockedSupply?: number;
   readonly lockedDemand?: number;
@@ -164,7 +164,7 @@ function MarketLockStack({
   return (
     <g>
       <title>
-        {`${count} damage cube(s) block ${rowLabel.toLowerCase()}; harvest/fulfil adds 2; Market Shift removes 1 per globalRound`}
+        {`${count} damage cube(s) block ${rowLabel.toLowerCase()}; harvest/fulfil adds 2; Market Shift removes 1 per game round`}
       </title>
       {Array.from({ length: count }, (_, index) => {
         const x = count === 1 ? 0 : -span / 2 + index * step;

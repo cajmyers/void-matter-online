@@ -1,0 +1,158 @@
+[
+  {
+    "id": "all-aboard",
+    "title": "All Aboard!",
+    "text": "Have 2 or more crew members on the same ship when you redeem this mission.",
+    "voidMatter": 1
+  },
+  {
+    "id": "full-roster",
+    "title": "Full Roster",
+    "text": "Have 3 different types of crew members across ships in your fleet when you redeem this mission.",
+    "voidMatter": 1
+  },
+  {
+    "id": "balanced-design",
+    "title": "Balanced Design",
+    "text": "Have a ship with 3 different component categories installed when you redeem this mission (weapon, defence, cargo, hull, crew, drive/utility). Base hull and weapon do not count.",
+    "voidMatter": 1
+  },
+  {
+    "id": "trade-negotiator",
+    "title": "Trade Negotiator",
+    "text": "On each of 3 different planets (4 in games with 3 or more seats), deliver at least 2 demand in a single Trade action, after taking this mission.",
+    "voidMatter": 1
+  },
+  {
+    "id": "blockade",
+    "title": "Blockade",
+    "text": "After taking this mission, the same ship must be in the Central Nexus at the start of the Action phase and at the end of Maintenance, without leaving and returning. It must survive Maintenance combat there.",
+    "voidMatter": 1
+  },
+  {
+    "id": "armada",
+    "title": "Armada",
+    "text": "Have a fleet size of at least 2 ships when you redeem this mission.",
+    "voidMatter": 1
+  },
+  {
+    "id": "devastation",
+    "title": "Devastation",
+    "text": "After taking this mission, deliver 2 or more hits to one ship in a single damage event (enemy or rival). Hits count after defences and bonuses.",
+    "voidMatter": 1
+  },
+  {
+    "id": "galactic-tour",
+    "title": "Galactic Tour",
+    "text": "After taking this mission, the same ship visits 2 + player count different Anomaly tiles (passing through counts). If that ship is destroyed, progress is lost.",
+    "voidMatter": 1
+  },
+  {
+    "id": "market-saturation",
+    "title": "Market Saturation",
+    "text": "In one Trade action, take a planet's printed maximum supply or satisfy its printed maximum demand, after taking this mission.",
+    "voidMatter": 1
+  },
+  {
+    "id": "resource-tycoon",
+    "title": "Resource Tycoon",
+    "text": "Have at least 3 of each resource type (TC, H3, PC, QP) in your faction resource pool when you redeem this mission.",
+    "voidMatter": 1
+  },
+  {
+    "id": "standardisation",
+    "title": "Standardisation",
+    "text": "Install the same named component on two different ships when you redeem this mission.",
+    "voidMatter": 1
+  },
+  {
+    "id": "sector-pacification",
+    "title": "Sector Pacification",
+    "text": "After taking this mission, deal a cumulative total of 2 damage to Level 2 or Level 3 enemy ships (may be split across ships and damage events).",
+    "voidMatter": 1
+  },
+  {
+    "id": "syndicate-bust",
+    "title": "Syndicate Bust",
+    "text": "When you redeem this mission, have 2 defeated Iron Syndicate enemy cards in your play area (discarded on redeem).",
+    "voidMatter": 1
+  },
+  {
+    "id": "prismatic-salvage",
+    "title": "Prismatic Salvage",
+    "text": "When you redeem this mission, have 2 defeated Prism Ascendancy enemy cards in your play area (discarded on redeem).",
+    "voidMatter": 1
+  },
+  {
+    "id": "hive-cleansing",
+    "title": "Hive Cleansing",
+    "text": "When you redeem this mission, have 2 defeated Hive enemy cards in your play area (discarded on redeem).",
+    "voidMatter": 1
+  },
+  {
+    "id": "anomaly-resonance",
+    "title": "Anomaly Resonance",
+    "text": "After taking this mission, use the unique Activate effect on 2 different Anomaly sectors (remote use via Comms Specialist counts).",
+    "voidMatter": 1
+  },
+  {
+    "id": "tri-system-supply-run",
+    "title": "Tri-System Supply Run",
+    "text": "After taking this mission, satisfy demand on 2 different planet tiles within one game round.",
+    "voidMatter": 1
+  },
+  {
+    "id": "cargo-kingpin",
+    "title": "Cargo Kingpin",
+    "text": "Hold at least 3 resources in cargo on a single ship in your fleet when you redeem this mission.",
+    "voidMatter": 1
+  },
+  {
+    "id": "industrial-titan",
+    "title": "Industrial Titan",
+    "text": "After taking this mission, spend 5 or more resources on ship components across one game round (actual amounts paid after reductions).",
+    "voidMatter": 1
+  },
+  {
+    "id": "evasive-master",
+    "title": "Evasive Master",
+    "text": "After taking this mission, complete 2 tactical Evade actions from a sector with an opposing ship where every evade roll passes and you take no damage.",
+    "voidMatter": 1
+  },
+  {
+    "id": "ironclad-survivor",
+    "title": "Ironclad Survivor",
+    "text": "Win a combat with a ship that has 2 or more hull damage cubes filled.",
+    "voidMatter": 1
+  },
+  {
+    "id": "shield-calibration",
+    "title": "Shield Calibration",
+    "text": "After taking this mission, prevent or negate incoming hits with installed defensive components (crew traits do not count).",
+    "voidMatter": 1
+  },
+  {
+    "id": "perimeter-lockdown",
+    "title": "Perimeter Lockdown",
+    "text": "After taking this mission, take 2 Interact actions on different Outer Rim Nexus tiles within one game round.",
+    "voidMatter": 1
+  },
+  {
+    "id": "master-engineer",
+    "title": "Master Engineer",
+    "text": "Have a ship with 4 or more installed components when you redeem this mission (printed hull and base weapon do not count).",
+    "voidMatter": 1
+  },
+  {
+    "id": "warp-pioneer",
+    "title": "Warp Pioneer",
+    "text": "After taking this mission, perform 2 or more Move actions with the same ship in one game round (by any means).",
+    "voidMatter": 1
+  },
+  {
+    "id": "stellar-cartographer",
+    "title": "Stellar Cartographer",
+    "text": "After taking this mission, enter 3 different Anomaly tiles in one game round (passing through counts; may be split across your ships).",
+    "voidMatter": 1
+  }
+]

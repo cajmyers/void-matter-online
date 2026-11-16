@@ -14,7 +14,7 @@ const samples: readonly { variant: TypographyVariant; text: string }[] = [
   { variant: "body1", text: "Players alternate one action at a time. A player may pass at any time, which exhausts all their remaining tokens and takes one resource from the Central Nexus." },
   { variant: "body2", text: "A ship cannot choose cubes unless every hit in the event fits in its free slots. Otherwise it must discard a component." },
   { variant: "button", text: "Take 2 cubes" },
-  { variant: "caption", text: "globalRound 3, Action phase, turn: Seat 1" },
+  { variant: "caption", text: "game round 3, Action phase, turn: Seat 1" },
   { variant: "overline", text: "Damage choice" },
   { variant: "cardTitle", text: "Energy Shields" },
   { variant: "cardText", text: "Each energy weapon's hits are reduced to at most 1, per weapon." },

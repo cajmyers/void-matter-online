@@ -46,3 +46,6 @@ export const fullGameCrewDeckSchema = z.object({
   cards: z.array(crewDeckCardEntrySchema).min(1),
 });
 export type FullGameCrewDeck = z.infer<typeof fullGameCrewDeckSchema>;
+
+export { missionDeckCardEntrySchema, missionDeckSchema } from "./missions";
+export type { MissionDeck, MissionDeckCardEntry } from "./missions";

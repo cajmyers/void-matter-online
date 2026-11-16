@@ -1,19 +1,42 @@
+import { commanderCrew, ensignCrew, firstPlayableSlice } from "@void-matter/content";
 import { ActionToken } from "../../../components/game/ActionToken";
-import { ComponentCard } from "../../../components/game/ComponentCard";
+import { AssetCard } from "../../../components/game/AssetCard";
+import { cardWidthHand } from "../../../components/game/cardSizes";
+import { CrewCard } from "../../../components/game/CrewCard";
 import { DeckBack } from "../../../components/game/DeckBack";
 import { ResourceCube } from "../../../components/game/ResourceCube";
 import { SeatMark } from "../../../components/game/SeatMark";
 import { SpaceBackdrop } from "../../../components/game/SpaceBackdrop";
+import type { SectorArtDeck } from "../../../components/game/assetCardArt";
 import { resourceIds, type ResourceId, type SeatNumber } from "../../../components/game/resources";
 import { Button } from "../../../components/Button/Button";
 import { Panel } from "../../../components/Panel/Panel";
 import { Typography } from "../../../components/Typography/Typography";
+import { hrefFor } from "../../../app/useHashRoute";
+import { galleryCrewCardsFromCatalogue } from "../../../fixtures/crewCardFixtures";
+import { galleryExampleAssetCardsForSectorMarkets } from "../../../fixtures/sectorAssetCards";
 import { SpecimenBoard } from "./SpecimenBoard";
 import styles from "./Specimen.module.css";
 
 // Placeholder numbers. This composite exists to judge the look, not to state rules.
 
 const poolCounts: Readonly<Record<ResourceId, number>> = { tc: 1, h3: 0, pc: 2, qp: 3 };
+
+const specimenSectorCards = galleryExampleAssetCardsForSectorMarkets();
+const specimenEnsign = galleryCrewCardsFromCatalogue(
+  ensignCrew.filter((row) => row.id === "pilot"),
+  "ensign",
+)[0]!;
+const specimenCommander = galleryCrewCardsFromCatalogue(
+  commanderCrew.filter((row) => row.id === "weapons-officer"),
+  "commander",
+)[0]!;
+
+const enemyDeckCount =
+  firstPlayableSlice.enemyDecks["iron-syndicate"].explorationSize +
+  firstPlayableSlice.enemyDecks["iron-syndicate"].reinforcementSize;
+
+const specimenDeckWidth = 72;
 
 function VmPips({ taken }: { readonly taken: number }) {
   return (
@@ -85,7 +108,7 @@ function TurnPanel() {
     <Panel>
       <div className={styles.turnStats}>
         <div>
-          <Typography variant="overline">globalRound</Typography>
+          <Typography variant="overline">game round</Typography>
           <Typography variant="numeric" className={styles.bigNumber}>
             3
           </Typography>
@@ -111,12 +134,52 @@ function TurnPanel() {
 }
 
 function DecksPanel() {
+  const sectorRows = (["s1", "s2", "s3", "s4"] as const).map((key) => {
+    const market = firstPlayableSlice.sectorMarkets[key];
+    return {
+      label: market.label.replace(/ \(.*\)$/, ""),
+      count: market.deckSize,
+      rim: `var(--game-resource-${market.resource})`,
+      variant: "sector" as const,
+      sectorDeck: key satisfies SectorArtDeck,
+    };
+  });
+
   return (
-    <Panel title="Decks">
+    <Panel title="Decks (slice)">
       <div className={styles.deckRow}>
-        <DeckBack label="Enemy" count={18} rim="var(--game-faction-iron)" />
-        <DeckBack label="Missions" count={27} rim="var(--palette-primary-main)" />
-        <DeckBack label="Assets" count={34} rim="var(--game-resource-qp)" />
+        {sectorRows.map((deck) => (
+          <DeckBack
+            key={deck.sectorDeck}
+            label={deck.label}
+            count={deck.count}
+            rim={deck.rim}
+            width={specimenDeckWidth}
+            variant={deck.variant}
+            sectorDeck={deck.sectorDeck}
+          />
+        ))}
+        <DeckBack
+          label="Crew"
+          count={firstPlayableSlice.crewDeckSize}
+          rim="var(--game-crew-rim)"
+          width={specimenDeckWidth}
+          variant="crew"
+        />
+        <DeckBack
+          label="Enemy"
+          count={enemyDeckCount}
+          rim="var(--game-faction-iron)"
+          width={specimenDeckWidth}
+          variant="enemy"
+        />
+        <DeckBack
+          label="Missions"
+          count={firstPlayableSlice.missionDeckSize}
+          rim="var(--game-mission-rim)"
+          width={specimenDeckWidth}
+          variant="mission"
+        />
       </div>
     </Panel>
   );
@@ -212,38 +275,11 @@ function PromptDialog() {
 function CardRow() {
   return (
     <div className={styles.cardRow}>
-      <ComponentCard
-        title="Energy Shields"
-        text="Each energy weapon's hits are reduced to at most 1, per weapon."
-        sector="tc"
-        cost={["tc", "tc", "qp"]}
-        art="planet"
-        note="Specimen"
-      />
-      <ComponentCard
-        title="Plasma Lance"
-        text="Placeholder card text, to judge the layout."
-        sector="pc"
-        cost={["pc", "pc"]}
-        art="ship"
-        note="Specimen"
-      />
-      <ComponentCard
-        title="Quantum Relay"
-        text="Placeholder card text, to judge the layout."
-        sector="qp"
-        cost={["qp", "h3", "tc"]}
-        art="nebula"
-        note="Specimen"
-      />
-      <ComponentCard
-        title="Ion Drive"
-        text="Placeholder card text, to judge the layout."
-        sector="h3"
-        cost={["h3", "h3"]}
-        art="ship"
-        note="Specimen"
-      />
+      {specimenSectorCards.map((card) => (
+        <AssetCard key={card.catalogueId} {...card} width={cardWidthHand} />
+      ))}
+      <CrewCard {...specimenEnsign} width={cardWidthHand} />
+      <CrewCard {...specimenCommander} width={cardWidthHand} />
     </div>
   );
 }
@@ -253,8 +289,10 @@ export function SpecimenSection() {
     <section className={styles.section} id="specimen">
       <Typography variant="h3">Specimen: the table</Typography>
       <Typography variant="body2">
-        A static mock of the finished screen, using the real components over a placeholder space scene. All numbers
-        and art are placeholders. This is a preview of sub-stages 1b and 1c, not the final layout.
+        A static mock of the finished screen: real hex tiles, owner deck backs, and catalogue{" "}
+        <code>AssetCard</code> / <code>CrewCard</code> samples at hand width ({cardWidthHand}px). Pool, turn flow and
+        prompts are still placeholders. Compare with{" "}
+        <a href={hrefFor("/dev/gallery")}>the component gallery</a> for every component state.
       </Typography>
       <div className={styles.table}>
         <SpaceBackdrop />

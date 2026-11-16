@@ -11,6 +11,7 @@ const S2CardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/S2CardsPage/
 const S3CardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/S3CardsPage/S3CardsPage")) : null;
 const S4CardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/S4CardsPage/S4CardsPage")) : null;
 const CrewCardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/CrewCardsPage/CrewCardsPage")) : null;
+const MissionCardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/MissionCardsPage/MissionCardsPage")) : null;
 
 function pageFor(path: string): ReactNode {
   if (path === "/") {
@@ -31,6 +32,7 @@ function pageFor(path: string): ReactNode {
     if (path === "/dev/s3-cards" && S3CardsPage) return <S3CardsPage />;
     if (path === "/dev/s4-cards" && S4CardsPage) return <S4CardsPage />;
     if (path === "/dev/crew-cards" && CrewCardsPage) return <CrewCardsPage />;
+    if (path === "/dev/mission-cards" && MissionCardsPage) return <MissionCardsPage />;
     if (path === "/dev/lab") {
       return (
         <ComingSoonPage

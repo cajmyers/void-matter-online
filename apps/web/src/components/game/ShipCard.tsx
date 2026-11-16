@@ -32,7 +32,7 @@ function SlotTrack({ filled, width }: { readonly filled: number; readonly width:
 /** Player ship card: stats and four half-counted upgrade slots. */
 export function ShipCard({ name, subtitle, speed, hull, crew, cargo, slotFill, width = 156 }: ShipCardProps) {
   return (
-    <PlayingCardShell rim="var(--game-seat-1)" width={width} ariaLabel={`${name}, ship card`}>
+    <PlayingCardShell rim="var(--game-ship-rim)" width={width} ariaLabel={`${name}, ship card`}>
       <div className={styles.shipBand}>
         <Typography variant="overline">{subtitle}</Typography>
         <Typography variant="cardFine" className={shellStyles.mono}>

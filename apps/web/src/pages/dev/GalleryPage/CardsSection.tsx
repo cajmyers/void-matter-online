@@ -1,4 +1,4 @@
-import { commanderCrew, ensignCrew, firstPlayableSlice } from "@void-matter/content";
+import { commanderCrew, ensignCrew, firstPlayableSlice, missionCatalogue } from "@void-matter/content";
 import { AssetCard } from "../../../components/game/AssetCard";
 import { CrewCard } from "../../../components/game/CrewCard";
 import { DeckBack } from "../../../components/game/DeckBack";
@@ -48,6 +48,8 @@ const sectorDeckGalleryRows: readonly {
 const enemyDeckCount =
   firstPlayableSlice.enemyDecks["iron-syndicate"].explorationSize +
   firstPlayableSlice.enemyDecks["iron-syndicate"].reinforcementSize;
+
+const galleryMissionSample = missionCatalogue.find((mission) => mission.id === "syndicate-bust");
 
 export function CardsSection() {
   return (
@@ -117,32 +119,58 @@ export function CardsSection() {
       </div>
 
       <div className={styles.group}>
-        <Typography variant="overline">Missions</Typography>
+        <Typography variant="overline">
+          Missions (Syndicate Bust sample) —{" "}
+          <a className={styles.inlineLink} href={hrefFor("/dev/mission-cards")}>
+            full catalogue
+          </a>
+        </Typography>
         <div className={styles.grid}>
-          <CardScalesFigure
-            name="Syndicate Bust (in progress)"
-            note="Combat mission, slice deck"
-            render={(width) => (
-              <MissionCard
-                title="Syndicate Bust"
-                text="Destroy 2 Iron Syndicate ships in one globalRound."
-                voidMatter={1}
-                width={width}
+          {galleryMissionSample ? (
+            <>
+              <CardScalesFigure
+                name={`${galleryMissionSample.title} (in progress)`}
+                note="Combat mission, slice deck"
+                render={(width) => (
+                  <MissionCard
+                    catalogueId={galleryMissionSample.id}
+                    title={galleryMissionSample.title}
+                    text={galleryMissionSample.text}
+                    voidMatter={galleryMissionSample.voidMatter}
+                    width={width}
+                  />
+                )}
               />
-            )}
-          />
-          <CardScalesFigure
-            name="Syndicate Bust (complete)"
-            render={(width) => (
-              <MissionCard
-                title="Syndicate Bust"
-                text="Destroy 2 Iron Syndicate ships in one globalRound."
-                voidMatter={1}
-                complete
-                width={width}
+              <CardScalesFigure
+                name={`${galleryMissionSample.title} (ready to redeem)`}
+                note="Central Nexus · Interact"
+                render={(width) => (
+                  <MissionCard
+                    catalogueId={galleryMissionSample.id}
+                    title={galleryMissionSample.title}
+                    text={galleryMissionSample.text}
+                    voidMatter={galleryMissionSample.voidMatter}
+                    readyToRedeem
+                    width={width}
+                  />
+                )}
               />
-            )}
-          />
+              <CardScalesFigure
+                name={`${galleryMissionSample.title} (redeemed)`}
+                note="VM in faction pool"
+                render={(width) => (
+                  <MissionCard
+                    catalogueId={galleryMissionSample.id}
+                    title={galleryMissionSample.title}
+                    text={galleryMissionSample.text}
+                    voidMatter={galleryMissionSample.voidMatter}
+                    redeemed
+                    width={width}
+                  />
+                )}
+              />
+            </>
+          ) : null}
         </div>
       </div>
 
@@ -215,21 +243,21 @@ export function CardsSection() {
             sector={null}
             label="Missions"
             count={firstPlayableSlice.missionDeckSize}
-            rim="var(--palette-primary-main)"
+            rim="var(--game-mission-rim)"
             variant="mission"
           />
           <FigureDeck
             sector={null}
             label="Crew"
             count={firstPlayableSlice.crewDeckSize}
-            rim="var(--palette-primary-light)"
+            rim="var(--game-crew-rim)"
             variant="crew"
           />
           <FigureDeck
             sector={null}
             label="Ships"
             count={firstPlayableSlice.includedPlayerShipIds.length}
-            rim="var(--palette-secondary-main)"
+            rim="var(--game-ship-rim)"
             variant="ship"
           />
         </div>

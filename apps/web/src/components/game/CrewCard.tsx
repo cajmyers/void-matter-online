@@ -56,7 +56,7 @@ export function CrewCard({ title, name, text, costs, action, rank = "ensign", il
 
   const style = {
     width,
-    "--crew-rim": "var(--palette-primary-light)",
+    "--crew-rim": "var(--game-crew-rim)",
     ...(artPlateHeight > 0 ? { "--art-plate-height": `${artPlateHeight}px` } : {}),
     "--text-block-height": `${textBlockHeight}px`,
     "--footer-reserve-height": `${footerReserveHeight}px`,

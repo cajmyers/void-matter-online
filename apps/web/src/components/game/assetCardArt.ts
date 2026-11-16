@@ -3,6 +3,7 @@ import s2FaceTextureUrl from "../../assets/cards/s2/fronts/s2-texture.webp";
 import s3FaceTextureUrl from "../../assets/cards/s3/fronts/s3-texture.webp";
 import s4FaceTextureUrl from "../../assets/cards/s4/fronts/s4-texture.webp";
 import crewFaceTextureUrl from "../../assets/cards/crew/fronts/crew-texture.webp";
+import missionFaceTextureUrl from "../../assets/cards/mission/fronts/mission-texture.webp";
 
 /** Slug for sector asset hero art (`assets/cards/<deck>/fronts/art/<slug>.webp`). */
 export function cardIllustrationSlug(title: string): string {
@@ -35,6 +36,11 @@ function parseCrewPortraitPath(path: string): string | undefined {
   return match?.[1]?.toLowerCase();
 }
 
+function parseMissionHeroPath(path: string): string | undefined {
+  const match = path.match(/\/cards\/mission\/fronts\/art\/([^/]+)\.(webp|png|jpe?g)$/i);
+  return match?.[1]?.toLowerCase();
+}
+
 const illustrationBySlug = (() => {
   const map = new Map<string, string>();
   for (const [path, url] of Object.entries(illustrationModules)) {
@@ -57,6 +63,15 @@ const crewPortraitByCatalogueId = (() => {
   const map = new Map<string, string>();
   for (const [path, url] of Object.entries(illustrationModules)) {
     const id = parseCrewPortraitPath(path);
+    if (id) map.set(id, url);
+  }
+  return map;
+})();
+
+const missionHeroByCatalogueId = (() => {
+  const map = new Map<string, string>();
+  for (const [path, url] of Object.entries(illustrationModules)) {
+    const id = parseMissionHeroPath(path);
     if (id) map.set(id, url);
   }
   return map;
@@ -92,7 +107,17 @@ export function crewCardFaceTexture(): string {
   return crewFaceTextureUrl;
 }
 
+/** Mission card face stock. */
+export function missionCardFaceTexture(): string {
+  return missionFaceTextureUrl;
+}
+
 /** Ensign portrait (`crew/fronts/art/<catalogueId>.webp`; ids from `ensigns.json`). */
 export function crewCardPortraitArt(catalogueId: string): string | undefined {
   return crewPortraitByCatalogueId.get(catalogueId.toLowerCase());
+}
+
+/** Mission hero (`mission/fronts/art/<catalogueId>.webp`; ids from `missions.json`). */
+export function missionCardHeroArt(catalogueId: string): string | undefined {
+  return missionHeroByCatalogueId.get(catalogueId.toLowerCase());
 }

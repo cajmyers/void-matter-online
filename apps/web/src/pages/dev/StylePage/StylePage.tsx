@@ -24,8 +24,8 @@ export default function StylePage() {
         <Typography variant="overline">Stage 1a</Typography>
         <Typography variant="h1">Holo tactical</Typography>
         <Typography variant="body1">
-          The chosen style: dark glass panels, thin cyan linework and a lit tactical display. This page shows the
-          specimen table, the game colours and icons, the palette, the type and the spacing, all read from{" "}
+          The chosen style: dark glass panels, thin cyan linework and a lit tactical display. The specimen table uses
+          production card and deck-back art where it exists; tokens, palette, type and spacing are read from{" "}
           <code>theme.css</code>.
         </Typography>
       </div>

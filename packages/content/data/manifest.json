@@ -16,6 +16,9 @@
     "crew/commanders": "data/crew/commanders.json",
     "slices/first-playable": "data/slices/first-playable.json",
     "decks/sector-markets": "data/decks/sector-markets.json",
-    "decks/crew": "data/decks/crew-deck.json"
+    "decks/crew": "data/decks/crew-deck.json",
+    "missions/catalogue": "data/missions/missions.json",
+    "decks/mission-slice": "data/decks/mission-deck-slice.json",
+    "decks/mission-full": "data/decks/mission-deck-full.json"
   }
 }

@@ -1,4 +1,4 @@
-import { commanderCrew, ensignCrew } from "@void-matter/content";
+import { commanderCrew, ensignCrew, missionCatalogue } from "@void-matter/content";
 import { describe, expect, it } from "vitest";
 import {
   cardIllustrationArt,
@@ -6,6 +6,8 @@ import {
   cardIllustrationSlug,
   crewCardFaceTexture,
   crewCardPortraitArt,
+  missionCardFaceTexture,
+  missionCardHeroArt,
   sectorCardFaceTexture,
 } from "./assetCardArt";
 
@@ -39,6 +41,20 @@ describe("assetCardArt", () => {
 
   it("loads crew face texture", () => {
     expect(crewCardFaceTexture()).toMatch(/crew\/fronts\/crew-texture/);
+  });
+
+  it("loads mission face texture", () => {
+    expect(missionCardFaceTexture()).toMatch(/mission\/fronts\/mission-texture/);
+  });
+
+  it("loads mission hero art by catalogue id", () => {
+    expect(missionCardHeroArt("syndicate-bust")).toMatch(/mission\/fronts\/art\/syndicate-bust/);
+    expect(missionCardHeroArt("unknown")).toBeUndefined();
+  });
+
+  it("loads hero art for every catalogue mission id", () => {
+    const missing = missionCatalogue.filter((mission) => missionCardHeroArt(mission.id) === undefined);
+    expect(missing.map((mission) => mission.id)).toEqual([]);
   });
 
   it("loads crew portraits by catalogue id", () => {

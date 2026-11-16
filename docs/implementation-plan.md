@@ -85,7 +85,7 @@ Goal: an empty but real app, deployable to a Firebase preview channel, so every 
 | Repoint `firebase.json` from `public/` to `apps/web/dist` | Hashed `js` and `css` keep the immutable cache header; `index.html` must not (the existing pattern already excludes it). Remove the placeholder `public/main.js` canvas demo. |
 | Preview deploys | `pnpm deploy:preview` builds the preview build (which keeps the `/dev/*` pages; the production build strips them, checked) and runs `firebase hosting:channel:deploy review --expires 30d`. **Written but not yet run.** Production deploy stays manual (`pnpm deploy:release`). |
 | Styling approach | **Decided by the owner:** CSS Modules for components, plus one global `theme.css` with a Material UI style palette, typography, gaps and the rest, read by the whole site. No UI framework. Recorded in `tooling-decisions.md` and `.cursor/rules/web-styling.mdc`. |
-| Tiny hash router | **Done.** Routes `#/`, `#/dev/style`, `#/dev/gallery`, `#/dev/lab`, `#/dev/s1-cards` … `#/dev/s4-cards`. No router library. |
+| Tiny hash router | **Done.** Routes `#/`, `#/dev/style`, `#/dev/gallery`, `#/dev/lab`, `#/dev/s1-cards` … `#/dev/s4-cards`, `#/dev/crew-cards`, `#/dev/mission-cards`. No router library. |
 
 Exit: a page deploys to a preview URL from one command; `pnpm test`, `pnpm lint` and `pnpm typecheck` pass. (Local build, test, lint and typecheck pass; the preview URL and production hosting still await the first successful `deploy:preview` or `deploy:release`.)
 
@@ -102,7 +102,7 @@ Goal: you can judge, on screen, what the finished game will look like and feel l
 3. **The reconciliation cost is accepted.** `GameView` is authored before the engine, so Stage 2 will adjust it. Stage 2 re-homes the type to the engine's `viewFor` output and makes every fixture type-check against it. That is a planned small cost, paid to get the look early.
 4. **Desktop only** (`design-decisions.md` section 1). Design at 1440 by 900 and 1920 by 1080, check up to 2560 by 1440. No mobile, no touch layout.
 5. **Placeholder art, except what the owner supplies.** Procedural SVG glyphs and CSS for ships and seats; the owner's action icons and resource tokens replace the placeholders for those. Real card art is referenced by card ID later and never required (`technical-proposal.md` section 8).
-6. **Vocabulary** (`TRM-1`): the UI says globalRound, combatRound, turn. No bare "round".
+6. **Vocabulary** (`TRM-1`): the UI says game round, combatRound, turn. No bare "round".
 
 ### 5.1 Sub-stage 1a: style direction (S) (built, **Holo tactical chosen**)
 
@@ -118,7 +118,7 @@ Built `/dev/style`: a single page of design tokens. It first offered three switc
 | Motion principles | A short list of durations and easings (tile flip, card move, dice, UI feedback) and a global speed multiplier, which the animation director will later own (`technical-proposal.md` section 6). |
 | Sound mood | A one-line brief only. Audio itself is Stage 6. |
 
-**As built.** `apps/web/src/theme/theme.css` is the global theme file, with the tokens above as CSS custom properties named after the Material UI theme (`--palette-primary-main`, `--palette-grey-500`, `--palette-text-secondary`, `--palette-background-paper`, `--palette-action-hover`), plus `--spacing-*` and `--gap-*`, `--shape-*`, `--shadow-*`, `--transitions-*`, `--motion-*`, `--z-index-*` and the `--game-*` tokens (including `--game-state-hover` for hex pointer-over). There is one theme in that file; `theme.test.ts` fails if any `var()` uses an undefined variable. `#/dev/style` shows the palette (with resolved hex), game colours, the owner's action icons and resource tokens, typography, controls, spacing, shape, elevation, motion (with a speed multiplier and a tile flip), a **vision simulator** (protanopia, deuteranopia, tritanopia, greyscale) and **Specimen: the table** (`SpecimenBoard`): a 2-seat `MAP-1` disc from appendices B/C, alternating face-down hexes, fixture-backed planets and Anomalies with bundled owner art, two Outer Rim Nexuses and the Central Nexus, connected gates, and two pinned rival ships on one hex. One planet is shown **selected**; every hex on the specimen board uses **interactive** hover on the rim. Side panels (commander, rival, turn, decks, ship, hand cards, prompt dock) are layout mocks using the same Panel/Button/Card shells. The reusable parts built here (hex geometry and tiles, resource cubes, seat marks, action tokens, panel, button, typography, `SpaceBackdrop`) carry into 1b and 1c.
+**As built.** `apps/web/src/theme/theme.css` is the global theme file, with the tokens above as CSS custom properties named after the Material UI theme (`--palette-primary-main`, `--palette-grey-500`, `--palette-text-secondary`, `--palette-background-paper`, `--palette-action-hover`), plus `--spacing-*` and `--gap-*`, `--shape-*`, `--shadow-*`, `--transitions-*`, `--motion-*`, `--z-index-*` and the `--game-*` tokens (including `--game-state-hover` for hex pointer-over). There is one theme in that file; `theme.test.ts` fails if any `var()` uses an undefined variable. `#/dev/style` shows the palette (with resolved hex), game colours, the owner's action icons and resource tokens, typography, controls, spacing, shape, elevation, motion (with a speed multiplier and a tile flip), a **vision simulator** (protanopia, deuteranopia, tritanopia, greyscale) and **Specimen: the table** (`SpecimenBoard`): a 2-seat `MAP-1` disc from appendices B/C, alternating face-down hexes, fixture-backed planets and Anomalies with bundled owner art, two Outer Rim Nexuses and the Central Nexus, connected gates, and two pinned rival ships on one hex. One planet is shown **selected**; every hex on the specimen board uses **interactive** hover on the rim. Side panels (commander, rival, turn, decks, ship, hand cards, prompt dock) are layout mocks using the same Panel/Button/Card shells; the deck strip uses owner <code>DeckBack</code> art (S1–S4, crew, enemy, missions) and the hand row uses slice <code>AssetCard</code> and catalogue <code>CrewCard</code> samples. The reusable parts built here (hex geometry and tiles, resource cubes, seat marks, action tokens, panel, button, typography, `SpaceBackdrop`) carry into 1b and 1c.
 
 Exit: **met** for direction (Holo tactical chosen; other themes deleted). Still being refined with the owner: Holo palette tweaks, specimen layout, and any remaining token or component polish before 1f sign-off.
 
@@ -166,7 +166,7 @@ Build `/`: the full play screen from a fixture, with a real **camera** (pan and 
 | Region | Contents | Notes |
 |---|---|---|
 | Board (centre) | Pointy-top hex map, SVG, camera-driven | 2-seat and 4-seat layouts from Appendix A; the 3-seat board is shown in **several candidate staggers** (see below) |
-| Top bar | globalRound, phase and step, first-player token, whose turn, every seat's VM and completed missions (public, no extra warning, section "Game end") | |
+| Top bar | game round, phase and step, first-player token, whose turn, every seat's VM and completed missions (public, no extra warning, section "Game end") | |
 | Rival strips | One per bot: colour, VM, pool and cargo (public, `INF-1`), fleet summary, tokens ready or passed | Collapsible |
 | Player mat (bottom) | **Pool** and **cargo** drawn as two clearly different stores, action tokens, held missions (cap 3), set-aside reward cards | Resolves `design-decisions.md` section 9 item 4, "how the interface shows the two stores" |
 | Fleet panel | Ship cards for the selected fleet with slots in halves, hull cubes, crew | |
@@ -267,15 +267,15 @@ Exit: a scripted two-seat toy game replays byte for byte; the hard-card fixtures
 
 ## 7. Stage 3: economy simulation, the go/no-go gate (M)
 
-Technical proposal P1, first task. **Do this before building the playable game**, because the largest unknown is whether a game can be won in a sane number of globalRounds, not combat.
+Technical proposal P1, first task. **Do this before building the playable game**, because the largest unknown is whether a game can be won in a sane number of game rounds, not combat.
 
 | Task | Notes |
 |---|---|
 | Map from setup data, Move, Trade, Interact, Pass | No combat, no enemies, no Anomaly effects beyond the discovery bonus |
 | Cargo versus pool, markets and the 3-for-1 exchange, Commission, Redeem, upgrades, Nexus Hop (`NEX-1`) | |
 | Crude bot (random legal plus redeem priority) | |
-| `packages/sim` headless runner, thousands of seeded games | Abort at 200 globalRounds and record "stalled" (`GEN-1`) |
-| Run with and without the four-Ensign crew set | Tests whether the single general Interact token per globalRound is a bottleneck (`ACT-1`, `design-decisions.md` section 9 item 11) |
+| `packages/sim` headless runner, thousands of seeded games | Abort at 200 game rounds and record "stalled" (`GEN-1`) |
+| Run with and without the four-Ensign crew set | Tests whether the single general Interact token per game round is a bottleneck (`ACT-1`, `design-decisions.md` section 9 item 11) |
 
 **Needs from you before it can finish:** a target for median game length and acceptable stall rate. Without one the gate cannot pass or fail. The result may change content numbers (`content-data.md` section 6), so keep the tables tunable.
 
@@ -360,5 +360,5 @@ Exit: a full game against one bot, with combat, in the browser; bot-soak runs ha
 **Still open**
 
 4. **Fonts:** self-hosted from Fontsource (done): Orbitron, Rajdhani and Share Tech Mono, following the Holo tactical choice.
-5. **Stage 3 target:** what median game length (in globalRounds) and what stall rate would you call acceptable? Not needed until Stage 3.
+5. **Stage 3 target:** what median game length (in game rounds) and what stall rate would you call acceptable? Not needed until Stage 3.
 6. **Sequencing:** Stage 1 before the engine, as proposed. If you would rather interleave (for example start Stage 2 content data in parallel), say so.

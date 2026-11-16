@@ -10,7 +10,10 @@ import playerShipsJson from "../data/ships/player-ships.json";
 import commandersJson from "../data/crew/commanders.json";
 import ensignsJson from "../data/crew/ensigns.json";
 import crewDeckJson from "../data/decks/crew-deck.json";
+import missionDeckFullJson from "../data/decks/mission-deck-full.json";
+import missionDeckSliceJson from "../data/decks/mission-deck-slice.json";
 import sectorMarketsJson from "../data/decks/sector-markets.json";
+import missionsJson from "../data/missions/missions.json";
 import firstPlayableJson from "../data/slices/first-playable.json";
 import { z } from "zod";
 import { contentManifestSchema } from "./schemas/manifest";
@@ -25,9 +28,12 @@ import { enemyShipSchema, type EnemyShip } from "./schemas/enemies";
 import {
   fullGameCrewDeckSchema,
   fullGameSectorMarketsSchema,
+  missionDeckSchema,
   type FullGameCrewDeck,
   type FullGameSectorMarkets,
+  type MissionDeck,
 } from "./schemas/decks";
+import { missionCardSchema, type MissionCard } from "./schemas/missions";
 import { firstPlayableSliceSchema, type FirstPlayableSlice } from "./schemas/slices";
 import { playerShipSchema, type PlayerShip } from "./schemas/ships";
 import { anomalyTileSchema, type AnomalyTile } from "./schemas/tiles";
@@ -77,6 +83,9 @@ export const commanderCrew: readonly CommanderCrew[] = parseArray(commanderCrewS
 export const firstPlayableSlice: FirstPlayableSlice = firstPlayableSliceSchema.parse(firstPlayableJson);
 export const fullGameSectorMarkets: FullGameSectorMarkets = fullGameSectorMarketsSchema.parse(sectorMarketsJson);
 export const fullGameCrewDeck: FullGameCrewDeck = fullGameCrewDeckSchema.parse(crewDeckJson);
+export const missionCatalogue: readonly MissionCard[] = parseArray(missionCardSchema, missionsJson, "missions");
+export const firstPlayableMissionDeck: MissionDeck = missionDeckSchema.parse(missionDeckSliceJson);
+export const fullGameMissionDeck: MissionDeck = missionDeckSchema.parse(missionDeckFullJson);
 
 assertUniqueIds(anomalies, "anomalies");
 assertUniqueIds(planets, "planets");
@@ -89,6 +98,7 @@ assertUniqueIds(ironSyndicateEnemies, "iron-syndicate");
 assertUniqueIds(playerShips, "player-ships");
 assertUniqueIds(ensignCrew, "ensigns");
 assertUniqueIds(commanderCrew, "commanders");
+assertUniqueIds(missionCatalogue, "missions");
 
 /** Passive-only Anomaly numbers (`MSN-1`). */
 export const passiveAnomalyNumbers: ReadonlySet<number> = new Set(

@@ -1,5 +1,5 @@
 .card {
-  --crew-rim: var(--palette-primary-light);
+  --crew-rim: var(--game-crew-rim);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -41,7 +41,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.48rem;
-  opacity: 0.88;
+  color: var(--palette-text-primary);
 }
 
 .title {

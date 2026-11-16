@@ -4,8 +4,11 @@ export {
   commanderCrew,
   ensignCrew,
   firstPlayableSlice,
+  firstPlayableMissionDeck,
   fullGameCrewDeck,
+  fullGameMissionDeck,
   fullGameSectorMarkets,
+  missionCatalogue,
   ironSyndicateEnemies,
   passiveAnomalyNumbers,
   planets,
@@ -33,6 +36,8 @@ export type {
 export type { EnemyShip } from "./schemas/enemies";
 export type { PlayerShip } from "./schemas/ships";
 export type { CommanderCrew, EnsignCrew } from "./schemas/crew";
+export type { MissionCard } from "./schemas/missions";
+export type { MissionDeck } from "./schemas/decks";
 export type { FirstPlayableSlice } from "./schemas/slices";
 export type {
   CrewDeckCardEntry,

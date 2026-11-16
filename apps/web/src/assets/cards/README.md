@@ -29,6 +29,8 @@ All four decks ship face textures and owner deck backs (`s1/back/s1.webp` … `s
 
 ## Mission deck
 
+- `mission/fronts/mission-texture.webp` — face stock (`missionCardFaceTexture` in `assetCardArt.ts`).
+- `mission/fronts/art/<catalogueId>.webp` — mission hero art; basename is `id` from `missions.json` (kebab-case), e.g. `syndicate-bust.webp`. Wired by `missionCardHeroArt` in `assetCardArt.ts`.
 - `mission/back/mission.webp` — mission deck pile back (`missionDeckBackArt`, `DeckBack` variant `mission`).
 
 ## Player ship deck

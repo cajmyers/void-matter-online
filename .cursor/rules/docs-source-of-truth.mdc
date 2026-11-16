@@ -22,7 +22,7 @@ No game code exists yet. The `docs/` folder is the specification.
 
 ## Vocabulary (`TRM-1`)
 
-Use exactly: **globalRound** (Action + Maintenance), **combatRound**, **turn**. Never a bare "round" in code, events or new docs.
+Use **game round** in player-facing text and docs prose; **gameRound** (Action + Maintenance), **combatRound**, **turn** in code and events. Never a bare "round".
 
 ## Working with rulings
 
