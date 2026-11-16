@@ -10,7 +10,9 @@ See [`../README.md`](../README.md) for slug rules.
 
 | Deck | Filename | Notes |
 |------|----------|--------|
-| S1 asset market | `backs/upgrade.jpg` | Tinted **red** (PC) in `DeckBack` until a red print exists |
+| S1 asset market | `back/s1.webp` | Gallery / `DeckBack` (`sectorDeckBackArt`) |
+
+*Legacy `backs/upgrade.jpg` is unused; remove when convenient.*
 
 ## Reference
 

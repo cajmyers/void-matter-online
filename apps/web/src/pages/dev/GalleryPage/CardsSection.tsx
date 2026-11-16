@@ -4,8 +4,10 @@ import { CrewCard } from "../../../components/game/CrewCard";
 import { DeckBack } from "../../../components/game/DeckBack";
 import { EnemyCard } from "../../../components/game/EnemyCard";
 import { MissionCard } from "../../../components/game/MissionCard";
-import { ReferenceCard } from "../../../components/game/ReferenceCard";
 import { ShipCard } from "../../../components/game/ShipCard";
+import type { SectorArtDeck } from "../../../components/game/assetCardArt";
+import type { DeckBackVariant } from "../../../components/game/DeckBack";
+import { sectorDeckForResource } from "../../../components/game/sectorDeck";
 import { resourceInfo, type ResourceId } from "../../../components/game/resources";
 import { Typography } from "../../../components/Typography/Typography";
 import { enemyFixtures } from "../../../fixtures/cards";
@@ -19,20 +21,29 @@ import { CardScalesFigure } from "./Figure";
 import styles from "./GalleryPage.module.css";
 
 const sectorMarketGalleryExamples = galleryExampleAssetCardsForSectorMarkets();
-const ensignGalleryCards = galleryCrewCardsFromCatalogue(ensignCrew, "ensign");
-const commanderGalleryExamples = galleryCrewCardsFromCatalogue(
-  commanderCrew.filter((row) =>
-    ["weapons-officer", "quartermaster", "trade-expert", "void-scout"].includes(row.id),
-  ),
+const galleryEnsignSample = galleryCrewCardsFromCatalogue(
+  ensignCrew.filter((row) => row.id === "pilot"),
+  "ensign",
+);
+const galleryCommanderSample = galleryCrewCardsFromCatalogue(
+  commanderCrew.filter((row) => row.id === "weapons-officer"),
   "commander",
 );
 
-const sectorDeckLabels: readonly { readonly sector: ResourceId; readonly count: number; readonly useS1Back: boolean }[] = [
-  { sector: firstPlayableSlice.sectorMarkets.s1.resource, count: firstPlayableSlice.sectorMarkets.s1.deckSize, useS1Back: true },
-  { sector: firstPlayableSlice.sectorMarkets.s2.resource, count: firstPlayableSlice.sectorMarkets.s2.deckSize, useS1Back: false },
-  { sector: firstPlayableSlice.sectorMarkets.s3.resource, count: firstPlayableSlice.sectorMarkets.s3.deckSize, useS1Back: false },
-  { sector: firstPlayableSlice.sectorMarkets.s4.resource, count: firstPlayableSlice.sectorMarkets.s4.deckSize, useS1Back: false },
-];
+const sectorDeckGalleryRows: readonly {
+  readonly sector: ResourceId;
+  readonly sectorDeck: SectorArtDeck;
+  readonly count: number;
+  readonly ownerBack: boolean;
+}[] = (["s1", "s2", "s3", "s4"] as const).map((key) => {
+  const market = firstPlayableSlice.sectorMarkets[key];
+  return {
+    sector: market.resource,
+    sectorDeck: key,
+    count: market.deckSize,
+    ownerBack: market.deckBack === "sector",
+  };
+});
 
 const enemyDeckCount =
   firstPlayableSlice.enemyDecks["iron-syndicate"].explorationSize +
@@ -80,13 +91,13 @@ export function CardsSection() {
 
       <div className={styles.group}>
         <Typography variant="overline">
-          Crew ensigns (first slice, `ACT-1`) —{" "}
+          Crew (one Ensign, one Commander) —{" "}
           <a className={styles.inlineLink} href={hrefFor("/dev/crew-cards")}>
             full catalogue
           </a>
         </Typography>
         <div className={styles.grid}>
-          {ensignGalleryCards.map((crew) => (
+          {galleryEnsignSample.map((crew) => (
             <CardScalesFigure
               key={crew.catalogueId}
               name={crew.name ?? crew.title}
@@ -94,18 +105,7 @@ export function CardsSection() {
               render={(width) => <CrewCard {...crew} width={width} />}
             />
           ))}
-        </div>
-      </div>
-
-      <div className={styles.group}>
-        <Typography variant="overline">
-          Crew commanders (catalogue sample) —{" "}
-          <a className={styles.inlineLink} href={hrefFor("/dev/crew-cards")}>
-            full catalogue
-          </a>
-        </Typography>
-        <div className={styles.grid}>
-          {commanderGalleryExamples.map((crew) => (
+          {galleryCommanderSample.map((crew) => (
             <CardScalesFigure
               key={crew.catalogueId}
               name={crew.name ?? crew.title}
@@ -193,30 +193,45 @@ export function CardsSection() {
       </div>
 
       <div className={styles.group}>
-        <Typography variant="overline">Reference</Typography>
-        <div className={styles.grid}>
-          <CardScalesFigure
-            name="Dice reference"
-            render={(width) => (
-              <ReferenceCard
-                title="Natural 6"
-                text="A natural 6 always hits. A natural 1 always misses, even with accuracy bonuses."
-                width={width}
-              />
-            )}
-          />
-        </div>
-      </div>
-
-      <div className={styles.group}>
         <Typography variant="overline">Deck backs (slice counts)</Typography>
         <div className={styles.grid}>
-          {sectorDeckLabels.map(({ sector, count, useS1Back }) => (
-            <FigureDeck key={sector} sector={sector} count={count} useS1Back={useS1Back} />
+          {sectorDeckGalleryRows.map(({ sector, sectorDeck, count, ownerBack }) => (
+            <FigureDeck
+              key={sector}
+              sector={sector}
+              sectorDeck={sectorDeck}
+              count={count}
+              variant={ownerBack ? "sector" : "procedural"}
+            />
           ))}
-          <FigureDeck sector={null} label="Enemy" count={enemyDeckCount} rim="var(--game-faction-iron)" />
-          <FigureDeck sector={null} label="Missions" count={firstPlayableSlice.missionDeckSize} rim="var(--palette-primary-main)" />
-          <FigureDeck sector={null} label="Crew" count={firstPlayableSlice.crewDeckSize} rim="var(--palette-primary-light)" />
+          <FigureDeck
+            sector={null}
+            label="Enemy"
+            count={enemyDeckCount}
+            rim="var(--game-faction-iron)"
+            variant="enemy"
+          />
+          <FigureDeck
+            sector={null}
+            label="Missions"
+            count={firstPlayableSlice.missionDeckSize}
+            rim="var(--palette-primary-main)"
+            variant="mission"
+          />
+          <FigureDeck
+            sector={null}
+            label="Crew"
+            count={firstPlayableSlice.crewDeckSize}
+            rim="var(--palette-primary-light)"
+            variant="crew"
+          />
+          <FigureDeck
+            sector={null}
+            label="Ships"
+            count={firstPlayableSlice.includedPlayerShipIds.length}
+            rim="var(--palette-secondary-main)"
+            variant="ship"
+          />
         </div>
       </div>
     </section>
@@ -225,20 +240,34 @@ export function CardsSection() {
 
 function FigureDeck({
   sector,
+  sectorDeck,
   count,
   label,
   rim,
-  useS1Back = false,
+  variant = "procedural",
 }: {
   readonly sector: ResourceId | null;
+  readonly sectorDeck?: SectorArtDeck;
   readonly count: number;
   readonly label?: string;
   readonly rim?: string;
-  readonly useS1Back?: boolean;
+  readonly variant?: DeckBackVariant;
 }) {
   const deckLabel = label ?? (sector ? resourceInfo[sector].name : "Deck");
   const deckRim = rim ?? (sector ? `var(--game-resource-${sector})` : "var(--palette-primary-main)");
-  const backNote = useS1Back ? `${count} cards · red upgrade back` : `${count} cards · order hidden`;
+  const resolvedSectorDeck = sectorDeck ?? (sector ? sectorDeckForResource(sector) : undefined);
+  const backNote =
+    variant === "sector" && resolvedSectorDeck
+      ? `${count} cards · owner ${resolvedSectorDeck.toUpperCase()} back`
+      : variant === "crew"
+        ? `${count} cards · owner crew back`
+        : variant === "enemy"
+          ? `${count} cards · owner enemy back`
+          : variant === "mission"
+            ? `${count} cards · owner mission back`
+            : variant === "ship"
+              ? `${count} cards · owner ship back`
+              : `${count} cards · order hidden`;
   return (
     <CardScalesFigure
       name={deckLabel}
@@ -249,7 +278,8 @@ function FigureDeck({
           count={count}
           rim={deckRim}
           width={width}
-          {...(useS1Back ? { variant: "s1-upgrade" as const } : {})}
+          variant={variant}
+          {...(variant === "sector" && resolvedSectorDeck ? { sectorDeck: resolvedSectorDeck } : {})}
         />
       )}
     />

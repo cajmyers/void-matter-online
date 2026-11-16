@@ -2,10 +2,10 @@
   "id": "first-playable",
   "label": "First content slice",
   "sectorMarkets": {
-    "s1": { "resource": "pc", "label": "S1 Weapons / Offensive", "deckSize": 30, "deckBack": "s1-upgrade" },
-    "s2": { "resource": "h3", "label": "S2 Propulsion / Utility", "deckSize": 2, "deckBack": "procedural" },
-    "s3": { "resource": "qp", "label": "S3 Cargo / Life Support", "deckSize": 5, "deckBack": "procedural" },
-    "s4": { "resource": "tc", "label": "S4 Hull / Defensive", "deckSize": 9, "deckBack": "procedural" }
+    "s1": { "resource": "pc", "label": "S1 Weapons / Offensive", "deckSize": 30, "deckBack": "sector" },
+    "s2": { "resource": "h3", "label": "S2 Propulsion / Utility", "deckSize": 2, "deckBack": "sector" },
+    "s3": { "resource": "qp", "label": "S3 Cargo / Life Support", "deckSize": 5, "deckBack": "sector" },
+    "s4": { "resource": "tc", "label": "S4 Hull / Defensive", "deckSize": 9, "deckBack": "sector" }
   },
   "sectorMarketComposition": {
     "s2": [

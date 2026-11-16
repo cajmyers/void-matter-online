@@ -12,3 +12,14 @@ const sectorByDeck: Readonly<Record<SectorDeckId, ResourceId>> = {
 export function sectorResourceForDeck(deck: SectorDeckId): ResourceId {
   return sectorByDeck[deck];
 }
+
+const deckBySector: Readonly<Record<ResourceId, SectorDeckId>> = {
+  pc: "s1",
+  h3: "s2",
+  qp: "s3",
+  tc: "s4",
+};
+
+export function sectorDeckForResource(resource: ResourceId): SectorDeckId {
+  return deckBySector[resource];
+}

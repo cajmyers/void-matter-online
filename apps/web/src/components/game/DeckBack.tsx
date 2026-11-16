@@ -1,9 +1,13 @@
 import type { CSSProperties } from "react";
-import { Typography } from "../Typography/Typography";
-import { s1UpgradeDeckBackUrl } from "./s1DeckBackArt";
+import { crewDeckBackArt } from "./crewDeckBackArt";
+import { enemyDeckBackArt } from "./enemyDeckBackArt";
+import { missionDeckBackArt } from "./missionDeckBackArt";
+import { shipDeckBackArt } from "./shipDeckBackArt";
+import type { SectorArtDeck } from "./assetCardArt";
+import { sectorDeckBackArt } from "./sectorDeckBackArt";
 import styles from "./DeckBack.module.css";
 
-export type DeckBackVariant = "procedural" | "s1-upgrade";
+export type DeckBackVariant = "procedural" | "sector" | "crew" | "enemy" | "mission" | "ship";
 
 export interface DeckBackProps {
   readonly label: string;
@@ -11,37 +15,42 @@ export interface DeckBackProps {
   /** A CSS colour (usually a theme variable) for the glowing rim. */
   readonly rim?: string;
   readonly width?: number;
-  /** Owner art: S1 upgrade back is tinted red (PC). */
+  /** Owner sector market back (`cards/s{1–4}/back/s{n}.webp`). */
   readonly variant?: DeckBackVariant;
+  readonly sectorDeck?: SectorArtDeck;
 }
 
-/** The back of a deck: a glowing card with its name and how many cards are left (counts are public, order is not). */
+/** Deck pile back. Label and count are for accessibility only (gallery captions carry the public count). */
 export function DeckBack({
   label,
   count,
   rim = "var(--palette-primary-main)",
   width = 84,
   variant = "procedural",
+  sectorDeck,
 }: DeckBackProps) {
+  const ownerArtUrl =
+    variant === "crew"
+      ? crewDeckBackArt()
+      : variant === "enemy"
+        ? enemyDeckBackArt()
+        : variant === "mission"
+          ? missionDeckBackArt()
+          : variant === "ship"
+            ? shipDeckBackArt()
+            : variant === "sector" && sectorDeck !== undefined
+            ? sectorDeckBackArt(sectorDeck)
+            : undefined;
   const style = { "--rim": rim, width } as CSSProperties;
-  const className = variant === "s1-upgrade" ? `${styles.deck} ${styles.s1Upgrade}` : styles.deck;
+  const className = ownerArtUrl ? `${styles.deck} ${styles.ownerBack}` : styles.deck;
   return (
     <div
       className={className}
       style={
-        variant === "s1-upgrade"
-          ? ({ ...style, backgroundImage: `url(${s1UpgradeDeckBackUrl})` } as CSSProperties)
-          : style
+        ownerArtUrl ? ({ ...style, backgroundImage: `url(${ownerArtUrl})` } as CSSProperties) : style
       }
       role="img"
       aria-label={`${label}: ${count} cards left`}
-    >
-      <Typography variant="overline" className={styles.label}>
-        {label}
-      </Typography>
-      <Typography variant="numeric" className={styles.count}>
-        {count}
-      </Typography>
-    </div>
+    />
   );
 }

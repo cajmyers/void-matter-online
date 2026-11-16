@@ -6,7 +6,7 @@ const sectorMarketSchema = z.object({
   resource: resourceIdSchema,
   label: z.string().min(1),
   deckSize: z.number().int().positive(),
-  deckBack: z.enum(["s1-upgrade", "procedural"]),
+  deckBack: z.enum(["sector", "procedural"]),
 });
 
 export const firstPlayableSliceSchema = z.object({
