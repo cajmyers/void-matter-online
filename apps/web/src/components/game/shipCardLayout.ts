@@ -24,6 +24,17 @@ export function shipUpgradeSlotMarkerSizePx(widthPx: number): number {
   return Math.min(38, Math.round(widthPx * 0.19));
 }
 
+/** Move action token on the art plate — each ship carries its own Move token (`ACT-1`). */
+export function shipCardMoveTokenSizePx(widthPx: number): number {
+  if (widthPx < 140) {
+    return 28;
+  }
+  if (widthPx >= cardWidthDetail) {
+    return 36;
+  }
+  return 32;
+}
+
 export function shipCardRegionHeights(widthPx: number): {
   readonly artPlateMinHeight: number;
   readonly compact: boolean;

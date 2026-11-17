@@ -1,0 +1,228 @@
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+.actionsStacked {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.actionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.tokenGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-md);
+}
+
+.tokenOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-xs);
+  padding: var(--spacing-1);
+  background: transparent;
+  border: 1px solid var(--palette-divider);
+  border-radius: var(--shape-border-radius);
+  cursor: pointer;
+  font: inherit;
+  color: var(--palette-text-primary);
+}
+
+.tokenOption:hover {
+  border-color: var(--palette-primary-main);
+  box-shadow: var(--glow-primary);
+}
+
+.tokenOption:disabled {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
+}
+
+.tokenLabel {
+  font-size: var(--typography-caption-size);
+  color: var(--palette-text-secondary);
+}
+
+.exchange {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--spacing-1);
+  border: 1px dashed var(--palette-warning-main, #e6a700);
+  border-radius: var(--shape-border-radius);
+  background: color-mix(in srgb, var(--palette-warning-main, #e6a700) 8%, transparent);
+}
+
+.exchangeLabel {
+  flex: 1 1 12rem;
+  color: var(--palette-text-secondary);
+}
+
+.costRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.cardRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  justify-content: center;
+}
+
+.selectableCard {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--shape-border-radius);
+  background: transparent;
+  cursor: pointer;
+}
+
+.selectableCard:hover {
+  border-color: var(--palette-primary-main);
+}
+
+.selectableCard[data-selected="true"] {
+  border-color: var(--palette-primary-light);
+  box-shadow: var(--glow-primary);
+}
+
+.hexMap {
+  display: flex;
+  justify-content: center;
+}
+
+.rotationRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+.rotationPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.dicePool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  align-items: center;
+}
+
+.diceToggle {
+  padding: 2px;
+  border: 2px solid transparent;
+  border-radius: var(--shape-border-radius-sm);
+  background: transparent;
+  cursor: pointer;
+}
+
+.diceToggle[data-selected="true"] {
+  border-color: var(--palette-primary-main);
+}
+
+.targetColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.targetLabel {
+  color: var(--palette-text-secondary);
+}
+
+.assignGrid {
+  display: grid;
+  gap: var(--gap-md);
+}
+
+.orderList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.orderItem {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--spacing-1);
+  border: 1px solid var(--palette-divider);
+  border-radius: var(--shape-border-radius-sm);
+}
+
+.orderRank {
+  min-width: 1.5rem;
+  font-family: var(--font-mono);
+  color: var(--palette-primary-light);
+}
+
+.retreatList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.retreatRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  padding: var(--spacing-0-5) var(--spacing-1);
+  border-radius: var(--shape-border-radius-sm);
+  background: color-mix(in srgb, var(--palette-background-paper) 60%, transparent);
+}
+
+.resourcePickGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-md);
+}
+
+.resourcePickCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.stepper button {
+  min-width: 2rem;
+}
+
+.slotList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.slotRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-sm);
+}

@@ -1,0 +1,23 @@
+.shell {
+  width: 100%;
+  max-width: 520px;
+  box-shadow: var(--panel-shadow), var(--glow-primary);
+}
+
+.headline {
+  color: var(--palette-text-primary);
+}
+
+.lead {
+  color: var(--palette-text-secondary);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.hint {
+  color: var(--palette-text-secondary);
+}

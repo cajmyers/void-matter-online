@@ -6,6 +6,7 @@ import { ActionTokensSection } from "./ActionTokensSection";
 import { ResourcesSection } from "./ResourcesSection";
 import { CardsSection } from "./CardsSection";
 import { ChromeSection } from "./ChromeSection";
+import { PromptsSection } from "./PromptsSection";
 import { DiceSection } from "./DiceSection";
 import { ZonesSection } from "./ZonesSection";
 import { ShipsSection } from "./ShipsSection";
@@ -27,7 +28,7 @@ const entries: readonly IndexEntry[] = [
   { id: "cards", label: "Cards", built: true },
   { id: "zones", label: "Zones", built: true },
   { id: "dice", label: "Dice", built: true },
-  { id: "prompts", label: "Prompts", built: false },
+  { id: "prompts", label: "Prompts", built: true },
   { id: "chrome", label: "Chrome", built: true },
 ];
 
@@ -87,6 +88,7 @@ export default function GalleryPage() {
         <CardsSection />
         <ZonesSection />
         <DiceSection />
+        <PromptsSection />
         <ChromeSection />
       </div>
     </div>

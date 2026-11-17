@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import type { ResourceCost } from "@void-matter/content";
 import { shipCardFaceTexture, shipCardHeroArt } from "./assetCardArt";
 import { assetCardAttackDieSize, assetCardCargoSlotOuterSize, assetCardCostCubeSize } from "./assetCardSizing";
+import { ActionToken } from "./ActionToken";
 import { CargoCapacityRow } from "./CargoCapacityRow";
 import {
   enemyWeaponArchetypeLabel,
@@ -12,7 +13,12 @@ import { AttackDiceRow } from "./AttackDiceRow";
 import { HullDamageSlots } from "./HullTrack";
 import { PlayingCardShell } from "./PlayingCardShell";
 import { ResourceCostBadge } from "./ResourceCostBadge";
-import { shipCardHullSlotSizePx, shipCardRegionHeights, shipUpgradeSlotMarkerSizePx } from "./shipCardLayout";
+import {
+  shipCardHullSlotSizePx,
+  shipCardMoveTokenSizePx,
+  shipCardRegionHeights,
+  shipUpgradeSlotMarkerSizePx,
+} from "./shipCardLayout";
 import { UpgradeSlotMarker } from "./UpgradeSlotMarker";
 import { Typography } from "../Typography/Typography";
 import styles from "./ShipCard.module.css";
@@ -59,6 +65,7 @@ export function ShipCard({
   const illustrationUrl = shipCardHeroArt(shipId);
   const costSize = assetCardCostCubeSize(width);
   const slotMarkerSize = shipUpgradeSlotMarkerSizePx(width);
+  const moveTokenSize = shipCardMoveTokenSizePx(width);
   const hullSlotSize = shipCardHullSlotSizePx(width);
   const showHullSlots = !compact && hull > 0 && hullSlotSize > 0;
   const parsedWeaponGroups = parseEnemyWeaponsLine(weapons);
@@ -79,7 +86,7 @@ export function ShipCard({
       width={width}
       faceTextureUrl={faceTextureUrl}
       layoutStyle={layoutStyle}
-      ariaLabel={`${title}, ${subtitle}, speed ${speed}, hull ${hull}, ${upgradeSlotCount} upgrade slots`}
+      ariaLabel={`${title}, ${subtitle}, speed ${speed}, hull ${hull}, Move action token, ${upgradeSlotCount} upgrade slots`}
       className={[
         styles.card,
         compact && styles.compact,
@@ -119,6 +126,9 @@ export function ShipCard({
         ) : (
           <div className={styles.heroPlaceholder} aria-hidden />
         )}
+        <div className={styles.moveTokenOnArt} aria-label="Move action token">
+          <ActionToken kind="move" size={moveTokenSize} />
+        </div>
       </div>
 
       {compact ? null : (
