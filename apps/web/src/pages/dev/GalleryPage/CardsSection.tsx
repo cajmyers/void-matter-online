@@ -146,6 +146,7 @@ export function CardsSection() {
                     title={galleryMissionSample.title}
                     text={galleryMissionSample.text}
                     voidMatter={galleryMissionSample.voidMatter}
+                    progress={0.62}
                     width={width}
                   />
                 )}

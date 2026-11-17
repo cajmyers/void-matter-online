@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { Typography } from "../Typography/Typography";
 import { crewDeckBackArt } from "./crewDeckBackArt";
 import { enemyDeckBackArt } from "./enemyDeckBackArt";
 import { missionDeckBackArt } from "./missionDeckBackArt";
@@ -20,7 +21,7 @@ export interface DeckBackProps {
   readonly sectorDeck?: SectorArtDeck;
 }
 
-/** Deck pile back. Label and count are for accessibility only (gallery captions carry the public count). */
+/** Deck pile back with a public count badge (order hidden). */
 export function DeckBack({
   label,
   count,
@@ -51,6 +52,10 @@ export function DeckBack({
       }
       role="img"
       aria-label={`${label}: ${count} cards left`}
-    />
+    >
+      <Typography variant="caption" className={styles.countBadge}>
+        {count}
+      </Typography>
+    </div>
   );
 }

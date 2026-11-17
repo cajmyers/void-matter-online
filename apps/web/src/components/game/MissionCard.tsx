@@ -23,19 +23,27 @@ export interface MissionCardProps {
   readonly complete?: boolean;
   /** VM taken; mission stays in the completed row until discarded by rules. */
   readonly redeemed?: boolean;
-  /** Demo / UI progress when in progress (0–1). Engine will drive this later. */
+  /**
+   * Demo / UI progress when held and in progress (0–1). Market and newly taken missions use 0 — not started.
+   * Engine will drive this later.
+   */
   readonly progress?: number;
   readonly width?: number;
 }
 
-function missionPhase(readyToRedeem: boolean, redeemed: boolean): "in-progress" | "ready-to-redeem" | "redeemed" {
+type MissionCardPhase = "not-started" | "in-progress" | "ready-to-redeem" | "redeemed";
+
+function missionPhase(readyToRedeem: boolean, redeemed: boolean, progress: number): MissionCardPhase {
   if (redeemed) {
     return "redeemed";
   }
   if (readyToRedeem) {
     return "ready-to-redeem";
   }
-  return "in-progress";
+  if (progress > 0) {
+    return "in-progress";
+  }
+  return "not-started";
 }
 
 export function MissionCard({
@@ -47,11 +55,11 @@ export function MissionCard({
   readyToRedeem: readyToRedeemProp,
   complete = false,
   redeemed = false,
-  progress = 0.62,
+  progress = 0,
   width = 156,
 }: MissionCardProps) {
   const readyToRedeem = readyToRedeemProp ?? complete;
-  const phase = missionPhase(readyToRedeem, redeemed);
+  const phase = missionPhase(readyToRedeem, redeemed, progress);
   const detailLayout = width >= cardWidthDetail;
   const faceTextureUrl = missionCardFaceTexture();
   const { artPlateHeight, textBlockHeight, footerReserveHeight, compact } = missionCardRegionHeights(width);
@@ -59,10 +67,7 @@ export function MissionCard({
     illustrationUrlProp ?? (catalogueId ? missionCardHeroArt(catalogueId) : undefined);
   const vmArtSize = assetCardCostCubeSize(width);
   const redeemedVmSize = missionCardRedeemedVmSize(width);
-  const progressClamped = Math.min(
-    1,
-    Math.max(0, phase === "ready-to-redeem" || phase === "redeemed" ? 1 : progress),
-  );
+  const progressClamped = Math.min(1, Math.max(0, phase === "ready-to-redeem" || phase === "redeemed" ? 1 : progress));
 
   const style = {
     width,
@@ -88,7 +93,13 @@ export function MissionCard({
         .join(" ")}
       style={style}
       aria-label={`${title}, mission. ${text}.${
-        phase === "redeemed" ? " Redeemed." : phase === "ready-to-redeem" ? " Ready to redeem." : " In progress."
+        phase === "redeemed"
+          ? " Redeemed."
+          : phase === "ready-to-redeem"
+            ? " Ready to redeem."
+            : phase === "in-progress"
+              ? " In progress."
+              : " Not started."
       }`}
     >
       <header className={styles.header}>
@@ -130,18 +141,30 @@ export function MissionCard({
         <span
           className={[
             styles.progress,
-            phase !== "in-progress" ? styles.progressComplete : undefined,
+            phase === "ready-to-redeem" || phase === "redeemed" ? styles.progressComplete : undefined,
           ]
             .filter(Boolean)
             .join(" ")}
-          role={phase === "in-progress" ? "img" : undefined}
-          aria-label={phase === "in-progress" ? "Mission progress" : undefined}
-          aria-hidden={phase === "in-progress" ? undefined : true}
+          role={phase === "in-progress" || phase === "not-started" ? "img" : undefined}
+          aria-label={
+            phase === "in-progress"
+              ? "Mission progress"
+              : phase === "not-started"
+                ? "Mission not started"
+                : undefined
+          }
+          aria-hidden={phase === "in-progress" || phase === "not-started" ? undefined : true}
         >
           <span className={styles.progressFill} />
         </span>
         <Typography variant="cardFine" className={styles.status}>
-          {phase === "redeemed" ? "Redeemed" : phase === "ready-to-redeem" ? "Ready to redeem" : "In progress"}
+          {phase === "redeemed"
+            ? "Redeemed"
+            : phase === "ready-to-redeem"
+              ? "Ready to redeem"
+              : phase === "in-progress"
+                ? "In progress"
+                : "Not started"}
         </Typography>
       </footer>
     </article>

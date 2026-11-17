@@ -1,0 +1,80 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  padding: var(--spacing-2);
+  background: var(--panel-background);
+  border: var(--panel-border-width) solid color-mix(in srgb, var(--zone-rim) 45%, var(--panel-border-color));
+  border-radius: var(--shape-border-radius-lg);
+  box-shadow:
+    var(--panel-shadow),
+    0 0 20px color-mix(in srgb, var(--zone-rim) 22%, transparent);
+  backdrop-filter: var(--panel-backdrop-filter);
+}
+
+.attachTabs {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.title {
+  color: var(--palette-text-primary);
+}
+
+.subtitle {
+  color: var(--palette-text-secondary);
+}
+
+.rowLabel {
+  color: var(--palette-primary-light);
+}
+
+.faceUp {
+  display: grid;
+  grid-template-columns: repeat(var(--game-zone-cards-across), var(--zone-card-width, 118px));
+  gap: var(--gap-sm);
+  justify-content: start;
+  align-content: start;
+}
+
+.piles {
+  display: grid;
+  grid-template-columns: repeat(var(--game-zone-cards-across), var(--zone-card-width, 118px));
+  gap: var(--gap-md);
+  align-items: start;
+  justify-content: start;
+}
+
+.pileSlot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-width: 0;
+}
+
+.pileLabel {
+  color: var(--palette-primary-light);
+}
+
+.pileBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footnote {
+  color: var(--palette-text-secondary);
+  max-width: calc(
+    var(--game-zone-cards-across) * var(--zone-card-width, 118px) + (var(--game-zone-cards-across) - 1) * var(--gap-sm)
+  );
+}

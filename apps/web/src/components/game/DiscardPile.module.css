@@ -1,0 +1,61 @@
+.pile {
+  position: relative;
+  flex: none;
+}
+
+/* Spent cards: lower energy than the face-up market (colour is supplementary). */
+.spent {
+  opacity: var(--game-zone-discard-opacity);
+}
+
+.spent .top {
+  filter: saturate(var(--game-zone-discard-saturate)) brightness(var(--game-zone-discard-brightness));
+}
+
+.shadowCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  aspect-ratio: var(--card-aspect-ratio);
+  border: 1px solid var(--palette-divider);
+  border-radius: var(--shape-border-radius-lg);
+  background: var(--game-card-background);
+  box-shadow: var(--shadow-1);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.top {
+  position: relative;
+  flex: none;
+}
+
+.countBadge {
+  position: absolute;
+  right: calc(var(--spacing-0-5) * -1);
+  bottom: calc(var(--spacing-0-5) * -1);
+  min-width: 1.25rem;
+  padding: var(--spacing-0-5) var(--spacing-0-5);
+  text-align: center;
+  color: var(--palette-text-primary);
+  background: color-mix(in srgb, var(--palette-background-elevated) 92%, transparent);
+  border: 1px solid var(--palette-divider);
+  border-radius: var(--shape-border-radius-sm);
+  box-shadow: var(--shadow-2);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xs);
+  aspect-ratio: var(--card-aspect-ratio);
+  border: 1px dashed var(--palette-divider);
+  border-radius: var(--shape-border-radius-lg);
+  background: color-mix(in srgb, var(--palette-background-default) 70%, transparent);
+}
+
+.emptyHint {
+  color: var(--palette-text-disabled);
+}

@@ -130,3 +130,16 @@
   border: 1px dashed var(--palette-divider);
   border-radius: var(--shape-border-radius);
 }
+
+/** Gallery specimens for the table’s left zone column (2 cards wide, unbounded height). */
+.zoneColumnStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  align-items: flex-start;
+}
+
+#zones .stage {
+  justify-content: flex-start;
+  align-items: flex-start;
+}

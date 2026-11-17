@@ -62,6 +62,12 @@
   --layout-min-width: 1280px;
   --layout-content-max-width: 1440px;
   --layout-topbar-height: 56px;
+  /* Left zone column: at most two playing cards across; height grows with face-up count. */
+  --game-zone-cards-across: 2;
+  --game-zone-tab-rail-width: 2.75rem;
+  --game-zone-discard-opacity: 0.82;
+  --game-zone-discard-saturate: 0.48;
+  --game-zone-discard-brightness: 0.9;
 
   /* Typography scale (the palette block below supplies the font families and display style) */
   --typography-font-size-base: 16px;
