@@ -6,6 +6,7 @@ import {
 } from "@void-matter/content";
 import { MissionCard } from "../../../components/game/MissionCard";
 import { Typography } from "../../../components/Typography/Typography";
+import { CatalogueDeckBackSection, FigureDeck } from "../GalleryPage/FigureDeck";
 import { CardScalesFigure } from "../GalleryPage/Figure";
 import galleryStyles from "../GalleryPage/GalleryPage.module.css";
 import styles from "../S1CardsPage/S1CardsPage.module.css";
@@ -139,6 +140,16 @@ export default function MissionCardsPage() {
             ])}
         </div>
       </section>
+
+      <CatalogueDeckBackSection>
+        <FigureDeck
+          sector={null}
+          label="Missions"
+          count={firstPlayableSlice.missionDeckSize}
+          rim="var(--game-mission-rim)"
+          variant="mission"
+        />
+      </CatalogueDeckBackSection>
     </div>
   );
 }

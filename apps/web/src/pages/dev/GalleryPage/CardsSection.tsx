@@ -1,14 +1,11 @@
 import { commanderCrew, ensignCrew, firstPlayableSlice, missionCatalogue } from "@void-matter/content";
 import { AssetCard } from "../../../components/game/AssetCard";
 import { CrewCard } from "../../../components/game/CrewCard";
-import { DeckBack } from "../../../components/game/DeckBack";
 import { EnemyCard } from "../../../components/game/EnemyCard";
 import { MissionCard } from "../../../components/game/MissionCard";
 import { ShipCard } from "../../../components/game/ShipCard";
 import type { SectorArtDeck } from "../../../components/game/assetCardArt";
-import type { DeckBackVariant } from "../../../components/game/DeckBack";
-import { sectorDeckForResource } from "../../../components/game/sectorDeck";
-import { resourceInfo, type ResourceId } from "../../../components/game/resources";
+import type { ResourceId } from "../../../components/game/resources";
 import { Typography } from "../../../components/Typography/Typography";
 import { enemyFixtures } from "../../../fixtures/cards";
 import { galleryCrewCardsFromCatalogue } from "../../../fixtures/crewCardFixtures";
@@ -18,6 +15,7 @@ import {
   sectorDeckLabel,
 } from "../../../fixtures/sectorAssetCards";
 import { CardScalesFigure } from "./Figure";
+import { FigureDeck } from "./FigureDeck";
 import styles from "./GalleryPage.module.css";
 
 const sectorMarketGalleryExamples = galleryExampleAssetCardsForSectorMarkets();
@@ -263,53 +261,5 @@ export function CardsSection() {
         </div>
       </div>
     </section>
-  );
-}
-
-function FigureDeck({
-  sector,
-  sectorDeck,
-  count,
-  label,
-  rim,
-  variant = "procedural",
-}: {
-  readonly sector: ResourceId | null;
-  readonly sectorDeck?: SectorArtDeck;
-  readonly count: number;
-  readonly label?: string;
-  readonly rim?: string;
-  readonly variant?: DeckBackVariant;
-}) {
-  const deckLabel = label ?? (sector ? resourceInfo[sector].name : "Deck");
-  const deckRim = rim ?? (sector ? `var(--game-resource-${sector})` : "var(--palette-primary-main)");
-  const resolvedSectorDeck = sectorDeck ?? (sector ? sectorDeckForResource(sector) : undefined);
-  const backNote =
-    variant === "sector" && resolvedSectorDeck
-      ? `${count} cards · owner ${resolvedSectorDeck.toUpperCase()} back`
-      : variant === "crew"
-        ? `${count} cards · owner crew back`
-        : variant === "enemy"
-          ? `${count} cards · owner enemy back`
-          : variant === "mission"
-            ? `${count} cards · owner mission back`
-            : variant === "ship"
-              ? `${count} cards · owner ship back`
-              : `${count} cards · order hidden`;
-  return (
-    <CardScalesFigure
-      name={deckLabel}
-      note={backNote}
-      render={(width) => (
-        <DeckBack
-          label={deckLabel}
-          count={count}
-          rim={deckRim}
-          width={width}
-          variant={variant}
-          {...(variant === "sector" && resolvedSectorDeck ? { sectorDeck: resolvedSectorDeck } : {})}
-        />
-      )}
-    />
   );
 }

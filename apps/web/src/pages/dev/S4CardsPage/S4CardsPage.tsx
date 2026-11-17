@@ -1,7 +1,8 @@
-import { fullGameSectorMarkets, s4AssetCards } from "@void-matter/content";
+import { firstPlayableSlice, fullGameSectorMarkets, s4AssetCards } from "@void-matter/content";
 import { AssetCard } from "../../../components/game/AssetCard";
 import { cardIllustrationArtForDeck } from "../../../components/game/assetCardArt";
 import { Typography } from "../../../components/Typography/Typography";
+import { CatalogueDeckBackSection, FigureDeck } from "../GalleryPage/FigureDeck";
 import { CardScalesFigure } from "../GalleryPage/Figure";
 import galleryStyles from "../GalleryPage/GalleryPage.module.css";
 import { catalogueAssetCardsForDeck } from "../../../fixtures/sectorAssetCards";
@@ -12,6 +13,7 @@ const catalogueCards = [...catalogueAssetCardsForDeck("s4")].sort((a, b) =>
 );
 const missingArt = s4AssetCards.filter((row) => !cardIllustrationArtForDeck(row.illustrationSlug, "s4"));
 const deckSize = fullGameSectorMarkets.decks.s4.deckSize;
+const s4Market = firstPlayableSlice.sectorMarkets.s4;
 
 /** All S4 (Hull / Defensive) catalogue rows. */
 export default function S4CardsPage() {
@@ -44,6 +46,15 @@ export default function S4CardsPage() {
           ))}
         </div>
       </section>
+
+      <CatalogueDeckBackSection>
+        <FigureDeck
+          sector={s4Market.resource}
+          sectorDeck="s4"
+          count={s4Market.deckSize}
+          variant={s4Market.deckBack === "sector" ? "sector" : "procedural"}
+        />
+      </CatalogueDeckBackSection>
     </div>
   );
 }

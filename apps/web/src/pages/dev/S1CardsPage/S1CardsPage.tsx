@@ -1,7 +1,8 @@
-import { s1AssetCards } from "@void-matter/content";
+import { firstPlayableSlice, s1AssetCards } from "@void-matter/content";
 import { AssetCard } from "../../../components/game/AssetCard";
 import { cardIllustrationArtForDeck } from "../../../components/game/assetCardArt";
 import { Typography } from "../../../components/Typography/Typography";
+import { CatalogueDeckBackSection, FigureDeck } from "../GalleryPage/FigureDeck";
 import { CardScalesFigure } from "../GalleryPage/Figure";
 import galleryStyles from "../GalleryPage/GalleryPage.module.css";
 import { ownerAssetCardsForDeck } from "../../../fixtures/sectorAssetCards";
@@ -13,6 +14,8 @@ const catalogueCards = [...ownerAssetCardsForDeck("s1")].sort((a, b) =>
 const missingArt = s1AssetCards.filter(
   (row) => !cardIllustrationArtForDeck(row.illustrationSlug, "s1"),
 );
+
+const s1Market = firstPlayableSlice.sectorMarkets.s1;
 
 /** All S1 (Weapons / Offensive) catalogue rows with owner hero art. */
 export default function S1CardsPage() {
@@ -47,6 +50,15 @@ export default function S1CardsPage() {
           <Typography variant="body2">No cards with loaded illustrations.</Typography>
         ) : null}
       </section>
+
+      <CatalogueDeckBackSection>
+        <FigureDeck
+          sector={s1Market.resource}
+          sectorDeck="s1"
+          count={s1Market.deckSize}
+          variant={s1Market.deckBack === "sector" ? "sector" : "procedural"}
+        />
+      </CatalogueDeckBackSection>
     </div>
   );
 }

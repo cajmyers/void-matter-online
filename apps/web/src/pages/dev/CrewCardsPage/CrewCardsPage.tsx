@@ -1,6 +1,7 @@
 import { commanderCrew, ensignCrew, firstPlayableSlice } from "@void-matter/content";
 import { CrewCard } from "../../../components/game/CrewCard";
 import { Typography } from "../../../components/Typography/Typography";
+import { CatalogueDeckBackSection, FigureDeck } from "../GalleryPage/FigureDeck";
 import { CardScalesFigure } from "../GalleryPage/Figure";
 import galleryStyles from "../GalleryPage/GalleryPage.module.css";
 import { galleryCrewCardsFromCatalogue } from "../../../fixtures/crewCardFixtures";
@@ -62,6 +63,16 @@ export default function CrewCardsPage() {
           ))}
         </div>
       </section>
+
+      <CatalogueDeckBackSection>
+        <FigureDeck
+          sector={null}
+          label="Crew"
+          count={sliceDeckSize}
+          rim="var(--game-crew-rim)"
+          variant="crew"
+        />
+      </CatalogueDeckBackSection>
     </div>
   );
 }

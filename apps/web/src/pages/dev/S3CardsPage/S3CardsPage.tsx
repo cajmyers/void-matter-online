@@ -1,7 +1,8 @@
-import { s3AssetCards } from "@void-matter/content";
+import { firstPlayableSlice, s3AssetCards } from "@void-matter/content";
 import { AssetCard } from "../../../components/game/AssetCard";
 import { cardIllustrationArtForDeck } from "../../../components/game/assetCardArt";
 import { Typography } from "../../../components/Typography/Typography";
+import { CatalogueDeckBackSection, FigureDeck } from "../GalleryPage/FigureDeck";
 import { CardScalesFigure } from "../GalleryPage/Figure";
 import galleryStyles from "../GalleryPage/GalleryPage.module.css";
 import { catalogueAssetCardsForDeck } from "../../../fixtures/sectorAssetCards";
@@ -11,6 +12,8 @@ const catalogueCards = [...catalogueAssetCardsForDeck("s3")].sort((a, b) =>
   a.title.localeCompare(b.title, "en", { sensitivity: "base" }),
 );
 const missingArt = s3AssetCards.filter((row) => !cardIllustrationArtForDeck(row.illustrationSlug, "s3"));
+
+const s3Market = firstPlayableSlice.sectorMarkets.s3;
 
 /** All S3 (Cargo / Life Support) catalogue rows with owner hero art. */
 export default function S3CardsPage() {
@@ -50,6 +53,15 @@ export default function S3CardsPage() {
           <Typography variant="body2">No cards with loaded illustrations.</Typography>
         ) : null}
       </section>
+
+      <CatalogueDeckBackSection>
+        <FigureDeck
+          sector={s3Market.resource}
+          sectorDeck="s3"
+          count={s3Market.deckSize}
+          variant={s3Market.deckBack === "sector" ? "sector" : "procedural"}
+        />
+      </CatalogueDeckBackSection>
     </div>
   );
 }
