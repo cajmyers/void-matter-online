@@ -1,0 +1,48 @@
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-md);
+  padding: var(--spacing-1-5) var(--spacing-2);
+  background: var(--panel-background);
+  border: var(--panel-border-width) solid var(--panel-border-color);
+  border-radius: var(--shape-border-radius);
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: var(--panel-backdrop-filter);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-width: 0;
+}
+
+.round {
+  font-size: var(--typography-h4-size);
+  color: var(--palette-primary-main);
+  line-height: 1;
+}
+
+.phase {
+  margin: 0;
+}
+
+.step {
+  color: var(--palette-text-secondary);
+}
+
+.divider {
+  align-self: stretch;
+  width: 1px;
+  min-height: 2.5rem;
+  background: var(--palette-divider);
+}
+
+.firstPlayer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-xs);
+  color: var(--palette-text-secondary);
+}

@@ -1,0 +1,22 @@
+.indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-md);
+  padding: var(--spacing-1-5) var(--spacing-2);
+  border: 2px solid color-mix(in srgb, var(--turn-seat) 65%, var(--panel-border-color));
+  border-radius: var(--shape-border-radius-lg);
+  background: color-mix(in srgb, var(--palette-background-elevated) 90%, transparent);
+  box-shadow:
+    var(--shadow-3),
+    0 0 20px color-mix(in srgb, var(--turn-seat) 28%, transparent);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.name {
+  margin: 0;
+}

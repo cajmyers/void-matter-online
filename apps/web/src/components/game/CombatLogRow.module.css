@@ -1,0 +1,49 @@
+.row {
+  display: grid;
+  grid-template-columns: 4.75rem minmax(0, 1fr);
+  gap: var(--gap-sm);
+  align-items: baseline;
+  padding: var(--spacing-0-5) var(--spacing-1);
+  border-left: 3px solid var(--palette-divider);
+  border-radius: 0 var(--shape-border-radius-sm) var(--shape-border-radius-sm) 0;
+  background: color-mix(in srgb, var(--palette-background-default) 55%, transparent);
+}
+
+.withSeat {
+  border-left-color: color-mix(in srgb, var(--log-seat) 70%, var(--palette-divider));
+}
+
+.highlight {
+  background: color-mix(in srgb, var(--palette-primary-main) 12%, transparent);
+}
+
+.kindTag {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--palette-text-secondary);
+}
+
+.body {
+  margin: 0;
+  color: var(--palette-text-primary);
+}
+
+.row[data-kind="phase"] .kindTag {
+  color: var(--palette-primary-light);
+}
+
+.row[data-kind="combat"] .kindTag {
+  color: var(--game-state-pinned);
+}
+
+.row[data-kind="damage"] .kindTag {
+  color: var(--palette-warning-light);
+}
+
+.row[data-kind="reaction"] .kindTag {
+  color: var(--palette-secondary-light);
+}
+
+.row[data-kind="score"] .kindTag {
+  color: var(--game-resource-vm);
+}

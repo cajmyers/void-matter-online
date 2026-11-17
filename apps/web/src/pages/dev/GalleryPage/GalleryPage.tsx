@@ -5,6 +5,7 @@ import { VisionFilters, visionModes, type VisionMode } from "../StylePage/Vision
 import { ActionTokensSection } from "./ActionTokensSection";
 import { ResourcesSection } from "./ResourcesSection";
 import { CardsSection } from "./CardsSection";
+import { ChromeSection } from "./ChromeSection";
 import { DiceSection } from "./DiceSection";
 import { ZonesSection } from "./ZonesSection";
 import { ShipsSection } from "./ShipsSection";
@@ -27,7 +28,7 @@ const entries: readonly IndexEntry[] = [
   { id: "zones", label: "Zones", built: true },
   { id: "dice", label: "Dice", built: true },
   { id: "prompts", label: "Prompts", built: false },
-  { id: "chrome", label: "Chrome", built: false },
+  { id: "chrome", label: "Chrome", built: true },
 ];
 
 function scrollToSection(id: string): void {
@@ -86,6 +87,7 @@ export default function GalleryPage() {
         <CardsSection />
         <ZonesSection />
         <DiceSection />
+        <ChromeSection />
       </div>
     </div>
   );

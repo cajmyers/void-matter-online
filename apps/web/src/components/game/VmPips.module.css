@@ -1,0 +1,22 @@
+.pips {
+  display: inline-flex;
+  gap: var(--gap-xs);
+  align-items: center;
+}
+
+.pip {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid var(--game-resource-vm);
+  transform: rotate(45deg);
+}
+
+.pipSmall {
+  width: 9px;
+  height: 9px;
+}
+
+.pipFilled {
+  background: var(--game-resource-vm);
+  box-shadow: 0 0 6px var(--game-resource-vm);
+}
