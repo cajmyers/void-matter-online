@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ensignCrew, firstPlayableSlice, ironSyndicateEnemies, s1AssetCards } from "./loadContent";
+import { ensignCrew, enemyCatalogue, firstPlayableSlice, s1AssetCards } from "./loadContent";
 
 /** `content-data.md` §5 and slice tables. */
 describe("first-playable slice verification", () => {
@@ -10,9 +10,10 @@ describe("first-playable slice verification", () => {
     expect(firstPlayableSlice.sectorMarkets.s4.deckSize).toBe(9);
   });
 
-  it("matches Iron Syndicate enemy deck placeholders", () => {
-    expect(firstPlayableSlice.enemyDecks["iron-syndicate"].explorationSize).toBe(6);
-    expect(firstPlayableSlice.enemyDecks["iron-syndicate"].reinforcementSize).toBe(5);
+  it("matches mixed-faction enemy deck placeholders", () => {
+    expect(firstPlayableSlice.enemyDecks.explorationSize).toBe(12);
+    expect(firstPlayableSlice.enemyDecks.reinforcementSize).toBe(15);
+    expect(firstPlayableSlice.enemyDecks.factionsInPlay).toHaveLength(3);
   });
 
   it("crew composition matches crewDeckSize (Ensigns only, 4 copies each)", () => {
@@ -35,7 +36,7 @@ describe("first-playable slice verification", () => {
     for (const id of firstPlayableSlice.includedCrewIds) {
       expect(crewIds.has(id)).toBe(true);
     }
-    const enemyIds = new Set(ironSyndicateEnemies.map((enemy) => enemy.id));
+    const enemyIds = new Set(enemyCatalogue.map((enemy) => enemy.id));
     for (const id of firstPlayableSlice.includedEnemyIds) {
       expect(enemyIds.has(id)).toBe(true);
     }

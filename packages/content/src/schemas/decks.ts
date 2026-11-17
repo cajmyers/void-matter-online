@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { sectorDeckSchema } from "./cards";
+import { enemyFactionIdSchema } from "./enemies";
 
 export const marketDeckCardEntrySchema = z.object({
   cardId: z.string().min(1),
@@ -49,3 +50,34 @@ export type FullGameCrewDeck = z.infer<typeof fullGameCrewDeckSchema>;
 
 export { missionDeckCardEntrySchema, missionDeckSchema } from "./missions";
 export type { MissionDeck, MissionDeckCardEntry } from "./missions";
+
+export const enemyDeckCardEntrySchema = z.object({
+  enemyId: z.string().min(1),
+  copies: z.number().int().positive(),
+});
+export type EnemyDeckCardEntry = z.infer<typeof enemyDeckCardEntrySchema>;
+
+const enemyPileSchema = z.object({
+  cards: z.array(enemyDeckCardEntrySchema).min(1),
+});
+
+export const fullGameEnemyDecksSchema = z.object({
+  schemaVersion: z.literal(1),
+  label: z.string().min(1),
+  explorationDeckSize: z.number().int().positive(),
+  reinforcementDeckSize: z.number().int().positive(),
+  exploration: enemyPileSchema,
+  reinforcement: enemyPileSchema,
+});
+export type FullGameEnemyDecks = z.infer<typeof fullGameEnemyDecksSchema>;
+
+export const sliceEnemyDeckSchema = z.object({
+  schemaVersion: z.literal(1),
+  label: z.string().min(1),
+  factionsInPlay: z.array(enemyFactionIdSchema).min(1),
+  explorationDeckSize: z.number().int().positive(),
+  reinforcementDeckSize: z.number().int().positive(),
+  exploration: enemyPileSchema,
+  reinforcement: enemyPileSchema,
+});
+export type SliceEnemyDeck = z.infer<typeof sliceEnemyDeckSchema>;

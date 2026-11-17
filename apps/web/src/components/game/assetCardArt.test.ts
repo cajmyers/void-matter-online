@@ -1,4 +1,4 @@
-import { commanderCrew, ensignCrew, missionCatalogue } from "@void-matter/content";
+import { commanderCrew, enemyCatalogue, ensignCrew, missionCatalogue, playerShips } from "@void-matter/content";
 import { describe, expect, it } from "vitest";
 import {
   cardIllustrationArt,
@@ -6,9 +6,12 @@ import {
   cardIllustrationSlug,
   crewCardFaceTexture,
   crewCardPortraitArt,
+  enemyCardHeroArt,
   missionCardFaceTexture,
   missionCardHeroArt,
   sectorCardFaceTexture,
+  shipCardFaceTexture,
+  shipCardHeroArt,
 } from "./assetCardArt";
 
 describe("assetCardArt", () => {
@@ -50,6 +53,30 @@ describe("assetCardArt", () => {
   it("loads mission hero art by catalogue id", () => {
     expect(missionCardHeroArt("syndicate-bust")).toMatch(/mission\/fronts\/art\/syndicate-bust/);
     expect(missionCardHeroArt("unknown")).toBeUndefined();
+  });
+
+  it("loads enemy hero art by catalogue id", () => {
+    expect(enemyCardHeroArt("iron-goliath")).toMatch(/enemy\/fronts\/art\/iron-goliath/);
+    expect(enemyCardHeroArt("unknown")).toBeUndefined();
+  });
+
+  it("loads hero art for every catalogue enemy id", () => {
+    const missing = enemyCatalogue.filter((enemy) => enemyCardHeroArt(enemy.id) === undefined);
+    expect(missing.map((enemy) => enemy.id)).toEqual([]);
+  });
+
+  it("loads ship hero art by catalogue id", () => {
+    expect(shipCardHeroArt("nomad-corvette")).toMatch(/ship\/fronts\/art\/nomad-corvette/);
+    expect(shipCardHeroArt("unknown")).toBeUndefined();
+  });
+
+  it("loads hero art for every catalogue player ship id", () => {
+    const missing = playerShips.filter((ship) => shipCardHeroArt(ship.id) === undefined);
+    expect(missing.map((ship) => ship.id)).toEqual([]);
+  });
+
+  it("loads ship face texture for nomad corvette", () => {
+    expect(shipCardFaceTexture("nomad-corvette")).toMatch(/nomad-corvette-texture/);
   });
 
   it("loads hero art for every catalogue mission id", () => {

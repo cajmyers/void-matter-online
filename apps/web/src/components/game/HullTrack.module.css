@@ -21,26 +21,6 @@
   gap: var(--gap-xs);
 }
 
-.slots {
-  display: flex;
-  gap: var(--gap-xs);
-}
-
-.slot {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: 1.5px solid var(--palette-text-secondary);
-  border-radius: var(--shape-border-radius-sm);
-  background: var(--palette-grey-600);
-}
-
-.slotFilled {
-  border-color: var(--game-state-locked);
-}
-
 .full {
   color: var(--game-state-pinned);
 }

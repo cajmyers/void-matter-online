@@ -25,13 +25,22 @@
     ]
   },
   "enemyDecks": {
-    "iron-syndicate": {
-      "explorationSize": 6,
-      "reinforcementSize": 5,
-      "cardIds": ["iron-skiff", "iron-enforcer", "iron-goliath"]
-    }
+    "explorationSize": 12,
+    "reinforcementSize": 15,
+    "factionsInPlay": ["iron-syndicate", "prism-ascendancy", "the-hive"],
+    "cardIds": [
+      "iron-skiff",
+      "iron-enforcer",
+      "iron-goliath",
+      "prism-spark",
+      "prism-templar",
+      "prism-star-fortress",
+      "swarm-larva",
+      "brood-reaper",
+      "hive-mother"
+    ]
   },
-  "missionDeckSize": 27,
+  "missionDeckSize": 29,
   "crewDeckSize": 16,
   "crewComposition": [
     { "crewId": "pilot", "copies": 4 },
@@ -43,6 +52,16 @@
     "s1": ["ai-guidance-suite", "apocalypse"]
   },
   "includedCrewIds": ["pilot", "merchant", "tactical", "scout"],
-  "includedEnemyIds": ["iron-skiff", "iron-enforcer", "iron-goliath"],
+  "includedEnemyIds": [
+    "iron-skiff",
+    "iron-enforcer",
+    "iron-goliath",
+    "prism-spark",
+    "prism-templar",
+    "prism-star-fortress",
+    "swarm-larva",
+    "brood-reaper",
+    "hive-mother"
+  ],
   "includedPlayerShipIds": ["nomad-corvette"]
 }

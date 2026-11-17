@@ -1,0 +1,32 @@
+[
+  {
+    "id": "swarm-larva",
+    "name": "Swarm Larva",
+    "faction": "the-hive",
+    "tier": 1,
+    "hull": 1,
+    "speed": 3,
+    "weaponsLine": "1× Stinger Micro-Missile · 2 dice · 6+",
+    "specialText": ""
+  },
+  {
+    "id": "brood-reaper",
+    "name": "Brood Reaper",
+    "faction": "the-hive",
+    "tier": 2,
+    "hull": 3,
+    "speed": 1,
+    "weaponsLine": "1× Brood Torpedo Rack · 2 dice · 5+",
+    "specialText": "Once per encounter, after scoring ≥1 hit, spawn a Swarm Larva token (hull 1, speed 3, 2 dice 6+)."
+  },
+  {
+    "id": "hive-mother",
+    "name": "Hive Mother",
+    "faction": "the-hive",
+    "tier": 3,
+    "hull": 5,
+    "speed": 1,
+    "weaponsLine": "2× Living Hive-Torpedo · 2 dice · 4+ each",
+    "specialText": "At end of each combat round, repair 1 hull if damage cubes > 2; otherwise spawn a Swarm Larva token."
+  }
+]

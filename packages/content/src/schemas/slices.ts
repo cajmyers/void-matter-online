@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { crewDeckCardEntrySchema, sliceSectorMarketCompositionSchema } from "./decks";
+import { enemyFactionIdSchema } from "./enemies";
 import { resourceIdSchema } from "./primitives";
 
 const sectorMarketSchema = z.object({
@@ -19,11 +20,10 @@ export const firstPlayableSliceSchema = z.object({
     s4: sectorMarketSchema,
   }),
   enemyDecks: z.object({
-    "iron-syndicate": z.object({
-      explorationSize: z.number().int().positive(),
-      reinforcementSize: z.number().int().positive(),
-      cardIds: z.array(z.string().min(1)),
-    }),
+    explorationSize: z.number().int().positive(),
+    reinforcementSize: z.number().int().positive(),
+    factionsInPlay: z.array(enemyFactionIdSchema).min(1),
+    cardIds: z.array(z.string().min(1)).min(1),
   }),
   missionDeckSize: z.number().int().positive(),
   crewDeckSize: z.number().int().positive(),

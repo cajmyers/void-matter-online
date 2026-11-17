@@ -9,6 +9,8 @@ export interface PlayingCardShellProps {
   readonly className?: string;
   /** Full-card face stock (e.g. crew-texture.webp). */
   readonly faceTextureUrl?: string;
+  /** Merged into the shell style (e.g. region height CSS variables). */
+  readonly layoutStyle?: CSSProperties;
 }
 
 /** Shared 5:7 frame and sector-coloured rim for non-component card types. */
@@ -19,8 +21,10 @@ export function PlayingCardShell({
   children,
   className,
   faceTextureUrl,
+  layoutStyle,
 }: PlayingCardShellProps) {
   const style = {
+    ...layoutStyle,
     "--rim": rim,
     width,
     ...(faceTextureUrl ? { "--card-face-texture": `url(${faceTextureUrl})` } : {}),

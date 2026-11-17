@@ -15,7 +15,7 @@ import { HullCapacityRow } from "./HullCapacityRow";
 import { UpgradeSlotMarker } from "./UpgradeSlotMarker";
 import { sectorCardFaceTexture, type SectorArtDeck } from "./assetCardArt";
 import { assetCardRegionHeights } from "./assetCardLayout";
-import { assetCardCargoSlotOuterSize, assetCardCostCubeSize } from "./assetCardSizing";
+import { assetCardAttackDieSize, assetCardCargoSlotOuterSize, assetCardCostCubeSize } from "./assetCardSizing";
 import { cardWidthDetail } from "./cardSizes";
 import { parseAttackDiceCount, parseHitLabel, shouldShowAttackDice } from "./attackDieStats";
 import styles from "./AssetCard.module.css";
@@ -144,7 +144,7 @@ export function AssetCard({
   } as CSSProperties;
 
   const placeholderClass = `${styles.placeholderArt} ${styles[placeholderArt]}`;
-  const dieSize = compact ? 9 : detailLayout ? Math.min(17, Math.round(width * 0.075)) : Math.min(14, Math.round(width * 0.06));
+  const dieSize = assetCardAttackDieSize(width);
   const slotMarkerSize = compact ? 26 : Math.min(38, Math.round(width * 0.19));
 
   return (

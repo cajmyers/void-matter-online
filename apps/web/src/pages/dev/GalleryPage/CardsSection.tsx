@@ -1,4 +1,11 @@
-import { commanderCrew, ensignCrew, firstPlayableSlice, missionCatalogue } from "@void-matter/content";
+import {
+  commanderCrew,
+  ensignCrew,
+  firstPlayableSlice,
+  enemyCatalogue,
+  missionCatalogue,
+  playerShips,
+} from "@void-matter/content";
 import { AssetCard } from "../../../components/game/AssetCard";
 import { CrewCard } from "../../../components/game/CrewCard";
 import { EnemyCard } from "../../../components/game/EnemyCard";
@@ -7,8 +14,8 @@ import { ShipCard } from "../../../components/game/ShipCard";
 import type { SectorArtDeck } from "../../../components/game/assetCardArt";
 import type { ResourceId } from "../../../components/game/resources";
 import { Typography } from "../../../components/Typography/Typography";
-import { enemyFixtures } from "../../../fixtures/cards";
 import { galleryCrewCardsFromCatalogue } from "../../../fixtures/crewCardFixtures";
+import { shipCardPropsFromPlayerShip } from "../../../fixtures/shipCardFixtures";
 import { hrefFor } from "../../../app/useHashRoute";
 import {
   galleryExampleAssetCardsForSectorMarkets,
@@ -44,10 +51,14 @@ const sectorDeckGalleryRows: readonly {
 });
 
 const enemyDeckCount =
-  firstPlayableSlice.enemyDecks["iron-syndicate"].explorationSize +
-  firstPlayableSlice.enemyDecks["iron-syndicate"].reinforcementSize;
+  firstPlayableSlice.enemyDecks.explorationSize + firstPlayableSlice.enemyDecks.reinforcementSize;
 
 const galleryMissionSample = missionCatalogue.find((mission) => mission.id === "syndicate-bust");
+
+const galleryEnemySampleIds = ["iron-skiff", "prism-spark", "swarm-larva"] as const;
+const galleryEnemySamples = galleryEnemySampleIds
+  .map((id) => enemyCatalogue.find((enemy) => enemy.id === id))
+  .filter((enemy): enemy is NonNullable<typeof enemy> => enemy !== undefined);
 
 export function CardsSection() {
   return (
@@ -82,7 +93,7 @@ export function CardsSection() {
             <CardScalesFigure
               key={card.catalogueId}
               name={card.title}
-              note={sectorDeckLabel[card.sectorDeck]}
+              note={card.sectorDeck ? sectorDeckLabel[card.sectorDeck] : "Sector asset"}
               render={(width) => <AssetCard {...card} width={width} />}
             />
           ))}
@@ -173,21 +184,28 @@ export function CardsSection() {
       </div>
 
       <div className={styles.group}>
-        <Typography variant="overline">Enemy ships (Iron Syndicate slice)</Typography>
+        <Typography variant="overline">
+          Enemy ships (one level-1 scout per faction) —{" "}
+          <a className={styles.inlineLink} href={hrefFor("/dev/enemy-cards")}>
+            full catalogue
+          </a>
+        </Typography>
         <div className={styles.grid}>
-          {enemyFixtures.map((enemy) => (
+          {galleryEnemySamples.map((enemy) => (
             <CardScalesFigure
-              key={enemy.name}
+              key={enemy.id}
               name={enemy.name}
               note={`Level ${enemy.tier} · ${enemy.tier} reward card${enemy.tier === 1 ? "" : "s"}`}
               render={(width) => (
                 <EnemyCard
+                  enemyId={enemy.id}
                   name={enemy.name}
+                  faction={enemy.faction}
                   tier={enemy.tier}
                   hull={enemy.hull}
                   speed={enemy.speed}
-                  weapons={enemy.weapons}
-                  special={enemy.special}
+                  weapons={enemy.weaponsLine}
+                  special={enemy.specialText}
                   width={width}
                 />
               )}
@@ -197,24 +215,22 @@ export function CardsSection() {
       </div>
 
       <div className={styles.group}>
-        <Typography variant="overline">Ship card (`SLT-1` halves)</Typography>
+        <Typography variant="overline">
+          Player ship —{" "}
+          <a className={styles.inlineLink} href={hrefFor("/dev/ship-cards")}>
+            full catalogue
+          </a>
+        </Typography>
         <div className={styles.grid}>
-          <CardScalesFigure
-            name="Nomad-class Corvette"
-            note="Sample install: ½ + ½ in slot 1, one full slot used"
-            render={(width) => (
-              <ShipCard
-                name="Nomad-class Corvette"
-                subtitle="Starting ship"
-                speed={2}
-                hull={1}
-                crew={1}
-                cargo={2}
-                slotFill={[2, 0, 1, 0]}
-                width={width}
-              />
-            )}
-          />
+          {playerShips[0] ? (
+            <CardScalesFigure
+              name={playerShips[0].title}
+              note={`${playerShips[0].upgradeSlotsHalves / 2} upgrade slots`}
+              render={(width) => (
+                <ShipCard {...shipCardPropsFromPlayerShip(playerShips[0]!)} width={width} />
+              )}
+            />
+          ) : null}
         </div>
       </div>
 

@@ -9,8 +9,9 @@ Authoritative **game catalogue** as JSON, validated with Zod at load time. The e
 | Anomaly tiles | `data/tiles/anomalies.json` |
 | Planets | `data/tiles/planets.json` |
 | S1–S4 asset cards | `data/cards/s1-assets.json` … `s4-assets.json` |
-| Iron Syndicate enemies | `data/enemies/iron-syndicate.json` |
-| Player ships | `data/ships/player-ships.json` |
+| Enemy ships (3 factions) | `data/enemies/{iron-syndicate,prism-ascendancy,the-hive}.json` |
+| Enemy decks (slice / full) | `data/decks/enemy-deck-slice.json`, `enemy-decks-full.json` |
+| Player ships (`weaponsLine`, `buildCosts`) | `data/ships/player-ships.json` |
 | Ensign crew (4 plain types, 3 resources each, `CRE-2`) | `data/crew/ensigns.json` |
 | Commander crew (16 types, 5 resources each, `CRE-2`) | `data/crew/commanders.json` |
 | Full game crew deck (`DCK-5`) | `data/decks/crew-deck.json` |
@@ -42,4 +43,4 @@ Game **saves** stay separate (`users/{uid}/games/{gameId}`); this package is onl
 
 ## Status
 
-Tiles, slice metadata, S1–S4 assets, full-game sector and crew deck composition (`DCK-5`), enemies, Corvette, ensigns, the Commander catalogue, and PvE mission cards with slice deck composition (`MSN-3`) are loaded.
+Tiles, slice metadata, S1–S4 assets, full-game sector and crew deck composition (`DCK-5`), all three enemy faction catalogues and exploration/reinforcement deck definitions (`DCK-3`, `DCK-4`), Nomad-class Corvette (`player-ships.json`), ensigns, the Commander catalogue, and PvE mission cards with slice deck composition (`MSN-3`) are loaded.

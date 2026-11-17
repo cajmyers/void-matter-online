@@ -7,14 +7,26 @@ export interface AttackDiceRowProps {
   readonly archetype?: string;
   readonly compact?: boolean;
   readonly dieSize?: number;
+  readonly weaponFooterClassName?: string;
+  readonly weaponRowClassName?: string;
 }
 
-export function AttackDiceRow({ diceCount, hitLabel, archetype, compact = false, dieSize = 12 }: AttackDiceRowProps) {
+export function AttackDiceRow({
+  diceCount,
+  hitLabel,
+  archetype,
+  compact = false,
+  dieSize = 12,
+  weaponFooterClassName,
+  weaponRowClassName,
+}: AttackDiceRowProps) {
+  const footerClass = [styles.weaponFooter, weaponFooterClassName].filter(Boolean).join(" ");
+  const rowClass = [styles.weaponRow, weaponRowClassName].filter(Boolean).join(" ");
   return (
-    <div className={styles.weaponFooter}>
+    <div className={footerClass}>
       {archetype ? <span className={compact ? `${styles.weaponType} ${styles.weaponTypeCompact}` : styles.weaponType}>{archetype}</span> : null}
       <div
-        className={styles.weaponRow}
+        className={rowClass}
         {...(hitLabel ? { "aria-label": `${diceCount} dice at ${hitLabel}` } : {})}
       >
         <div className={styles.attackDice} aria-hidden>

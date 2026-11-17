@@ -8,19 +8,15 @@ import {
 
 /** `MSN-3`, `content-data.md` §4 and §5. */
 describe("mission decks", () => {
-  it("slice deck is 27 cards of 24 types", () => {
-    const total = firstPlayableMissionDeck.cards.reduce((sum, row) => sum + row.copies, 0);
-    const types = firstPlayableMissionDeck.cards.length;
-    expect(total).toBe(27);
-    expect(types).toBe(24);
-    expect(total).toBe(firstPlayableMissionDeck.deckSize);
-    expect(total).toBe(firstPlayableSlice.missionDeckSize);
-  });
-
-  it("full PvE deck is 29 cards", () => {
-    const total = fullGameMissionDeck.cards.reduce((sum, row) => sum + row.copies, 0);
-    expect(total).toBe(29);
-    expect(total).toBe(fullGameMissionDeck.deckSize);
+  it("slice deck matches full PvE deck (29 cards of 26 types)", () => {
+    const sliceTotal = firstPlayableMissionDeck.cards.reduce((sum, row) => sum + row.copies, 0);
+    const fullTotal = fullGameMissionDeck.cards.reduce((sum, row) => sum + row.copies, 0);
+    expect(sliceTotal).toBe(29);
+    expect(fullTotal).toBe(29);
+    expect(firstPlayableMissionDeck.cards.length).toBe(26);
+    expect(sliceTotal).toBe(firstPlayableMissionDeck.deckSize);
+    expect(sliceTotal).toBe(firstPlayableSlice.missionDeckSize);
+    expect(sliceTotal).toBe(fullTotal);
   });
 
   it("references catalogue ids", () => {
@@ -33,9 +29,10 @@ describe("mission decks", () => {
     }
   });
 
-  it("excludes Prismatic Salvage and Hive Cleansing from the slice", () => {
+  it("includes faction redemption missions (`MSN-3`)", () => {
     const sliceIds = new Set(firstPlayableMissionDeck.cards.map((row) => row.missionId));
-    expect(sliceIds.has("prismatic-salvage")).toBe(false);
-    expect(sliceIds.has("hive-cleansing")).toBe(false);
+    expect(sliceIds.has("prismatic-salvage")).toBe(true);
+    expect(sliceIds.has("hive-cleansing")).toBe(true);
+    expect(sliceIds.has("syndicate-bust")).toBe(true);
   });
 });

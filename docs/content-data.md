@@ -111,10 +111,10 @@ Purpose: a small, fully playable game to prove the engine, the bot and the simul
 | S2 deck | Impulse Thrusters, Nested Overdrive (1 each) = 2 cards |
 | S3 deck | Compact Storage ×3, Expanded Cargo Bay ×2 = 5 cards (`first-playable.json` `sectorMarketComposition.s3`) |
 | S4 deck | Nano Bonding (4), Magnetic Shields (2), Energy Shields, Thermal Sinks, Reactive Plating (1 each) = 9 cards |
-| Enemies | **Iron Syndicate only** (Skiff, Enforcer, Goliath), see section 3 |
+| Enemies | **All 3 factions in play** (9 types; mixed 12 + 15 exploration/reinforcement). See section 3 and `decks/enemy-deck-slice.json`. |
 | Anomaly tiles | all **22** are loaded under their normal rules (`TIL-2` reinstated tile 4). **Tile 20 (Personnel Transporter) does nothing without crew**, so it is inert in the slice. *(Check the other tiles for dependencies on unloaded content when the data files are written.)* |
 | Crew | the four plain Ensigns (Pilot, Merchant, Tactical, Scout), section 2a. The Recruit action is enabled. Commander catalogue (`CRE-2`) is not loaded in the slice (scope only). |
-| Missions | the 27-card filtered deck, section 4 |
+| Missions | the 29-card PvE deck (`MSN-3`), section 4 |
 | Bots | the bot design in `design-decisions.md` section 11 (a Monte Carlo strength check against the real engine) |
 
 *Former V5 “always available at upgrade” staples (**Hull Plating, Warp Drive Mk I, Laser Cannon, Cargo Containers, Crew Quarters**) are now normal rows in S4, S2, S1, and S3 respectively; they are not loaded in this slice unless added here.*
@@ -161,19 +161,26 @@ The slice market decks have fewer cards than the full game, so S2 holds only 2 c
 
 V5 gives the per-action deck rule but the engine needs concrete numbers. These are **placeholders**.
 
-### Full game, per faction
+**Catalogue JSON** (one row per ship type, Zod-validated):
+
+| Faction | File | Tier 1 | Tier 2 | Tier 3 |
+|---|---|---|---|---|
+| Iron Syndicate | `enemies/iron-syndicate.json` | Iron Skiff | Iron Enforcer | Iron Goliath |
+| Prism Ascendancy | `enemies/prism-ascendancy.json` | Prism Spark | Prism Templar | Prism Star-Fortress |
+| The Hive | `enemies/the-hive.json` | Swarm Larva | Brood Reaper | Hive Mother |
+
+**Deck composition JSON:** `decks/enemy-decks-full.json` and `decks/enemy-deck-slice.json` (same 12 + 15 mixed-faction composition).
+
+### Full game (mixed factions)
 
 | Deck | Contents |
 |---|---|
-| Level 1 (exploration) | 4 of each Tier-1 scout card (3 scouts per faction) = 12 cards |
-| Reinforcement | 3 of each Tier-2 card (3 types) + 2 of each Tier-3 card (3 types) = 15 cards |
+| Level 1 (exploration) | 4× each tier-1 scout (Iron Skiff, Prism Spark, Swarm Larva) = **12 cards** |
+| Reinforcement | 3× each tier-2 + 2× each tier-3 (all factions) = **15 cards** |
 
-### Slice (Iron Syndicate only)
+### First-playable slice (same as full game above)
 
-| Deck | Contents |
-|---|---|
-| Level 1 | Skiff x 6 |
-| Reinforcement | Enforcer x 3, Goliath x 2 |
+Mixed factions: 4× each tier-1 scout, then reinforcement as in the full-game table. Authoritative rows in `decks/enemy-deck-slice.json`.
 
 ### Reward cards per defeated enemy (V5 level rule, confirm)
 
@@ -185,9 +192,9 @@ V5 gives the per-action deck rule but the engine needs concrete numbers. These a
 
 Reward cards are drawn from the markets matching the tile's discovery bonus (`DCK-3`).
 
-## 4. Slice mission deck (27 cards, 24 types)
+## 4. Slice mission deck (29 cards, 26 types)
 
-The full deck after removing the 7 PvP missions is 29 cards of 26 types. The slice removes **Prismatic Salvage, Hive Cleansing** (no Prism or Hive enemies in the slice), leaving **27 cards of 24 types** (`MSN-3`). All Aboard (2 or more crew on one ship) and Full Roster (3 different crew types across the fleet) stay because the four Ensigns cover Move, Trade, Tactical and Interact.
+The slice uses the **same** deck as full PvE after removing the 7 PvP missions: **29 cards of 26 types** (`MSN-3`), including Prismatic Salvage and Hive Cleansing. Authoritative list in `decks/mission-deck-slice.json`.
 
 The bot's mission nudge groups (design-decisions section 11) become **Build/state: 8 cards, Combat: 6 cards**. The per-card lists come from the V5 mission table; whoever edits the data files keeps this file in sync.
 
@@ -195,10 +202,11 @@ The bot's mission nudge groups (design-decisions section 11) become **Build/stat
 
 - Deck totals: S1 30, S2 15, S3 18, S4 18 (full game, `decks/sector-markets.json`); 30, 2, 5, 9 (slice, `first-playable.json`).
 - Every card name appears in exactly one sector deck (S1–S4).
-- Slice enemy deck sizes: 6 and 5.
-- Mission slice size: 27, types 24.
+- Enemy catalogue: **9 types**, **3 factions** (`enemies/*.json`).
+- Full and slice enemy decks: exploration **12**, reinforcement **15** (same composition; `enemy-decks-full.json`, `enemy-deck-slice.json`).
+- Mission slice size: **29**, types **26** (`mission-deck-slice.json`).
 - Crew: full game 20 types / 32 cards (`DCK-5`); slice 4 types / 16 cards (4× Ensign only).
-- No card in the slice refers to unloaded content (Commander and special Ensign traits, Prism or Hive enemies).
+- No card in the slice refers to unloaded **play** content (Commander and special Ensign traits beyond the four Ensigns). All nine enemy types and all PvE missions are loaded.
 
 ## 6. Known weaknesses of this proposal
 

@@ -2,11 +2,18 @@
   {
     "id": "nomad-corvette",
     "title": "Nomad-class Corvette",
-    "subtitle": "Starting ship",
+    "subtitle": "Ship",
     "speed": 2,
     "hull": 1,
     "crewSlots": 1,
     "cargo": 2,
-    "upgradeSlotsHalves": 8
+    "upgradeSlotsHalves": 8,
+    "weaponsLine": "1× Side-Mounted Laser · 1 die · 5+",
+    "buildCosts": [
+      { "resource": "h3", "amount": 3 },
+      { "resource": "tc", "amount": 3 },
+      { "resource": "qp", "amount": 2 },
+      { "resource": "pc", "amount": 2 }
+    ]
   }
 ]

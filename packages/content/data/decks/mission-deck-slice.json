@@ -1,103 +1,33 @@
 {
   "id": "first-playable",
-  "label": "First-playable mission deck (`MSN-3`, PvP missions removed)",
-  "deckSize": 27,
+  "label": "First-playable mission deck (`MSN-3`, PvP missions removed; all factions in play)",
+  "deckSize": 29,
   "cards": [
-    {
-      "missionId": "all-aboard",
-      "copies": 1
-    },
-    {
-      "missionId": "full-roster",
-      "copies": 1
-    },
-    {
-      "missionId": "balanced-design",
-      "copies": 1
-    },
-    {
-      "missionId": "trade-negotiator",
-      "copies": 1
-    },
-    {
-      "missionId": "blockade",
-      "copies": 1
-    },
-    {
-      "missionId": "armada",
-      "copies": 1
-    },
-    {
-      "missionId": "devastation",
-      "copies": 1
-    },
-    {
-      "missionId": "galactic-tour",
-      "copies": 1
-    },
-    {
-      "missionId": "market-saturation",
-      "copies": 1
-    },
-    {
-      "missionId": "resource-tycoon",
-      "copies": 1
-    },
-    {
-      "missionId": "standardisation",
-      "copies": 1
-    },
-    {
-      "missionId": "sector-pacification",
-      "copies": 3
-    },
-    {
-      "missionId": "syndicate-bust",
-      "copies": 1
-    },
-    {
-      "missionId": "anomaly-resonance",
-      "copies": 1
-    },
-    {
-      "missionId": "tri-system-supply-run",
-      "copies": 2
-    },
-    {
-      "missionId": "cargo-kingpin",
-      "copies": 1
-    },
-    {
-      "missionId": "industrial-titan",
-      "copies": 1
-    },
-    {
-      "missionId": "evasive-master",
-      "copies": 1
-    },
-    {
-      "missionId": "ironclad-survivor",
-      "copies": 1
-    },
-    {
-      "missionId": "shield-calibration",
-      "copies": 1
-    },
-    {
-      "missionId": "perimeter-lockdown",
-      "copies": 1
-    },
-    {
-      "missionId": "master-engineer",
-      "copies": 1
-    },
-    {
-      "missionId": "warp-pioneer",
-      "copies": 1
-    },
-    {
-      "missionId": "stellar-cartographer",
-      "copies": 1
-    }
+    { "missionId": "all-aboard", "copies": 1 },
+    { "missionId": "full-roster", "copies": 1 },
+    { "missionId": "balanced-design", "copies": 1 },
+    { "missionId": "trade-negotiator", "copies": 1 },
+    { "missionId": "blockade", "copies": 1 },
+    { "missionId": "armada", "copies": 1 },
+    { "missionId": "devastation", "copies": 1 },
+    { "missionId": "galactic-tour", "copies": 1 },
+    { "missionId": "market-saturation", "copies": 1 },
+    { "missionId": "resource-tycoon", "copies": 1 },
+    { "missionId": "standardisation", "copies": 1 },
+    { "missionId": "sector-pacification", "copies": 3 },
+    { "missionId": "syndicate-bust", "copies": 1 },
+    { "missionId": "anomaly-resonance", "copies": 1 },
+    { "missionId": "tri-system-supply-run", "copies": 2 },
+    { "missionId": "cargo-kingpin", "copies": 1 },
+    { "missionId": "industrial-titan", "copies": 1 },
+    { "missionId": "evasive-master", "copies": 1 },
+    { "missionId": "ironclad-survivor", "copies": 1 },
+    { "missionId": "shield-calibration", "copies": 1 },
+    { "missionId": "perimeter-lockdown", "copies": 1 },
+    { "missionId": "master-engineer", "copies": 1 },
+    { "missionId": "warp-pioneer", "copies": 1 },
+    { "missionId": "stellar-cartographer", "copies": 1 },
+    { "missionId": "prismatic-salvage", "copies": 1 },
+    { "missionId": "hive-cleansing", "copies": 1 }
   ]
 }

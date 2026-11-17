@@ -10,6 +10,11 @@ export {
   fullGameSectorMarkets,
   missionCatalogue,
   ironSyndicateEnemies,
+  prismAscendancyEnemies,
+  hiveEnemies,
+  enemyCatalogue,
+  fullGameEnemyDecks,
+  firstPlayableEnemyDeck,
   passiveAnomalyNumbers,
   planets,
   playerShips,
@@ -33,7 +38,8 @@ export type {
   S1WeaponBlock,
   WeaponBlock,
 } from "./schemas/cards";
-export type { EnemyShip } from "./schemas/enemies";
+export type { EnemyFactionId, EnemyShip } from "./schemas/enemies";
+export { ENEMY_FACTION_LABELS, enemyFactionIdSchema } from "./schemas/enemies";
 export type { PlayerShip } from "./schemas/ships";
 export type { CommanderCrew, EnsignCrew } from "./schemas/crew";
 export type { MissionCard } from "./schemas/missions";

@@ -4,6 +4,10 @@ import s3FaceTextureUrl from "../../assets/cards/s3/fronts/s3-texture.webp";
 import s4FaceTextureUrl from "../../assets/cards/s4/fronts/s4-texture.webp";
 import crewFaceTextureUrl from "../../assets/cards/crew/fronts/crew-texture.webp";
 import missionFaceTextureUrl from "../../assets/cards/mission/fronts/mission-texture.webp";
+import ironEnemyFaceTextureUrl from "../../assets/cards/enemy/fronts/iron-texture.webp";
+import prismEnemyFaceTextureUrl from "../../assets/cards/enemy/fronts/prism-texture.webp";
+import hiveEnemyFaceTextureUrl from "../../assets/cards/enemy/fronts/hive-texture.webp";
+import type { EnemyFactionId } from "@void-matter/content";
 
 /** Slug for sector asset hero art (`assets/cards/<deck>/fronts/art/<slug>.webp`). */
 export function cardIllustrationSlug(title: string): string {
@@ -25,6 +29,11 @@ const illustrationModules = import.meta.glob<string>("../../assets/cards/**/fron
   import: "default",
 });
 
+const shipFaceTextureModules = import.meta.glob<string>("../../assets/cards/ship/fronts/*-texture.webp", {
+  eager: true,
+  import: "default",
+});
+
 function parseArtPath(path: string): { deck: SectorArtDeck; slug: string } | undefined {
   const match = path.match(/\/cards\/(s[1-4])\/fronts\/art\/([^/]+)\.(webp|png|jpe?g)$/i);
   if (!match?.[1] || !match[2]) return undefined;
@@ -38,6 +47,30 @@ function parseCrewPortraitPath(path: string): string | undefined {
 
 function parseMissionHeroPath(path: string): string | undefined {
   const match = path.match(/\/cards\/mission\/fronts\/art\/([^/]+)\.(webp|png|jpe?g)$/i);
+  return match?.[1]?.toLowerCase();
+}
+
+function parseEnemyHeroPath(path: string): string | undefined {
+  const match = path.match(/\/cards\/enemy\/fronts\/art\/([^/]+)\.(webp|png|jpe?g)$/i);
+  if (!match?.[1]) {
+    return undefined;
+  }
+  const basename = match[1];
+  const normalized = basename.includes(" ") ? cardIllustrationSlug(basename) : basename.toLowerCase();
+  return normalized;
+}
+
+function parseShipHeroPath(path: string): string | undefined {
+  const match = path.match(/\/cards\/ship\/fronts\/art\/([^/]+)\.(webp|png|jpe?g)$/i);
+  if (!match?.[1]) {
+    return undefined;
+  }
+  const basename = match[1];
+  return basename.includes(" ") ? cardIllustrationSlug(basename) : basename.toLowerCase();
+}
+
+function parseShipFaceTexturePath(path: string): string | undefined {
+  const match = path.match(/\/cards\/ship\/fronts\/([^/]+)-texture\.webp$/i);
   return match?.[1]?.toLowerCase();
 }
 
@@ -72,6 +105,33 @@ const missionHeroByCatalogueId = (() => {
   const map = new Map<string, string>();
   for (const [path, url] of Object.entries(illustrationModules)) {
     const id = parseMissionHeroPath(path);
+    if (id) map.set(id, url);
+  }
+  return map;
+})();
+
+const enemyHeroByCatalogueId = (() => {
+  const map = new Map<string, string>();
+  for (const [path, url] of Object.entries(illustrationModules)) {
+    const id = parseEnemyHeroPath(path);
+    if (id) map.set(id, url);
+  }
+  return map;
+})();
+
+const shipHeroByCatalogueId = (() => {
+  const map = new Map<string, string>();
+  for (const [path, url] of Object.entries(illustrationModules)) {
+    const id = parseShipHeroPath(path);
+    if (id) map.set(id, url);
+  }
+  return map;
+})();
+
+const shipFaceTextureByCatalogueId = (() => {
+  const map = new Map<string, string>();
+  for (const [path, url] of Object.entries(shipFaceTextureModules)) {
+    const id = parseShipFaceTexturePath(path);
     if (id) map.set(id, url);
   }
   return map;
@@ -112,6 +172,17 @@ export function missionCardFaceTexture(): string {
   return missionFaceTextureUrl;
 }
 
+const enemyFaceTextureByFaction: Readonly<Record<EnemyFactionId, string>> = {
+  "iron-syndicate": ironEnemyFaceTextureUrl,
+  "prism-ascendancy": prismEnemyFaceTextureUrl,
+  "the-hive": hiveEnemyFaceTextureUrl,
+};
+
+/** Enemy card face stock (`enemy/fronts/<faction>-texture.webp`). */
+export function enemyCardFaceTexture(faction: EnemyFactionId): string {
+  return enemyFaceTextureByFaction[faction];
+}
+
 /** Ensign portrait (`crew/fronts/art/<catalogueId>.webp`; ids from `ensigns.json`). */
 export function crewCardPortraitArt(catalogueId: string): string | undefined {
   return crewPortraitByCatalogueId.get(catalogueId.toLowerCase());
@@ -120,4 +191,19 @@ export function crewCardPortraitArt(catalogueId: string): string | undefined {
 /** Mission hero (`mission/fronts/art/<catalogueId>.webp`; ids from `missions.json`). */
 export function missionCardHeroArt(catalogueId: string): string | undefined {
   return missionHeroByCatalogueId.get(catalogueId.toLowerCase());
+}
+
+/** Enemy hero (`enemy/fronts/art/<catalogueId>.webp`; ids from `enemies/*.json`). */
+export function enemyCardHeroArt(catalogueId: string): string | undefined {
+  return enemyHeroByCatalogueId.get(catalogueId.toLowerCase());
+}
+
+/** Player ship hero (`ship/fronts/art/<catalogueId>.webp`; ids from `player-ships.json`). */
+export function shipCardHeroArt(catalogueId: string): string | undefined {
+  return shipHeroByCatalogueId.get(catalogueId.toLowerCase());
+}
+
+/** Player ship face stock (`ship/fronts/<catalogueId>-texture.webp`). */
+export function shipCardFaceTexture(catalogueId: string): string | undefined {
+  return shipFaceTextureByCatalogueId.get(catalogueId.toLowerCase());
 }

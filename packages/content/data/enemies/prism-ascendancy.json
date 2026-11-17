@@ -1,0 +1,32 @@
+[
+  {
+    "id": "prism-spark",
+    "name": "Prism Spark",
+    "faction": "prism-ascendancy",
+    "tier": 1,
+    "hull": 2,
+    "speed": 4,
+    "weaponsLine": "1× Side-Mounted Laser · 1 die · 5+",
+    "specialText": "Player energy weapons get −1 to hit. Takes +1 damage from mass, missile or drone hits."
+  },
+  {
+    "id": "prism-templar",
+    "name": "Prism Templar",
+    "faction": "prism-ascendancy",
+    "tier": 2,
+    "hull": 4,
+    "speed": 3,
+    "weaponsLine": "1× Thermal Pyre Cannon · 2 dice · 4+",
+    "specialText": "Takes −1 damage from energy weapon attacks. Takes +1 damage from mass, missile or drone hits."
+  },
+  {
+    "id": "prism-star-fortress",
+    "name": "Prism Star-Fortress",
+    "faction": "prism-ascendancy",
+    "tier": 3,
+    "hull": 5,
+    "speed": 2,
+    "weaponsLine": "2× Heavy Plasma Matrix · 2 dice · 5+ each",
+    "specialText": "Takes 0 damage from energy weapons. Mass accelerator, missile and drone weapons get +1 to hit. Takes a maximum of 2 hits, per weapon, per combat round."
+  }
+]

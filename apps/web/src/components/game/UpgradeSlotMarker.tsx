@@ -9,23 +9,40 @@ const slotLabels: Readonly<Record<AssetSlotSize, string>> = {
 };
 
 export interface UpgradeSlotMarkerProps {
-  readonly slotSize: AssetSlotSize;
+  /** Printed slot cost on a component card (`SLT-1`). */
+  readonly slotSize?: AssetSlotSize;
+  /** Total upgrade slots on a ship card (icon + count). */
+  readonly capacity?: number;
   readonly size?: number;
 }
 
 /** Slot cost (`SLT-1`) on the art window: puzzle icon + number on a dark plate. */
-export function UpgradeSlotMarker({ slotSize, size = 26 }: UpgradeSlotMarkerProps) {
-  const label = slotLabels[slotSize];
+export function UpgradeSlotMarker({ slotSize, capacity, size = 26 }: UpgradeSlotMarkerProps) {
+  if (capacity === undefined && slotSize === undefined) {
+    throw new Error("UpgradeSlotMarker requires slotSize or capacity");
+  }
+
+  const capacityLabel = capacity !== undefined ? String(capacity) : undefined;
+  const label = capacityLabel ?? slotLabels[slotSize as AssetSlotSize];
+  const ariaLabel =
+    capacity !== undefined
+      ? `${capacity} upgrade slot${capacity === 1 ? "" : "s"}`
+      : `${slotSize} slot${slotSize === 1 ? "" : "s"}`;
+
   return (
     <span
       className={styles.marker}
       style={{ width: size, height: size, fontSize: size }}
       role="img"
-      aria-label={`${slotSize} slot${slotSize === 1 ? "" : "s"}`}
+      aria-label={ariaLabel}
     >
       <img className={styles.icon} src={moduleIcon} alt="" draggable={false} />
-      <span className={slotSize === 0.5 ? `${styles.value} ${styles.valueHalf}` : styles.value}>
-        {slotSize === 0.5 ? (
+      <span
+        className={
+          slotSize === 0.5 && capacity === undefined ? `${styles.value} ${styles.valueHalf}` : styles.value
+        }
+      >
+        {slotSize === 0.5 && capacity === undefined ? (
           <>
             <span className={styles.halfDot} aria-hidden>
               .

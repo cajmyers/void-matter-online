@@ -33,8 +33,7 @@ const specimenCommander = galleryCrewCardsFromCatalogue(
 )[0]!;
 
 const enemyDeckCount =
-  firstPlayableSlice.enemyDecks["iron-syndicate"].explorationSize +
-  firstPlayableSlice.enemyDecks["iron-syndicate"].reinforcementSize;
+  firstPlayableSlice.enemyDecks.explorationSize + firstPlayableSlice.enemyDecks.reinforcementSize;
 
 const specimenDeckWidth = 72;
 

@@ -20,6 +20,8 @@ const navLinks: readonly NavLink[] = [
   { path: "/dev/s4-cards", label: "S4" },
   { path: "/dev/crew-cards", label: "Crew" },
   { path: "/dev/mission-cards", label: "Missions" },
+  { path: "/dev/enemy-cards", label: "Enemies" },
+  { path: "/dev/ship-cards", label: "Ships" },
   { path: "/dev/lab", label: "Motion lab" },
 ];
 

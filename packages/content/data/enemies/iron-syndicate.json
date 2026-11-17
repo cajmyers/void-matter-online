@@ -7,7 +7,7 @@
     "hull": 3,
     "speed": 2,
     "weaponsLine": "1× Scrap-Driver · 1 die · 5+",
-    "specialText": "Underworld Extortion 1: destroyer pays 1 resource from their faction pool."
+    "specialText": "Destroyer pays 1 resource from their faction pool."
   },
   {
     "id": "iron-enforcer",
@@ -17,7 +17,7 @@
     "hull": 5,
     "speed": 1,
     "weaponsLine": "2× Heavy Slug · 2 dice · 4+ each",
-    "specialText": "Underworld Extortion 2: destroyer pays 2 resources from their faction pool."
+    "specialText": "Destroyer pays 2 resources from their faction pool."
   },
   {
     "id": "iron-goliath",
@@ -27,6 +27,6 @@
     "hull": 7,
     "speed": 1,
     "weaponsLine": "2× Siege Mass Driver · 4 dice · 5+ each",
-    "specialText": "Underworld Extortion 3: destroyer pays 3 resources from their faction pool."
+    "specialText": "Destroyer pays 3 resources from their faction pool."
   }
 ]

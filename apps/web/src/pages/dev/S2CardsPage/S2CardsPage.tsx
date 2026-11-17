@@ -29,7 +29,7 @@ export default function S2CardsPage() {
           types). Helium-3 rim; print 65 × 100 mm; hand 118px / inspect 220px.
         </Typography>
         {missingArt.length > 0 ? (
-          <Typography variant="body2" component="p">
+          <Typography variant="body2">
             Missing hero art ({missingArt.length}): {missingArt.map((row) => row.title).join(", ")}.
           </Typography>
         ) : null}

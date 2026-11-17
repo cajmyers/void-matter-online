@@ -68,7 +68,7 @@ export function galleryExampleAssetCardsForSectorMarkets(): readonly OwnerGaller
 }
 
 export const ownerSectorAssetCards: readonly OwnerGalleryAssetCard[] = sectorAssetCards
-  .map(toGalleryCard)
+  .map((card) => toGalleryCard(card))
   .filter((card): card is OwnerGalleryAssetCard => card !== null);
 
 export function ownerAssetCardsForDeck(deck: (typeof sectorDeckOrder)[number]): readonly OwnerGalleryAssetCard[] {

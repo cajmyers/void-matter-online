@@ -1,3 +1,4 @@
+import assetStyles from "./AssetCard.module.css";
 import { Typography } from "../Typography/Typography";
 import styles from "./HullTrack.module.css";
 
@@ -19,6 +20,51 @@ export function DamageCube({ size = 22 }: DamageCubeProps) {
   );
 }
 
+export interface HullDamageSlotsProps {
+  /** Hull slots printed on the card (`LOT-3` damage cubes fill from the left). */
+  readonly capacity: number;
+  readonly damage?: number;
+  readonly slotSize?: number;
+  readonly compact?: boolean;
+  readonly className?: string;
+}
+
+/** Empty hull boxes that accept {@link DamageCube}s (ships, enemy cards, fleet panel). */
+export function HullDamageSlots({
+  capacity,
+  damage = 0,
+  slotSize = 22,
+  compact = false,
+  className,
+}: HullDamageSlotsProps) {
+  if (capacity <= 0) {
+    return null;
+  }
+  const filled = Math.min(Math.max(0, damage), capacity);
+  const cubeSize = Math.max(10, Math.round(slotSize * 0.78));
+  const slotsClass = [assetStyles.cargoSlots, className].filter(Boolean).join(" ");
+  const hullSlotClass = compact
+    ? `${assetStyles.hullSlot} ${assetStyles.hullSlotCompact}`
+    : assetStyles.hullSlot;
+  return (
+    <div
+      className={slotsClass}
+      role="img"
+      aria-label={`Hull ${capacity} ${capacity === 1 ? "slot" : "slots"}, ${filled} with damage`}
+    >
+      {Array.from({ length: capacity }, (_, index) => (
+        <span key={index} className={hullSlotClass} style={{ width: slotSize, height: slotSize }}>
+          {index < filled ? (
+            <DamageCube size={cubeSize} />
+          ) : (
+            <span className={assetStyles.cargoSlotVoid} aria-hidden />
+          )}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export interface HullTrackProps {
   /** Free hull slots a ship has in total. Damage cubes sit in these slots (DMG rulings, LOT-3). */
   readonly capacity: number;
@@ -30,14 +76,8 @@ export function HullTrack({ capacity, damage }: HullTrackProps) {
   const filled = Math.min(damage, capacity);
   const full = filled >= capacity;
   return (
-    <div className={styles.track} role="img" aria-label={`Hull: ${filled} of ${capacity} slots hold damage${full ? ", full" : ""}`}>
-      <div className={styles.slots}>
-        {Array.from({ length: capacity }, (_, index) => (
-          <span key={index} className={index < filled ? `${styles.slot} ${styles.slotFilled}` : styles.slot}>
-            {index < filled ? <DamageCube size={22} /> : null}
-          </span>
-        ))}
-      </div>
+    <div className={styles.track} role="presentation">
+      <HullDamageSlots capacity={capacity} damage={damage} slotSize={28} />
       <Typography variant="caption" className={full ? styles.full : undefined}>
         {full ? "Hull full" : `${capacity - filled} free`}
       </Typography>

@@ -6,6 +6,10 @@ import s2AssetsJson from "../data/cards/s2-assets.json";
 import s3AssetsJson from "../data/cards/s3-assets.json";
 import s4AssetsJson from "../data/cards/s4-assets.json";
 import ironSyndicateJson from "../data/enemies/iron-syndicate.json";
+import prismAscendancyJson from "../data/enemies/prism-ascendancy.json";
+import theHiveJson from "../data/enemies/the-hive.json";
+import enemyDeckFullJson from "../data/decks/enemy-decks-full.json";
+import enemyDeckSliceJson from "../data/decks/enemy-deck-slice.json";
 import playerShipsJson from "../data/ships/player-ships.json";
 import commandersJson from "../data/crew/commanders.json";
 import ensignsJson from "../data/crew/ensigns.json";
@@ -27,11 +31,15 @@ import { commanderCrewSchema, ensignCrewSchema, type CommanderCrew, type EnsignC
 import { enemyShipSchema, type EnemyShip } from "./schemas/enemies";
 import {
   fullGameCrewDeckSchema,
+  fullGameEnemyDecksSchema,
   fullGameSectorMarketsSchema,
   missionDeckSchema,
+  sliceEnemyDeckSchema,
   type FullGameCrewDeck,
+  type FullGameEnemyDecks,
   type FullGameSectorMarkets,
   type MissionDeck,
+  type SliceEnemyDeck,
 } from "./schemas/decks";
 import { missionCardSchema, type MissionCard } from "./schemas/missions";
 import { firstPlayableSliceSchema, type FirstPlayableSlice } from "./schemas/slices";
@@ -77,6 +85,17 @@ export const sectorAssetCards: readonly AssetCard[] = [
   ...s4AssetCards,
 ];
 export const ironSyndicateEnemies: readonly EnemyShip[] = parseArray(enemyShipSchema, ironSyndicateJson, "iron-syndicate");
+export const prismAscendancyEnemies: readonly EnemyShip[] = parseArray(
+  enemyShipSchema,
+  prismAscendancyJson,
+  "prism-ascendancy",
+);
+export const hiveEnemies: readonly EnemyShip[] = parseArray(enemyShipSchema, theHiveJson, "the-hive");
+export const enemyCatalogue: readonly EnemyShip[] = [
+  ...ironSyndicateEnemies,
+  ...prismAscendancyEnemies,
+  ...hiveEnemies,
+];
 export const playerShips: readonly PlayerShip[] = parseArray(playerShipSchema, playerShipsJson, "player-ships");
 export const ensignCrew: readonly EnsignCrew[] = parseArray(ensignCrewSchema, ensignsJson, "ensigns");
 export const commanderCrew: readonly CommanderCrew[] = parseArray(commanderCrewSchema, commandersJson, "commanders");
@@ -86,6 +105,8 @@ export const fullGameCrewDeck: FullGameCrewDeck = fullGameCrewDeckSchema.parse(c
 export const missionCatalogue: readonly MissionCard[] = parseArray(missionCardSchema, missionsJson, "missions");
 export const firstPlayableMissionDeck: MissionDeck = missionDeckSchema.parse(missionDeckSliceJson);
 export const fullGameMissionDeck: MissionDeck = missionDeckSchema.parse(missionDeckFullJson);
+export const fullGameEnemyDecks: FullGameEnemyDecks = fullGameEnemyDecksSchema.parse(enemyDeckFullJson);
+export const firstPlayableEnemyDeck: SliceEnemyDeck = sliceEnemyDeckSchema.parse(enemyDeckSliceJson);
 
 assertUniqueIds(anomalies, "anomalies");
 assertUniqueIds(planets, "planets");
@@ -95,6 +116,9 @@ assertUniqueIds(s3AssetCards, "s3-assets");
 assertUniqueIds(s4AssetCards, "s4-assets");
 assertUniqueIds(sectorAssetCards, "sector-asset-cards");
 assertUniqueIds(ironSyndicateEnemies, "iron-syndicate");
+assertUniqueIds(prismAscendancyEnemies, "prism-ascendancy");
+assertUniqueIds(hiveEnemies, "the-hive");
+assertUniqueIds(enemyCatalogue, "enemy-catalogue");
 assertUniqueIds(playerShips, "player-ships");
 assertUniqueIds(ensignCrew, "ensigns");
 assertUniqueIds(commanderCrew, "commanders");

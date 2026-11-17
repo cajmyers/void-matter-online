@@ -49,7 +49,8 @@ export default function MissionCardsPage() {
       <section className={galleryStyles.section}>
         <Typography variant="h2">Slice deck</Typography>
         <Typography variant="body2">
-          From <code>mission-deck-slice.json</code> — no Prismatic Salvage or Hive Cleansing (`MSN-3`).
+          From <code>mission-deck-slice.json</code> — same 29-card PvE deck as full game (`MSN-3`; all enemy factions in
+          play).
         </Typography>
         <div className={galleryStyles.grid}>
           {sliceMissions.map((mission) => (

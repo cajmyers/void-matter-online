@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "label": "Full PvE enemy decks (all factions)",
+  "explorationDeckSize": 12,
+  "reinforcementDeckSize": 15,
+  "exploration": {
+    "cards": [
+      { "enemyId": "iron-skiff", "copies": 4 },
+      { "enemyId": "prism-spark", "copies": 4 },
+      { "enemyId": "swarm-larva", "copies": 4 }
+    ]
+  },
+  "reinforcement": {
+    "cards": [
+      { "enemyId": "iron-enforcer", "copies": 3 },
+      { "enemyId": "prism-templar", "copies": 3 },
+      { "enemyId": "brood-reaper", "copies": 3 },
+      { "enemyId": "iron-goliath", "copies": 2 },
+      { "enemyId": "prism-star-fortress", "copies": 2 },
+      { "enemyId": "hive-mother", "copies": 2 }
+    ]
+  }
+}
