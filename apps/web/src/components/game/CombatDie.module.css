@@ -1,0 +1,59 @@
+.die {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 2px solid var(--game-die-rim);
+  border-radius: var(--shape-border-radius);
+  background: var(--game-die-face);
+  box-shadow:
+    var(--shadow-2),
+    0 0 10px color-mix(in srgb, var(--game-die-rim) 35%, transparent),
+    inset 0 0 12px color-mix(in srgb, var(--game-die-rim) 12%, transparent);
+  transition:
+    transform var(--transitions-duration-short) var(--transitions-easing-standard),
+    box-shadow var(--transitions-duration-short) var(--transitions-easing-standard),
+    border-color var(--transitions-duration-short) var(--transitions-easing-standard);
+}
+
+.face {
+  display: block;
+}
+
+.pip {
+  fill: var(--game-die-pip);
+  filter: drop-shadow(0 0 2px color-mix(in srgb, var(--game-die-pip) 70%, transparent));
+}
+
+.thrown {
+  transform: translateY(-2px) rotate(-9deg);
+  box-shadow:
+    var(--shadow-4),
+    0 6px 14px rgb(0 0 0 / 0.35),
+    0 0 14px color-mix(in srgb, var(--game-die-rim) 40%, transparent);
+}
+
+.hit {
+  border-color: var(--game-die-success);
+  box-shadow: var(--shadow-2);
+}
+
+.miss {
+  border-color: var(--game-die-fail);
+  opacity: 0.92;
+  box-shadow: var(--shadow-1);
+}
+
+.miss .pip {
+  fill: color-mix(in srgb, var(--game-die-pip) 55%, var(--palette-text-disabled));
+}
+
+.rerollRing {
+  position: absolute;
+  inset: calc(var(--spacing-0-5) * -1);
+  border: 1px dashed var(--game-die-reroll-accent);
+  border-radius: calc(var(--shape-border-radius) + 2px);
+  pointer-events: none;
+}

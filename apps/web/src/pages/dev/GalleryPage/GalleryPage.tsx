@@ -5,6 +5,7 @@ import { VisionFilters, visionModes, type VisionMode } from "../StylePage/Vision
 import { ActionTokensSection } from "./ActionTokensSection";
 import { ResourcesSection } from "./ResourcesSection";
 import { CardsSection } from "./CardsSection";
+import { DiceSection } from "./DiceSection";
 import { ZonesSection } from "./ZonesSection";
 import { ShipsSection } from "./ShipsSection";
 import { TilesSection } from "./TilesSection";
@@ -24,7 +25,7 @@ const entries: readonly IndexEntry[] = [
   { id: "ships", label: "Ships", built: true },
   { id: "cards", label: "Cards", built: true },
   { id: "zones", label: "Zones", built: true },
-  { id: "dice", label: "Dice", built: false },
+  { id: "dice", label: "Dice", built: true },
   { id: "prompts", label: "Prompts", built: false },
   { id: "chrome", label: "Chrome", built: false },
 ];
@@ -84,6 +85,7 @@ export default function GalleryPage() {
         <ShipsSection />
         <CardsSection />
         <ZonesSection />
+        <DiceSection />
       </div>
     </div>
   );

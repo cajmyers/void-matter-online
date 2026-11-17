@@ -69,6 +69,14 @@
   --game-zone-discard-saturate: 0.48;
   --game-zone-discard-brightness: 0.9;
 
+  /* Combat d6 (`CombatDie`) */
+  --game-die-face: color-mix(in srgb, var(--game-card-background) 92%, var(--palette-background-elevated));
+  --game-die-pip: var(--palette-primary-light);
+  --game-die-rim: var(--palette-primary-main);
+  --game-die-success: var(--game-state-ready);
+  --game-die-fail: var(--game-state-pinned);
+  --game-die-reroll-accent: var(--palette-warning-light);
+
   /* Typography scale (the palette block below supplies the font families and display style) */
   --typography-font-size-base: 16px;
   --typography-h1-size: 2.5rem;
