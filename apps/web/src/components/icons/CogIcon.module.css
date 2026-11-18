@@ -1,0 +1,6 @@
+.icon {
+  display: block;
+  object-fit: contain;
+  /* White gear on black plate: lighten drops the black on our dark HUD. */
+  mix-blend-mode: lighten;
+}

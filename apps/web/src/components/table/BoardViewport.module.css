@@ -1,0 +1,29 @@
+.viewport {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.viewport :global(svg),
+.viewport :global(svg *) {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.viewportDragging {
+  cursor: grabbing;
+}
+
+.cameraLayer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}

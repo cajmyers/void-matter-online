@@ -7,6 +7,7 @@ export interface SeatVmEntry {
   readonly label: string;
   readonly voidMatterTaken: number;
   readonly activeTurn?: boolean;
+  readonly firstPlayer?: boolean;
 }
 
 export function VmTrackerRow({ seats }: { readonly seats: readonly SeatVmEntry[] }) {
@@ -19,6 +20,7 @@ export function VmTrackerRow({ seats }: { readonly seats: readonly SeatVmEntry[]
             label={entry.label}
             voidMatterTaken={entry.voidMatterTaken}
             active={entry.activeTurn ?? false}
+            firstPlayer={entry.firstPlayer ?? false}
             compact
           />
         </div>

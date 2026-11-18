@@ -4,6 +4,13 @@
   min-height: 100vh;
 }
 
+/* Play table: lock document height so wheel zoom does not scroll the page. */
+.shellTable {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
 .bar {
   position: sticky;
   top: 0;
@@ -51,4 +58,7 @@
 
 .content {
   flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }

@@ -1,0 +1,19 @@
+.root {
+  position: fixed;
+  top: var(--spacing-1);
+  right: var(--spacing-2);
+  z-index: var(--z-index-app-bar);
+}
+
+.rootEmbedded {
+  position: relative;
+  top: auto;
+  right: auto;
+}
+
+.root[open] summary {
+  opacity: 1;
+  border-color: var(--palette-divider);
+  background: color-mix(in srgb, var(--palette-background-elevated) 88%, transparent);
+  color: var(--palette-text-primary);
+}

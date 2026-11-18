@@ -1,7 +1,7 @@
 /** Pointy-top hex circumradius passed to `HexTileBody` as `size`. */
 
-/** Hexes on the live play table (in-game board camera). */
-export const hexTileSizeBoard = 46;
+/** Hexes on the live play table (pan/zoom can pull back when the map is larger than the viewport). */
+export const hexTileSizeBoard = 70;
 
 /** Board-scale tiles in the style specimen and component gallery (1:1 SVG, ~22px market pills). */
 export const hexTileSizeGalleryBoard = 62;

@@ -1,0 +1,64 @@
+.page {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.hud {
+  position: relative;
+  z-index: var(--z-index-hud);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--spacing-1) var(--spacing-2);
+  background: color-mix(in srgb, var(--palette-background-elevated) 88%, transparent);
+  border-bottom: 1px solid var(--palette-divider);
+  backdrop-filter: blur(8px);
+}
+
+.hudPhase {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-md);
+  justify-self: start;
+  grid-column: 1;
+}
+
+.hudSeats {
+  justify-self: center;
+  grid-column: 2;
+}
+
+.hudMenu {
+  display: flex;
+  justify-content: flex-end;
+  justify-self: end;
+  grid-column: 3;
+}
+
+.table {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.hint {
+  position: absolute;
+  bottom: var(--spacing-1);
+  right: var(--spacing-2);
+  z-index: var(--z-index-hud);
+  padding: var(--spacing-0-5) var(--spacing-1);
+  border-radius: var(--shape-border-radius-sm);
+  background: color-mix(in srgb, var(--palette-background-elevated) 75%, transparent);
+  color: var(--palette-text-secondary);
+  pointer-events: none;
+}

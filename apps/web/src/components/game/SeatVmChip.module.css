@@ -10,8 +10,8 @@
 }
 
 .chipActive {
-  background: color-mix(in srgb, var(--palette-background-elevated) 88%, transparent);
-  box-shadow: var(--glow-primary);
+  background: color-mix(in srgb, var(--chip-seat) 62%, var(--palette-background-paper) 38%);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--chip-seat) 85%, transparent);
 }
 
 .name {

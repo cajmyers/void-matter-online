@@ -10,30 +10,48 @@ export interface PhaseBannerProps {
   /** Maintenance step label when `phase` is Maintenance (e.g. "Enemy Combat"). */
   readonly maintenanceStep?: string;
   readonly showFirstPlayer?: boolean;
+  /** Single-row layout for the play-table HUD. */
+  readonly compact?: boolean;
 }
 
-export function PhaseBanner({ gameRound, phase, maintenanceStep, showFirstPlayer = true }: PhaseBannerProps) {
+export function PhaseBanner({
+  gameRound,
+  phase,
+  maintenanceStep,
+  showFirstPlayer = true,
+  compact = false,
+}: PhaseBannerProps) {
+  const bannerClass = compact ? `${styles.banner} ${styles.bannerCompact}` : styles.banner;
+  const blockClass = compact ? styles.blockInline : styles.block;
+  const roundClass = compact ? `${styles.round} ${styles.roundCompact}` : styles.round;
+  const phaseVariant = compact ? "subtitle2" : "h6";
+  const phaseClass = compact ? `${styles.phase} ${styles.phaseCompact}` : styles.phase;
+
   return (
-    <header className={styles.banner} aria-label={`Game round ${gameRound}, ${phase} phase`}>
-      <div className={styles.block}>
-        <Typography variant="overline">game round</Typography>
-        <Typography variant="numeric" className={styles.round}>
+    <header className={bannerClass} aria-label={`Game round ${gameRound}, ${phase} phase`}>
+      <div className={blockClass}>
+        <Typography variant="overline" className={compact ? styles.inlineLabel : undefined}>
+          game round
+        </Typography>
+        <Typography variant="numeric" className={roundClass}>
           {gameRound}
         </Typography>
       </div>
-      <div className={styles.divider} aria-hidden />
-      <div className={styles.block}>
-        <Typography variant="overline">Phase</Typography>
-        <Typography variant="h6" className={styles.phase}>
+      <div className={compact ? `${styles.divider} ${styles.dividerCompact}` : styles.divider} aria-hidden />
+      <div className={blockClass}>
+        <Typography variant="overline" className={compact ? styles.inlineLabel : undefined}>
+          Phase
+        </Typography>
+        <Typography variant={phaseVariant} className={phaseClass}>
           {phase}
         </Typography>
         {phase === "Maintenance" && maintenanceStep ? (
-          <Typography variant="caption" className={styles.step}>
-            {maintenanceStep}
+          <Typography variant="caption" className={compact ? `${styles.step} ${styles.stepInline}` : styles.step}>
+            {compact ? `· ${maintenanceStep}` : maintenanceStep}
           </Typography>
         ) : null}
       </div>
-      {showFirstPlayer ? (
+      {!compact && showFirstPlayer ? (
         <>
           <div className={styles.divider} aria-hidden />
           <div className={styles.firstPlayer}>

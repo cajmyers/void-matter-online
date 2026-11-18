@@ -46,3 +46,42 @@
   gap: var(--gap-xs);
   color: var(--palette-text-secondary);
 }
+
+.bannerCompact {
+  flex-wrap: nowrap;
+  gap: var(--gap-sm);
+  padding: var(--spacing-0-5) var(--spacing-1-5);
+}
+
+.blockInline {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--gap-sm);
+  min-width: 0;
+}
+
+.inlineLabel {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.roundCompact {
+  font-size: var(--typography-subtitle1-size);
+  line-height: 1;
+}
+
+.phaseCompact {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.stepInline {
+  white-space: nowrap;
+  color: var(--palette-text-secondary);
+}
+
+.dividerCompact {
+  align-self: center;
+  min-height: 1.25rem;
+}

@@ -1,0 +1,23 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  flex-shrink: 0;
+}
+
+.mark {
+  display: block;
+  flex: none;
+  object-fit: contain;
+  filter: var(--game-vm-filter);
+}
+
+.wordmark {
+  margin: 0;
+  color: var(--palette-primary-main);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}

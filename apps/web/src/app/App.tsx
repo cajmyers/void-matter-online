@@ -14,16 +14,11 @@ const CrewCardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/CrewCardsP
 const MissionCardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/MissionCardsPage/MissionCardsPage")) : null;
 const EnemyCardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/EnemyCardsPage/EnemyCardsPage")) : null;
 const ShipCardsPage = __DEV_PAGES__ ? lazy(() => import("../pages/dev/ShipCardsPage/ShipCardsPage")) : null;
+const TablePage = lazy(() => import("../pages/TablePage/TablePage"));
 
 function pageFor(path: string): ReactNode {
   if (path === "/") {
-    return (
-      <ComingSoonPage
-        title="The table"
-        stage="Stage 1c"
-        description="The full play screen (board, ships, markets, player mat, prompts) rendered from fixtures. Not built yet. The style page shows the look it will have."
-      />
-    );
+    return <TablePage />;
   }
   if (__DEV_PAGES__) {
     if (path === "/dev/style" && StylePage) return <StylePage />;
