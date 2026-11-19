@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { HexDefs } from "../../components/hex/HexTile";
 import { PhaseBanner } from "../../components/game/PhaseBanner";
 import { VoidMatterLogo } from "../../components/game/VoidMatterLogo";
@@ -6,6 +6,8 @@ import { VmTrackerRow } from "../../components/game/VmTrackerRow";
 import { SpaceBackdrop } from "../../components/game/SpaceBackdrop";
 import { BoardViewport } from "../../components/table/BoardViewport";
 import { GameBoard } from "../../components/table/GameBoard";
+import { MapHexInspector } from "../../components/table/MapHexInspector";
+import type { MapHexView } from "../../view/mapView";
 import { Typography } from "../../components/Typography/Typography";
 import { devPagesEnabled } from "../../app/devPages";
 import { DevPagesMenu } from "../../app/DevPagesMenu";
@@ -24,6 +26,7 @@ function vmTrackerSeats(
     seat: row.seat,
     label: row.label,
     voidMatterTaken: row.vmTaken,
+    pool: row.pool,
     ...(row.seat === activeSeat ? { activeTurn: true as const } : {}),
     ...(row.seat === firstPlayerSeat ? { firstPlayer: true as const } : {}),
   }));
@@ -35,6 +38,11 @@ export default function TablePage() {
   const path = useHashRoute();
   const view = midGame4SeatView;
   const devLinks = appNavLinks;
+  const [inspectorHex, setInspectorHex] = useState<MapHexView | null>(null);
+
+  const onInspectHex = useCallback((hex: MapHexView) => {
+    setInspectorHex(hex);
+  }, []);
 
   return (
     <div className={styles.page}>
@@ -43,7 +51,7 @@ export default function TablePage() {
       </svg>
 
       <header className={styles.hud}>
-        <div className={styles.hudPhase}>
+        <div className={styles.hudStart}>
           <VoidMatterLogo compact />
           <PhaseBanner
             compact
@@ -52,8 +60,6 @@ export default function TablePage() {
             phase={view.phase}
             maintenanceStep={view.maintenanceStep}
           />
-        </div>
-        <div className={styles.hudSeats}>
           <VmTrackerRow seats={vmTrackerSeats(view.seats, view.activeSeat, view.firstPlayerSeat)} />
         </div>
         <div className={styles.hudMenu}>
@@ -64,11 +70,18 @@ export default function TablePage() {
       <div ref={tableRegionRef} className={styles.table}>
         <SpaceBackdrop />
         <BoardViewport wheelRegionRef={tableRegionRef}>
-          <GameBoard view={view} />
+          <GameBoard
+            view={view}
+            inspectedHex={inspectorHex ? { q: inspectorHex.q, r: inspectorHex.r } : undefined}
+            onInspectHex={onInspectHex}
+          />
         </BoardViewport>
         <Typography variant="caption" className={styles.hint}>
-          Drag to pan · scroll to zoom
+          Drag to pan · scroll to zoom · right-click a hex to inspect
         </Typography>
+        {inspectorHex ? (
+          <MapHexInspector hex={inspectorHex} view={view} onClose={() => setInspectorHex(null)} />
+        ) : null}
       </div>
     </div>
   );

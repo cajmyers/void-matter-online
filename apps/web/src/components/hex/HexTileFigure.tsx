@@ -7,17 +7,23 @@ import figureStyles from "./HexTileFigure.module.css";
 
 export type TileBody = Omit<HexTileBodyProps, "x" | "y" | "size">;
 
+export interface TileFigureShip {
+  readonly seat: SeatNumber;
+  readonly pinned?: boolean;
+  readonly selected?: boolean;
+  readonly hovered?: boolean;
+  readonly laneOffset?: -1 | 1;
+}
+
 export interface TileFigureTile {
   readonly q?: number;
   readonly r?: number;
   readonly body: TileBody;
   readonly gates?: readonly EdgeName[];
-  readonly ship?: {
-    readonly seat: SeatNumber;
-    readonly pinned?: boolean;
-    readonly selected?: boolean;
-    readonly hovered?: boolean;
-  };
+  /** Gallery specimen: one ship at the legacy offset. */
+  readonly ship?: Omit<TileFigureShip, "laneOffset">;
+  /** Play-table layout: centred on the hex with optional lane offsets. */
+  readonly ships?: readonly TileFigureShip[];
 }
 
 function tileFigureViewBox(tiles: readonly TileFigureTile[], size: number) {
@@ -37,13 +43,17 @@ export function HexTileFigureSvg({
   size,
   ariaLabel,
   className,
+  gatesByTile: gatesByTileOverride,
 }: {
   readonly tiles: readonly TileFigureTile[];
   readonly size: number;
   readonly ariaLabel: string;
   readonly className?: string;
+  /** When set, connected warp gates match the live board (`MAP-5`). */
+  readonly gatesByTile?: ReadonlyMap<string, readonly EdgeName[]>;
 }) {
-  const { placed, minX, minY, width, height, gatesByTile } = tileFigureViewBox(tiles, size);
+  const { placed, minX, minY, width, height, gatesByTile: localGatesByTile } = tileFigureViewBox(tiles, size);
+  const gatesByTile = gatesByTileOverride ?? localGatesByTile;
   return (
     <svg
       className={className ? `${figureStyles.intrinsic} ${className}` : figureStyles.intrinsic}
@@ -69,9 +79,33 @@ export function HexTileFigureSvg({
         />
       ))}
       {placed.map(({ tile, x, y }, index) =>
-        tile.ship ? (
-          <ShipBadge key={`ship-${index}`} x={x + size * 0.28} y={y + size * 0.12} size={size} {...tile.ship} />
-        ) : null,
+        tile.ships && tile.ships.length > 0
+          ? tile.ships.map((ship, shipIndex) => {
+              const lanePx =
+                ship.laneOffset !== undefined ? Math.round(size * 0.28) * ship.laneOffset : 0;
+              return (
+                <ShipBadge
+                  key={`ship-${index}-${shipIndex}`}
+                  x={x + lanePx}
+                  y={y}
+                  size={size}
+                  seat={ship.seat}
+                  pinned={ship.pinned}
+                  selected={ship.selected}
+                  hovered={ship.hovered}
+                  pointerEvents={false}
+                />
+              );
+            })
+          : tile.ship ? (
+              <ShipBadge
+                key={`ship-${index}`}
+                x={x + size * 0.28}
+                y={y + size * 0.12}
+                size={size}
+                {...tile.ship}
+              />
+            ) : null,
       )}
     </svg>
   );
@@ -101,14 +135,27 @@ export function HexTileScales({
 export function HexTileDetailPreview({
   body,
   gates = [],
+  q,
+  r,
+  gatesByTile,
+  ships = [],
 }: {
   readonly body: TileBody;
   readonly gates?: readonly EdgeName[];
+  readonly q?: number;
+  readonly r?: number;
+  readonly gatesByTile?: ReadonlyMap<string, readonly EdgeName[]>;
+  readonly ships?: readonly TileFigureShip[];
 }) {
   const title = body.title;
   return (
     <div className={detailStyles.root}>
-      <HexTileFigureSvg tiles={[{ body, gates }]} size={hexTileSizeDetail} ariaLabel={title} />
+      <HexTileFigureSvg
+        tiles={[{ body, gates, q, r, ...(ships.length > 0 ? { ships } : {}) }]}
+        size={hexTileSizeDetail}
+        ariaLabel={title}
+        gatesByTile={gatesByTile}
+      />
     </div>
   );
 }

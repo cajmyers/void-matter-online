@@ -63,6 +63,13 @@
   stroke: none;
 }
 
+/* Central Nexus pass pool: frosted white so it reads over busy art. */
+.nexusPassPill {
+  fill: color-mix(in srgb, white 58%, transparent);
+  stroke: color-mix(in srgb, white 70%, transparent);
+  stroke-width: 0.6;
+}
+
 /* Anomaly discovery bonus and similar compact badges. */
 .pill {
   fill: rgb(2 6 14 / 0.66);

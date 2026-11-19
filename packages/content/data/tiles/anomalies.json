@@ -12,7 +12,8 @@
       "TL",
       "R",
       "BL"
-    ]
+    ],
+    "effect": "Swap any two components on any two of your ships anywhere. Your ship must be here. Illegal if either ship would exceed slot or capacity limits after the swap."
   },
   {
     "id": "anomaly-2",
@@ -27,7 +28,8 @@
       "TR",
       "BR",
       "L"
-    ]
+    ],
+    "effect": "Swap up to 2 resources in this ship's cargo for any 2 resources (never VM) from the general supply. Cargo size unchanged."
   },
   {
     "id": "anomaly-3",
@@ -42,7 +44,8 @@
       "TL",
       "BR",
       "L"
-    ]
+    ],
+    "effect": "Each other player chooses one of their own ready action tokens and exhausts it. Players with no ready tokens are unaffected."
   },
   {
     "id": "anomaly-4",
@@ -57,7 +60,8 @@
       "TR",
       "R",
       "BL"
-    ]
+    ],
+    "effect": "Turn over one of your exhausted action tokens (general, Move, or officer) with no resource cost, once per Interact."
   },
   {
     "id": "anomaly-5",
@@ -73,7 +77,8 @@
       "TR",
       "BR",
       "BL"
-    ]
+    ],
+    "effect": "Pay 1 resource from one of your ships' cargo here. One of your ships in this sector (not necessarily the Interacting ship) takes a Move without a Move token at +1 speed, may traverse half warp gates, and is not blocked by enemies for that movement. Interact is blocked if opposing ships are present."
   },
   {
     "id": "anomaly-6",
@@ -88,7 +93,8 @@
       "R",
       "BL",
       "L"
-    ]
+    ],
+    "effect": "At the end of the game round, each ship in this sector repairs 1 damage cube (not components). Works while opposing ships are present."
   },
   {
     "id": "anomaly-7",
@@ -103,7 +109,8 @@
       "TL",
       "TR",
       "BR"
-    ]
+    ],
+    "effect": "Each ship that was in this sector at the start of the Action phase gets +1 to attack dice and +1 to evasion checks for the whole game round, even if it leaves."
   },
   {
     "id": "anomaly-8",
@@ -118,7 +125,8 @@
       "TR",
       "BL",
       "L"
-    ]
+    ],
+    "effect": "Look at the top 2 enemy cards and return them to the top or bottom in any order."
   },
   {
     "id": "anomaly-9",
@@ -133,7 +141,8 @@
       "TL",
       "R",
       "BR"
-    ]
+    ],
+    "effect": "Choose one of the four sector asset decks, look at its top 5 cards, and return them in any order. Only you see the cards."
   },
   {
     "id": "anomaly-10",
@@ -147,7 +156,8 @@
     "gates": [
       "TL",
       "BR"
-    ]
+    ],
+    "effect": "If a ship of a different owner enters this sector (including passing through), that owner must exhaust a ready Tactical token before the Move. Own ships enter freely."
   },
   {
     "id": "anomaly-11",
@@ -162,7 +172,8 @@
       "TR",
       "R",
       "L"
-    ]
+    ],
+    "effect": "While you have a ship here, every draw from your own actions is draw two, keep one (upgrade deck, enemy explore, Intelligence Bureau). The other card is discarded. Maintenance refills are unaffected."
   },
   {
     "id": "anomaly-12",
@@ -177,7 +188,8 @@
       "TL",
       "BR",
       "BL"
-    ]
+    ],
+    "effect": "When a ship enters, it may gain 1 H3 into cargo (every entry). At end of the Action phase, each ship here must discard 1 cargo resource to supply or take 1 damage."
   },
   {
     "id": "anomaly-13",
@@ -191,7 +203,8 @@
     "gates": [
       "R",
       "L"
-    ]
+    ],
+    "effect": "Leaving by Move costs +1 Speed. Evade and Retreat from this sector always succeed. Gravitic Anchor's 2-resource cost still applies to tactical Evade."
   },
   {
     "id": "anomaly-14",
@@ -206,7 +219,8 @@
       "TR",
       "BL",
       "L"
-    ]
+    ],
+    "effect": "All your other ships gain +1 to attack dice for the rest of the game round."
   },
   {
     "id": "anomaly-15",
@@ -222,7 +236,8 @@
       "R",
       "BR",
       "L"
-    ]
+    ],
+    "effect": "While you have a ship here, each purchase you make (upgrades, crew, new ships) costs 1 fewer resource, minimum 0, once per purchase. Ability costs are not purchases."
   },
   {
     "id": "anomaly-16",
@@ -237,7 +252,8 @@
       "TR",
       "BR",
       "BL"
-    ]
+    ],
+    "effect": "This ship takes any number of damage cubes on free hull slots (cannot destroy itself), and moves 1 cargo resource to your pool for each cube."
   },
   {
     "id": "anomaly-17",
@@ -252,7 +268,8 @@
       "TL",
       "R",
       "L"
-    ]
+    ],
+    "effect": "Choose one face-up mission in the shared mission market, discard it, and replace it from the mission deck. No replacement if the deck is empty."
   },
   {
     "id": "anomaly-18",
@@ -267,7 +284,8 @@
       "TR",
       "BL",
       "L"
-    ]
+    ],
+    "effect": "This ship pays 1 QP from its cargo to supply. Each other player exhausts up to 2 ready Move tokens (or all they have if fewer)."
   },
   {
     "id": "anomaly-19",
@@ -282,7 +300,8 @@
       "TL",
       "R",
       "BR"
-    ]
+    ],
+    "effect": "Target any planet on the board. Add or remove 1 damage cube on its supply area and/or 1 on its demand area (stacking allowed)."
   },
   {
     "id": "anomaly-20",
@@ -297,7 +316,8 @@
       "TR",
       "BR",
       "L"
-    ]
+    ],
+    "effect": "Move any number of crew between any two of your ships anywhere, subject to crew capacity (may remove crew to make room). Officer tokens keep ready/exhausted state."
   },
   {
     "id": "anomaly-21",
@@ -312,7 +332,8 @@
       "TL",
       "R",
       "BL"
-    ]
+    ],
+    "effect": "Pay 2 resources from your pool to turn over one of your exhausted action tokens, once per Interact."
   },
   {
     "id": "anomaly-22",
@@ -327,6 +348,7 @@
       "TR",
       "BR",
       "BL"
-    ]
+    ],
+    "effect": "Passive: each Maintenance, the first-player adds 1 resource of their choice to this hex (at most one of each type). Interact: take 1 resource from the hex into your pool."
   }
 ]

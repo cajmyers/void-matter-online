@@ -14,6 +14,7 @@ import { hexTileSizeGalleryBoard } from "../../../components/hex/hexTileSizes";
 import { anomalyDetailArt } from "../../../components/hex/anomalyTileArt";
 import { planetDetailArt } from "../../../components/hex/planetTileArt";
 import { anomalyFixtures, planetFixtures } from "../../../fixtures/tiles";
+import { centralNexusPassSupply } from "../../../view/centralNexusPassSupply";
 
 // A hand-made 2-seat board (MAP-1: 19 hexes, rows 3, 4, 5, 4, 3; N1 and N2 at opposite corners).
 // Tile data is structural seed data from technical-proposal.md appendices B and C.
@@ -69,7 +70,10 @@ function rimGates(q: number, r: number): readonly EdgeName[] {
 }
 
 const tiles: Readonly<Record<string, SpecimenTile>> = {
-  [axialKey(0, 0)]: { body: { kind: "nexusCentral", title: "Central Nexus" }, gates: edgeOrder },
+  [axialKey(0, 0)]: {
+    body: { kind: "nexusCentral", title: "Central Nexus", passSupply: centralNexusPassSupply },
+    gates: edgeOrder,
+  },
   [axialKey(0, -2)]: { body: { kind: "nexusRim", title: "Outer Rim Nexus, seat 1 start", seat: 1 }, gates: rimGates(0, -2) },
   [axialKey(0, 2)]: { body: { kind: "nexusRim", title: "Outer Rim Nexus, seat 2 start", seat: 2 }, gates: rimGates(0, 2) },
   [axialKey(-1, 0)]: { body: planetBody("Aethel-9"), gates: ["TL", "TR", "R"] },

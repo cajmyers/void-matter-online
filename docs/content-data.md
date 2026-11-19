@@ -8,7 +8,7 @@ Hero illustrations live under **`apps/web/src/assets/cards/{s1|s2|s3|s4}/fronts/
 
 ## 1. Sector decks (asset market assignment)
 
-Four asset decks, one per sector and market (`MAP-4`, `DCK-3`): **S1 = Weapons / Offensive (PC), S2 = Propulsion / Utility (H3), S3 = Cargo / Life Support (QP), S4 = Hull / Defensive (TC).** The tile discovery bonus resources map to these (PC to S1, H3 to S2, QP to S3, TC to S4). **Every upgrade card belongs to exactly one of these decks** (no separate common list).
+Four asset decks, one per sector and market (`MAP-4`: all four at the Central Nexus; subset per Outer Rim tile by seat count, `DCK-3`): **S1 = Weapons / Offensive (PC), S2 = Propulsion / Utility (H3), S3 = Cargo / Life Support (QP), S4 = Hull / Defensive (TC).** The tile discovery bonus resources map to these (PC to S1, H3 to S2, QP to S3, TC to S4). **Every upgrade card belongs to exactly one of these decks** (no separate common list).
 
 Totals of this proposal: **81 physical market cards** shuffled across S1–S4 below (**57 card types** in sector catalogues).
 

@@ -1,17 +1,26 @@
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { axialKey, axialToPixel } from "../hex/hexGeometry";
 import { HexGates, HexTileBody, ShipBadge } from "../hex/HexTile";
 import figureStyles from "../hex/HexTileFigure.module.css";
 import { hexTileSizeBoard } from "../hex/hexTileSizes";
 import type { GameView } from "../../view/gameView";
 import { mapTileViewToBody } from "../../view/mapHexPresentation";
+import type { MapHexView } from "../../view/mapView";
 
 export interface GameBoardProps {
   readonly view: Pick<GameView, "map" | "ships">;
   readonly hexSize?: number;
+  readonly inspectedHex?: { readonly q: number; readonly r: number };
+  readonly onInspectHex?: (hex: MapHexView, event: ReactMouseEvent<SVGGElement>) => void;
 }
 
 /** SVG hex map from a `GameView` map slice. Parent must render `<HexDefs />` once on the page. */
-export function GameBoard({ view, hexSize = hexTileSizeBoard }: GameBoardProps) {
+export function GameBoard({
+  view,
+  hexSize = hexTileSizeBoard,
+  inspectedHex,
+  onInspectHex,
+}: GameBoardProps) {
   const placed = view.map.map((hex) => {
     const centre = axialToPixel(hex.q, hex.r, hexSize);
     const body = mapTileViewToBody(hex.tile);
@@ -37,16 +46,29 @@ export function GameBoard({ view, hexSize = hexTileSizeBoard }: GameBoardProps) 
       role="img"
       aria-label="Void Matter game board"
     >
-      {placed.map(({ hex, centre, body }) => (
-        <HexTileBody
-          key={axialKey(hex.q, hex.r)}
-          x={centre.x}
-          y={centre.y}
-          size={hexSize}
-          interactive
-          {...body}
-        />
-      ))}
+      {placed.map(({ hex, centre, body }) => {
+        const inspected = inspectedHex?.q === hex.q && inspectedHex?.r === hex.r;
+        return (
+          <HexTileBody
+            key={axialKey(hex.q, hex.r)}
+            x={centre.x}
+            y={centre.y}
+            size={hexSize}
+            interactive
+            onContextMenu={
+              onInspectHex
+                ? (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    onInspectHex(hex, event);
+                  }
+                : undefined
+            }
+            {...body}
+            selected={inspected || Boolean(body.selected)}
+          />
+        );
+      })}
       {placed.map(({ hex, centre, gates }) => (
         <HexGates
           key={`gates-${axialKey(hex.q, hex.r)}`}
@@ -73,6 +95,7 @@ export function GameBoard({ view, hexSize = hexTileSizeBoard }: GameBoardProps) 
             pinned={ship.pinned}
             selected={ship.selected}
             hovered={ship.hovered}
+            pointerEvents={false}
           />
         );
       })}

@@ -1,4 +1,4 @@
-import { useId, type CSSProperties } from "react";
+import { useId, type CSSProperties, type MouseEvent as ReactMouseEvent } from "react";
 import { seatShapePath } from "../game/SeatMark";
 import interactIcon from "../../assets/icons/actions/interact.png";
 import { resourceArt } from "../game/resourceArt";
@@ -20,6 +20,7 @@ import {
   hexTileMarketLayout,
   hexTileMarketLockStackY,
   hexTileMarketSupplyY,
+  hexTileSizeDetail,
   type HexTileMarketLayout,
 } from "./hexTileSizes";
 import { nexusDetailArt } from "./nexusTileArt";
@@ -44,6 +45,8 @@ export interface HexTileBodyProps {
   /** Planet only: supply (harvest) and demand (deliver) rows use full-strength resource art. */
   readonly supply?: readonly ResourceAmount[];
   readonly demand?: readonly ResourceAmount[];
+  /** Central Nexus only: pass supply pool (`centralNexusPassSupply`). */
+  readonly passSupply?: readonly ResourceAmount[];
   /**
    * Planet only: damage cubes on the supply or demand area (harvest/fulfil each add 2; blocked while any remain;
    * Market Shift removes 1 per game round — design-decisions harvest/fulfil + Market Shift).
@@ -61,6 +64,7 @@ export interface HexTileBodyProps {
   readonly interactive?: boolean;
   /** Planet only: owner art clipped inside the hex when provided (`assets/tiles/planets`). */
   readonly detailArt?: string;
+  readonly onContextMenu?: (event: ReactMouseEvent<SVGGElement>) => void;
 }
 
 const tileClass: Readonly<Record<TileKind, string>> = {
@@ -174,6 +178,46 @@ function MarketLockStack({
   );
 }
 
+/** Central Nexus pass pool: centred on the hex with a market pill for legibility over tile art. */
+function NexusPassSupplyIcons({
+  items,
+  layout,
+}: {
+  readonly items: readonly ResourceAmount[];
+  readonly layout: HexTileMarketLayout;
+}) {
+  if (items.length === 0) return null;
+  const { cube, pillHeight, pillWidth, pillPadY } = layout;
+  const entryGap = Math.round(cube * 0.2);
+  const entryWidth = cube + entryGap;
+  const contentWidth = items.length * entryWidth - entryGap;
+  const start = -contentWidth / 2;
+  const pillW = Math.max(pillWidth, contentWidth + cube * 0.6);
+  return (
+    <g>
+      <rect
+        x={-pillW / 2}
+        y={-cube / 2 - pillPadY}
+        width={pillW}
+        height={pillHeight}
+        rx={pillHeight / 2}
+        className={styles.nexusPassPill}
+      />
+      {items.map((item, index) => {
+        const info = resourceInfo[item.resource];
+        const left = start + index * entryWidth;
+        return (
+          <g key={item.resource} transform={`translate(${left} ${-cube / 2})`}>
+            <image href={resourceArt[item.resource]} width={cube} height={cube}>
+              <title>{`Pass supply: ${item.amount} ${info.name}`}</title>
+            </image>
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
 function ResourceRow({
   items,
   y,
@@ -254,7 +298,7 @@ function HexTileClippedArt({
         clipPath={`url(#${clipId})`}
         className={styles.planetDetailArt}
       >
-        <title>{artTitle}</title>
+        {artTitle ? <title>{artTitle}</title> : null}
       </image>
     </>
   );
@@ -303,6 +347,7 @@ export function HexTileBody(props: HexTileBodyProps) {
     seat,
     supply = [],
     demand = [],
+    passSupply = [],
     lockedSupply = 0,
     lockedDemand = 0,
     bonus,
@@ -311,6 +356,7 @@ export function HexTileBody(props: HexTileBodyProps) {
     hovered = false,
     interactive = false,
     detailArt,
+    onContextMenu,
   } = props;
   const hexArtClipId = useId();
   const corners = hexCorners(size);
@@ -325,7 +371,10 @@ export function HexTileBody(props: HexTileBodyProps) {
       : kind === "nexusRim" && seat !== undefined
         ? nexusDetailArt("nexusRim", seat)
         : undefined;
-  const marketLayout = kind === "planet" ? hexTileMarketLayout(size) : undefined;
+  const showTileTooltip = size < hexTileSizeDetail;
+  const showNexusPassSupply =
+    kind === "nexusCentral" && passSupply.length > 0 && showTileTooltip;
+  const marketLayout = kind === "planet" || showNexusPassSupply ? hexTileMarketLayout(size) : undefined;
   const artClipRadius = size * 0.94;
   const artClip = hexCorners(artClipRadius);
   const artBounds = hexBoundingHalfExtents(artClipRadius);
@@ -347,8 +396,9 @@ export function HexTileBody(props: HexTileBodyProps) {
         .filter(Boolean)
         .join(" ")}
       style={tileStyle}
+      onContextMenu={onContextMenu}
     >
-      <title>{title}</title>
+      {showTileTooltip ? <title>{title}</title> : null}
       <polygon points={pointsAttribute(corners)} className={`${styles.body} ${tileClass[kind]}`} />
 
       {kind === "faceDown" ? (
@@ -367,7 +417,7 @@ export function HexTileBody(props: HexTileBodyProps) {
             <HexTileClippedArt
               clipId={hexArtClipId}
               href={detailArt}
-              artTitle={title}
+              artTitle={showTileTooltip ? title : ""}
               artClip={artClip}
               artBounds={artBounds}
             />
@@ -397,7 +447,7 @@ export function HexTileBody(props: HexTileBodyProps) {
             <HexTileClippedArt
               clipId={`${hexArtClipId}-anomaly`}
               href={detailArt}
-              artTitle={title}
+              artTitle={showTileTooltip ? title : ""}
               artClip={artClip}
               artBounds={artBounds}
             />
@@ -449,7 +499,7 @@ export function HexTileBody(props: HexTileBodyProps) {
             <HexTileClippedArt
               clipId={`${hexArtClipId}-central`}
               href={nexusArt}
-              artTitle={title}
+              artTitle={showTileTooltip ? title : ""}
               artClip={artClip}
               artBounds={artBounds}
             />
@@ -460,6 +510,9 @@ export function HexTileBody(props: HexTileBodyProps) {
               <polygon points={pointsAttribute(innermost)} className={styles.nexusRing} />
             </>
           )}
+          {showNexusPassSupply && marketLayout ? (
+            <NexusPassSupplyIcons items={passSupply} layout={marketLayout} />
+          ) : null}
         </>
       ) : null}
 
@@ -469,7 +522,7 @@ export function HexTileBody(props: HexTileBodyProps) {
             <HexTileClippedArt
               clipId={`${hexArtClipId}-rim-${seat}`}
               href={nexusArt}
-              artTitle={title}
+              artTitle={showTileTooltip ? title : ""}
               artClip={artClip}
               artBounds={artBounds}
             />
@@ -543,15 +596,27 @@ export interface ShipBadgeProps {
   readonly pinned?: boolean;
   readonly selected?: boolean;
   readonly hovered?: boolean;
+  /** When false, pan and hex inspect pass through the badge (play table). */
+  readonly pointerEvents?: boolean;
 }
 
 /** A ship on the board: the seat colour and the seat shape (never colour alone), with an engine trail. */
-export function ShipBadge({ x, y, size, seat, pinned = false, selected = false, hovered = false }: ShipBadgeProps) {
+export function ShipBadge({
+  x,
+  y,
+  size,
+  seat,
+  pinned = false,
+  selected = false,
+  hovered = false,
+  pointerEvents = true,
+}: ShipBadgeProps) {
   const radius = size * 0.2;
   const trail = radius * 4.4;
   const glow = { "--ship": `var(--game-seat-${seat})` } as CSSProperties;
+  const style = { ...glow, pointerEvents: pointerEvents ? undefined : "none" } as CSSProperties;
   return (
-    <g transform={`translate(${x} ${y})`} style={glow} className={styles.ship}>
+    <g transform={`translate(${x} ${y})`} style={style} className={styles.ship}>
       <title>{`Ship, seat ${seat}${pinned ? ", pinned" : ""}${selected ? ", selected" : ""}`}</title>
       <g transform="rotate(-25)">
         <polygon points={`0,${-radius * 0.55} ${-trail},0 0,${radius * 0.55}`} fill={`url(#vm-trail-${seat})`} />

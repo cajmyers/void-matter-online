@@ -19,6 +19,12 @@ describe("tile content (technical-proposal Appendices B and C)", () => {
     }
   });
 
+  it("includes a player-facing effect for every anomaly", () => {
+    for (const tile of anomalies) {
+      expect(tile.effect.length, tile.name).toBeGreaterThan(20);
+    }
+  });
+
   it("gives every Anomaly valid, distinct gate edges and two different discovery resources", () => {
     for (const tile of anomalies) {
       expect(new Set(tile.gates).size).toBe(tile.gates.length);

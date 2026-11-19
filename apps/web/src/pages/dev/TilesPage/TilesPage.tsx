@@ -6,6 +6,7 @@ import { anomalyFixtures, planetFixtures } from "../../../fixtures/tiles";
 import { TileScalesFigure } from "../GalleryPage/Figure";
 import galleryStyles from "../GalleryPage/GalleryPage.module.css";
 import { buildAnomalyFigure, buildPlanetFigure } from "../tileCatalogFigures";
+import { centralNexusPassSupply } from "../../../view/centralNexusPassSupply";
 import styles from "./TilesPage.module.css";
 
 const planetGroups = ["High metal", "High fuel", "High component", "High tech"] as const;
@@ -39,7 +40,12 @@ export default function TilesPage() {
             <TileScalesFigure
               name="Central Nexus"
               note="Six gates"
-              tiles={[{ body: { kind: "nexusCentral", title: "Central Nexus" }, gates: edgeOrder }]}
+              tiles={[
+                {
+                  body: { kind: "nexusCentral", title: "Central Nexus", passSupply: centralNexusPassSupply },
+                  gates: edgeOrder,
+                },
+              ]}
             />
             {seatNumbers.map((seat) => (
               <TileScalesFigure

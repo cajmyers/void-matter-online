@@ -1,0 +1,21 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.entry {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.amount {
+  color: var(--palette-text-primary);
+  font-size: var(--typography-body2-size);
+}
+
+.empty {
+  color: var(--palette-text-secondary);
+}

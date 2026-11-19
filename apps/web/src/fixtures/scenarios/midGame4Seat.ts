@@ -13,7 +13,7 @@ const tileByCoord: Readonly<Record<string, MapTileView>> = {
   [axialKey(-2, 1)]: { kind: "planet", planetName: "Caelum Mining Hub" },
   [axialKey(1, 2)]: { kind: "nexusRim", seat: 4 },
   [axialKey(-1, 0)]: { kind: "planet", planetName: "Aethel-9" },
-  [axialKey(1, 0)]: { kind: "planet", planetName: "Vulkan's Forge", selected: true, lockedDemand: 1 },
+  [axialKey(1, 0)]: { kind: "planet", planetName: "Vulkan's Forge", lockedDemand: 1 },
   [axialKey(0, -1)]: { kind: "planet", planetName: "Kraken's Breath", lockedSupply: 2 },
   [axialKey(0, 1)]: { kind: "planet", planetName: "Stallos Prime" },
   [axialKey(-2, 0)]: { kind: "planet", planetName: "Solaria Prime" },
@@ -77,10 +77,10 @@ export const midGame4SeatView: GameView = {
   firstPlayerSeat: 2,
   activeSeat: 1,
   seats: [
-    { seat: 1, label: "You", vmTaken: 0 },
-    { seat: 2, label: "Bot A", vmTaken: 1 },
-    { seat: 3, label: "Bot B", vmTaken: 1, passed: true },
-    { seat: 4, label: "Bot C", vmTaken: 2 },
+    { seat: 1, label: "You", vmTaken: 0, pool: { tc: 2, h3: 1, pc: 3, qp: 0 } },
+    { seat: 2, label: "Bot A", vmTaken: 1, pool: { tc: 0, h3: 4, pc: 1, qp: 2 } },
+    { seat: 3, label: "Bot B", vmTaken: 1, passed: true, pool: { tc: 1, h3: 0, pc: 0, qp: 3 } },
+    { seat: 4, label: "Bot C", vmTaken: 2, pool: { tc: 3, h3: 2, pc: 2, qp: 1 } },
   ],
   map: buildMap(),
   ships: [

@@ -10,6 +10,8 @@ export const anomalyTileSchema = z.object({
   name: z.string().min(1),
   bonus: z.tuple([resourceIdSchema, resourceIdSchema]),
   ability: anomalyAbilitySchema,
+  /** Player-facing effect (`design-decisions.md` §7). */
+  effect: z.string().min(1),
   gates: z.array(edgeNameSchema).min(1),
 });
 export type AnomalyTile = z.infer<typeof anomalyTileSchema>;

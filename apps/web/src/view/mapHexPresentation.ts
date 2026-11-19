@@ -3,6 +3,7 @@ import type { HexTileBodyProps } from "../components/hex/HexTile";
 import { planetDetailArt } from "../components/hex/planetTileArt";
 import { anomalyFixtures, planetFixtures, planetGatePatterns } from "../fixtures/tiles";
 import type { MapHexView } from "./mapView";
+import { centralNexusPassSupply } from "./centralNexusPassSupply";
 
 function planet(name: string, extra: { lockedSupply?: number; lockedDemand?: number; selected?: boolean } = {}) {
   const row = planetFixtures.find((candidate) => candidate.name === name);
@@ -37,7 +38,7 @@ export function mapTileViewToBody(tile: MapHexView["tile"]): Omit<HexTileBodyPro
     case "faceDown":
       return { kind: "faceDown", title: "Face-down tile" };
     case "nexusCentral":
-      return { kind: "nexusCentral", title: "Central Nexus" };
+      return { kind: "nexusCentral", title: "Central Nexus", passSupply: centralNexusPassSupply };
     case "nexusRim":
       return { kind: "nexusRim", title: "Outer Rim Nexus", seat: tile.seat };
     case "planet":

@@ -1,3 +1,4 @@
+import type { FactionPoolView } from "../components/game/FactionPoolCounts";
 import type { SeatNumber } from "../components/game/resources";
 import type { MapHexView, ShipOnMapView } from "./mapView";
 
@@ -7,6 +8,8 @@ export interface SeatPublicView {
   readonly seat: SeatNumber;
   readonly label: string;
   readonly vmTaken: number;
+  /** Faction resource pool (`INF-1`, public). */
+  readonly pool: FactionPoolView;
   readonly passed?: boolean;
 }
 

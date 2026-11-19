@@ -12,9 +12,10 @@
 .hud {
   position: relative;
   z-index: var(--z-index-hud);
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   gap: var(--gap-sm);
   padding: var(--spacing-1) var(--spacing-2);
   background: color-mix(in srgb, var(--palette-background-elevated) 88%, transparent);
@@ -22,25 +23,19 @@
   backdrop-filter: blur(8px);
 }
 
-.hudPhase {
+.hudStart {
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--gap-md);
-  justify-self: start;
-  grid-column: 1;
-}
-
-.hudSeats {
-  justify-self: center;
-  grid-column: 2;
+  min-width: 0;
 }
 
 .hudMenu {
   display: flex;
+  flex: none;
   justify-content: flex-end;
-  justify-self: end;
-  grid-column: 3;
 }
 
 .table {

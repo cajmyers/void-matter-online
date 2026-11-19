@@ -3,6 +3,7 @@ import { hrefFor } from "../../../app/useHashRoute";
 import { Typography } from "../../../components/Typography/Typography";
 import { anomalyFixtures, planetFixtures } from "../../../fixtures/tiles";
 import { buildAnomalyFigure, buildPlanetFigure } from "../tileCatalogFigures";
+import { centralNexusPassSupply } from "../../../view/centralNexusPassSupply";
 import { TileScalesFigure } from "./Figure";
 import styles from "./GalleryPage.module.css";
 
@@ -28,7 +29,12 @@ export function TilesSection() {
           <TileScalesFigure
             name="Central Nexus"
             note="Six gates; hub of the board"
-            tiles={[{ body: { kind: "nexusCentral", title: "Central Nexus" }, gates: edgeOrder }]}
+            tiles={[
+              {
+                body: { kind: "nexusCentral", title: "Central Nexus", passSupply: centralNexusPassSupply },
+                gates: edgeOrder,
+              },
+            ]}
           />
           <TileScalesFigure
             name="Outer Rim Nexus"
