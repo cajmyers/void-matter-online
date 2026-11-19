@@ -71,6 +71,8 @@ export function MapHexInspector({ hex, view, onClose }: MapHexInspectorProps) {
       <aside
         ref={panelRef}
         className={styles.panel}
+        data-block-board-wheel="true"
+        data-map-hex-inspector="true"
         role="dialog"
         aria-modal="true"
         aria-label={`Inspect ${title}`}

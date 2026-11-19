@@ -5,8 +5,12 @@ import { cardWidthHand } from "./cardSizes";
 export const zoneCardsAcross = 2;
 
 /** Inline vars for `MarketZonePanel` and `ZoneTabDock` width (`theme.css` `--game-zone-cards-across`). */
-export function zoneColumnStyle(cardWidth: number = cardWidthHand): CSSProperties {
+export function zoneColumnStyle(
+  cardWidth: number = cardWidthHand,
+  pileWidth: number = cardWidth,
+): CSSProperties {
   return {
     "--zone-card-width": `${cardWidth}px`,
+    "--zone-pile-width": `${pileWidth}px`,
   } as CSSProperties;
 }

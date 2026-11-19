@@ -7,7 +7,11 @@ import { SpaceBackdrop } from "../../components/game/SpaceBackdrop";
 import { BoardViewport } from "../../components/table/BoardViewport";
 import { GameBoard } from "../../components/table/GameBoard";
 import { MapHexInspector } from "../../components/table/MapHexInspector";
+import { MarketCardInspector } from "../../components/table/MarketCardInspector";
+import { MarketDiscardInspector } from "../../components/table/MarketDiscardInspector";
+import { TableMarketsDock } from "../../components/table/TableMarketsDock";
 import type { MapHexView } from "../../view/mapView";
+import type { MarketCardInspectTarget, MarketDiscardInspectTarget } from "../../view/marketCardInspect";
 import { Typography } from "../../components/Typography/Typography";
 import { devPagesEnabled } from "../../app/devPages";
 import { DevPagesMenu } from "../../app/DevPagesMenu";
@@ -39,9 +43,25 @@ export default function TablePage() {
   const view = midGame4SeatView;
   const devLinks = appNavLinks;
   const [inspectorHex, setInspectorHex] = useState<MapHexView | null>(null);
+  const [inspectorCard, setInspectorCard] = useState<MarketCardInspectTarget | null>(null);
+  const [inspectorDiscard, setInspectorDiscard] = useState<MarketDiscardInspectTarget | null>(null);
 
   const onInspectHex = useCallback((hex: MapHexView) => {
+    setInspectorCard(null);
+    setInspectorDiscard(null);
     setInspectorHex(hex);
+  }, []);
+
+  const onInspectMarketCard = useCallback((target: MarketCardInspectTarget) => {
+    setInspectorHex(null);
+    setInspectorDiscard(null);
+    setInspectorCard(target);
+  }, []);
+
+  const onInspectMarketDiscard = useCallback((target: MarketDiscardInspectTarget) => {
+    setInspectorHex(null);
+    setInspectorCard(null);
+    setInspectorDiscard(target);
   }, []);
 
   return (
@@ -67,21 +87,36 @@ export default function TablePage() {
         </div>
       </header>
 
-      <div ref={tableRegionRef} className={styles.table}>
-        <SpaceBackdrop />
-        <BoardViewport wheelRegionRef={tableRegionRef}>
-          <GameBoard
-            view={view}
-            inspectedHex={inspectorHex ? { q: inspectorHex.q, r: inspectorHex.r } : undefined}
-            onInspectHex={onInspectHex}
-          />
-        </BoardViewport>
-        <Typography variant="caption" className={styles.hint}>
-          Drag to pan · scroll to zoom · right-click a hex to inspect
-        </Typography>
-        {inspectorHex ? (
-          <MapHexInspector hex={inspectorHex} view={view} onClose={() => setInspectorHex(null)} />
-        ) : null}
+      <TableMarketsDock
+        view={view}
+        overlayHostRef={tableRegionRef}
+        onInspectCard={onInspectMarketCard}
+        onInspectDiscard={onInspectMarketDiscard}
+      />
+
+      <div className={styles.playfield}>
+        <div ref={tableRegionRef} className={styles.table}>
+          <SpaceBackdrop />
+          <BoardViewport wheelRegionRef={tableRegionRef}>
+            <GameBoard
+              view={view}
+              inspectedHex={inspectorHex ? { q: inspectorHex.q, r: inspectorHex.r } : undefined}
+              onInspectHex={onInspectHex}
+            />
+          </BoardViewport>
+          <Typography variant="caption" className={styles.hint}>
+            Drag to pan · scroll to zoom · right-click a hex to inspect
+          </Typography>
+          {inspectorHex ? (
+            <MapHexInspector hex={inspectorHex} view={view} onClose={() => setInspectorHex(null)} />
+          ) : null}
+          {inspectorCard ? (
+            <MarketCardInspector target={inspectorCard} onClose={() => setInspectorCard(null)} />
+          ) : null}
+          {inspectorDiscard ? (
+            <MarketDiscardInspector target={inspectorDiscard} onClose={() => setInspectorDiscard(null)} />
+          ) : null}
+        </div>
       </div>
     </div>
   );

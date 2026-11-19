@@ -73,6 +73,11 @@ export function BoardViewport({ children, initialPan, wheelRegionRef }: BoardVie
       const region = wheelRegionRef?.current ?? viewport;
       if (!pointerInRect(event.clientX, event.clientY, region.getBoundingClientRect())) return;
 
+      const target = event.target;
+      if (target instanceof Element && target.closest("[data-block-board-wheel]")) {
+        return;
+      }
+
       event.preventDefault();
       event.stopPropagation();
 

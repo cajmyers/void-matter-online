@@ -19,7 +19,7 @@
   gap: var(--gap-sm);
   padding: var(--spacing-1) var(--spacing-2);
   background: color-mix(in srgb, var(--palette-background-elevated) 88%, transparent);
-  border-bottom: 1px solid var(--palette-divider);
+  border-bottom: none;
   backdrop-filter: blur(8px);
 }
 
@@ -38,12 +38,21 @@
   justify-content: flex-end;
 }
 
+.playfield {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .table {
   position: relative;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  min-width: 0;
 }
 
 .hint {

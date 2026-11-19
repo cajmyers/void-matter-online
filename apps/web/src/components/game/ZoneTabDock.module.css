@@ -13,63 +13,8 @@
   color: var(--palette-text-secondary);
 }
 
-.tabRail {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 0;
+.tabRailHost {
   width: 100%;
-  padding: 0;
-  border-bottom: var(--panel-border-width) solid
-    color-mix(in srgb, var(--dock-rim) 45%, var(--panel-border-color));
-}
-
-.tab {
-  appearance: none;
-  position: relative;
-  padding: var(--spacing-0-5) var(--spacing-1-5);
-  margin-bottom: calc(-1 * var(--panel-border-width));
-  font-family: var(--font-numeric);
-  font-size: var(--typography-caption-size);
-  font-weight: 600;
-  line-height: 1.2;
-  color: var(--palette-text-secondary);
-  cursor: pointer;
-  background: color-mix(in srgb, var(--palette-background-default) 82%, transparent);
-  border: var(--panel-border-width) solid var(--palette-divider);
-  border-radius: var(--shape-border-radius-sm) var(--shape-border-radius-sm) 0 0;
-  transition:
-    border-color var(--transitions-duration-short) var(--transitions-easing-standard),
-    color var(--transitions-duration-short) var(--transitions-easing-standard),
-    box-shadow var(--transitions-duration-short) var(--transitions-easing-standard),
-    background-color var(--transitions-duration-short) var(--transitions-easing-standard);
-}
-
-.tab:not(:first-child) {
-  margin-left: calc(-1 * var(--panel-border-width));
-}
-
-.tab:hover {
-  color: var(--palette-primary-light);
-  z-index: 1;
-  border-color: color-mix(in srgb, var(--tab-rim) 55%, var(--palette-divider));
-}
-
-.tabActive {
-  z-index: 2;
-  color: var(--palette-text-primary);
-  background: var(--panel-background);
-  backdrop-filter: var(--panel-backdrop-filter);
-  border-color: color-mix(in srgb, var(--tab-rim) 45%, var(--panel-border-color));
-  border-bottom-color: var(--panel-background);
-  box-shadow:
-    0 0 12px color-mix(in srgb, var(--tab-rim) 20%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--tab-rim) 18%, transparent);
-}
-
-.tabActive:first-child {
-  border-top-left-radius: 0;
 }
 
 .panelHost {

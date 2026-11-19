@@ -1,5 +1,6 @@
 import { useId, useState, type CSSProperties, type ReactNode } from "react";
 import { Typography } from "../Typography/Typography";
+import { ZoneTabRail } from "./ZoneTabRail";
 import styles from "./ZoneTabDock.module.css";
 
 export interface ZoneTabDockTab {
@@ -15,10 +16,13 @@ export function ZoneTabDock({
   tabs,
   defaultTabId,
   heading = "Markets",
+  purchasableTabIds,
 }: {
   readonly tabs: readonly ZoneTabDockTab[];
   readonly defaultTabId: string;
   readonly heading?: string;
+  /** Tabs the viewer may buy from at the current Nexus (`MAP-4`). Others stay visible but muted. */
+  readonly purchasableTabIds?: readonly string[];
 }) {
   const [activeId, setActiveId] = useState(defaultTabId);
   const groupId = useId();
@@ -35,25 +39,14 @@ export function ZoneTabDock({
       <div id={groupId} className={styles.heading}>
         <Typography variant="overline">{heading}</Typography>
       </div>
-      <div className={styles.tabRail} role="tablist" aria-label="Market zones">
-        {tabs.map((tab) => {
-          const selected = tab.id === active.id;
-          const tabStyle = { "--tab-rim": tab.rim } as CSSProperties;
-          return (
-            <button
-              key={tab.id}
-              type="button"
-              role="tab"
-              aria-selected={selected}
-              aria-label={tab.ariaLabel}
-              className={selected ? `${styles.tab} ${styles.tabActive}` : styles.tab}
-              style={tabStyle}
-              onClick={() => setActiveId(tab.id)}
-            >
-              {tab.shortLabel}
-            </button>
-          );
-        })}
+      <div className={styles.tabRailHost}>
+        <ZoneTabRail
+          tabs={tabs}
+          activeTabId={active.id}
+          onTabSelect={setActiveId}
+          purchasableTabIds={purchasableTabIds}
+          variant="dock"
+        />
       </div>
       <div className={styles.panelHost} role="tabpanel" aria-label={active.ariaLabel}>
         {active.panel}

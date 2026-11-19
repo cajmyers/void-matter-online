@@ -17,6 +17,8 @@ export interface SectorMarketZoneView {
   readonly faceUpCardIds: readonly string[];
   /** Face-up top of discard when `piles.discardCount` > 0. */
   readonly discardTopCardId?: string;
+  /** Fixture discard contents for inspect (order as in pile, top first). */
+  readonly discardCardIds?: readonly string[];
   readonly useOwnerDeckBack?: boolean;
 }
 
@@ -26,6 +28,7 @@ export interface CrewMarketZoneView {
   /** Face-up catalogue ids, length 1–4 (`DCK-2`, recruitment market). */
   readonly faceUpCrewIds: readonly string[];
   readonly discardTopCrewId?: string;
+  readonly discardCardIds?: readonly string[];
 }
 
 export interface MissionMarketZoneView {
@@ -34,6 +37,7 @@ export interface MissionMarketZoneView {
   /** Face-up catalogue ids, length 1–4. */
   readonly faceUpMissionIds: readonly string[];
   readonly discardTopMissionId?: string;
+  readonly discardCardIds?: readonly string[];
 }
 
 export type CardMarketZoneView = SectorMarketZoneView | CrewMarketZoneView | MissionMarketZoneView;

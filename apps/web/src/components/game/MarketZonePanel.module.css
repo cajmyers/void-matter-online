@@ -49,7 +49,7 @@
 
 .piles {
   display: grid;
-  grid-template-columns: repeat(var(--game-zone-cards-across), var(--zone-card-width, 118px));
+  grid-template-columns: repeat(var(--game-zone-cards-across), var(--zone-pile-width, var(--zone-card-width, 118px)));
   gap: var(--gap-md);
   align-items: start;
   justify-content: start;

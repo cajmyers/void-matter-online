@@ -38,7 +38,12 @@ export function gallerySectorMarketZoneViews(): readonly SectorMarketZoneView[] 
   return sectorDecks.map((deck) => {
     const market = firstPlayableSlice.sectorMarkets[deck];
     const faceUpCardIds = pickFaceUpIds(deck, 3);
-    const discardCount = deck === "s1" ? 4 : deck === "s4" ? 2 : 0;
+    const discardCardIdsByDeck: Readonly<Partial<Record<SectorArtDeck, readonly string[]>>> = {
+      s1: ["laser-cannon", "minigun", "beam-projector", "energy-shields"],
+      s4: ["hull-plating", "reactive-plating"],
+    };
+    const discardCardIds = discardCardIdsByDeck[deck];
+    const discardCount = discardCardIds?.length ?? 0;
     const deckCount = Math.max(0, market.deckSize - faceUpCardIds.length - discardCount);
     return {
       kind: "sector",
@@ -47,7 +52,9 @@ export function gallerySectorMarketZoneViews(): readonly SectorMarketZoneView[] 
       resource: market.resource,
       faceUpCardIds,
       piles: { deckCount, discardCount },
-      ...(discardCount > 0 ? { discardTopCardId: faceUpCardIds[0] } : {}),
+      ...(discardCount > 0 && discardCardIds
+        ? { discardTopCardId: discardCardIds[0], discardCardIds }
+        : {}),
       useOwnerDeckBack: market.deckBack === "sector",
     };
   });
@@ -72,11 +79,13 @@ export function galleryCrewMarketZoneView(): CrewMarketZoneView {
   const faceUpCrewIds = ["pilot", "merchant", "tactical", "scout"] as const;
   const discardCount = 2;
   const deckCount = Math.max(0, firstPlayableSlice.crewDeckSize - faceUpCrewIds.length - discardCount);
+  const discardCardIds = ["scout", "merchant"] as const;
   return {
     kind: "crew",
     faceUpCrewIds,
     piles: { deckCount, discardCount },
     discardTopCrewId: "scout",
+    discardCardIds,
   };
 }
 
@@ -86,11 +95,20 @@ export function galleryMissionMarketZoneView(): MissionMarketZoneView {
   const faceUpMissionIds = ["syndicate-bust", "market-saturation", "blockade", "galactic-tour"] as const;
   const discardCount = 6;
   const deckCount = Math.max(0, firstPlayableSlice.missionDeckSize - faceUpMissionIds.length - discardCount);
+  const discardCardIds = [
+    "all-aboard",
+    "resource-tycoon",
+    "cargo-kingpin",
+    "armada",
+    "full-roster",
+    "galactic-tour",
+  ] as const;
   return {
     kind: "mission",
     faceUpMissionIds,
     piles: { deckCount, discardCount },
     discardTopMissionId: "all-aboard",
+    discardCardIds,
   };
 }
 
@@ -105,6 +123,7 @@ export function gallerySectorMarketDepletedView(): SectorMarketZoneView {
     faceUpCardIds: base.faceUpCardIds.slice(0, 2),
     piles: { deckCount: 0, discardCount: 3 },
     discardTopCardId: "impulse-thrusters",
+    discardCardIds: ["impulse-thrusters", "nested-overdrive", "impulse-thrusters"],
   };
 }
 

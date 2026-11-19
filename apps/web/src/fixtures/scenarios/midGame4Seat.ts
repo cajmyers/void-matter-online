@@ -3,6 +3,7 @@ import type { GameView } from "../../view/gameView";
 import type { MapHexView, MapTileView } from "../../view/mapView";
 import { anomalyGatesForName, planetGatesForName } from "../../view/mapHexPresentation";
 import { board4SeatHexes, gatesForBoardHex } from "../board/boardLayout4Seat";
+import { midGame4SeatMarkets } from "./midGame4SeatMarkets";
 
 /** Revealed tiles for a mid-game 4-seat fixture (`implementation-plan.md` §5.4 `midGame*`). */
 const tileByCoord: Readonly<Record<string, MapTileView>> = {
@@ -92,4 +93,5 @@ export const midGame4SeatView: GameView = {
     { q: 1, r: 0, seat: 2, laneOffset: 1, pinned: true },
     { q: 0, r: -1, seat: 3 },
   ],
+  markets: midGame4SeatMarkets,
 };

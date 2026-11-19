@@ -7,6 +7,11 @@ export const cardPrintHeightMm = 100;
 /** In hand on the player mat or in a market row. */
 export const cardWidthHand = 118;
 
+/** Deck and discard slots in `MarketZonePanel` (face-up row stays `cardWidthHand`). */
+export function cardWidthMarketPile(faceWidth: number = cardWidthHand): number {
+  return Math.round(faceWidth * 0.55);
+}
+
 /** Inspector / detail zoom beside the board. */
 export const cardWidthDetail = 220;
 

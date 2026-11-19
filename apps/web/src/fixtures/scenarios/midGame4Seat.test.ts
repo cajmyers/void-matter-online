@@ -9,6 +9,11 @@ describe("midGame4Seat fixture", () => {
     expect(midGame4SeatView.seatCount).toBe(4);
   });
 
+  it("includes shared market zones", () => {
+    expect(midGame4SeatView.markets.sectors).toHaveLength(4);
+    expect(midGame4SeatView.markets.crew.faceUpCrewIds.length).toBeGreaterThan(0);
+  });
+
   it("places one Outer Rim Nexus per seat", () => {
     const rim = midGame4SeatView.map.filter((hex) => hex.tile.kind === "nexusRim");
     expect(rim).toHaveLength(4);

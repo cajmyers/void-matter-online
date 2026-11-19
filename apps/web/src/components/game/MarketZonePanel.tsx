@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Typography } from "../Typography/Typography";
-import { cardWidthHand } from "./cardSizes";
+import { cardWidthHand, cardWidthMarketPile } from "./cardSizes";
 import { zoneColumnStyle } from "./zoneLayout";
 import styles from "./MarketZonePanel.module.css";
 
@@ -44,7 +44,8 @@ export function MarketZonePanel({
   cardWidth = cardWidthHand,
   attachTabs = false,
 }: MarketZonePanelProps) {
-  const style = { "--zone-rim": rim, ...zoneColumnStyle(cardWidth) } as CSSProperties;
+  const pileWidth = cardWidthMarketPile(cardWidth);
+  const style = { "--zone-rim": rim, ...zoneColumnStyle(cardWidth, pileWidth) } as CSSProperties;
   const panelClass = attachTabs ? `${styles.panel} ${styles.attachTabs}` : styles.panel;
   return (
     <section className={panelClass} style={style} aria-label={title}>

@@ -1,6 +1,7 @@
 import type { FactionPoolView } from "../components/game/FactionPoolCounts";
 import type { SeatNumber } from "../components/game/resources";
 import type { MapHexView, ShipOnMapView } from "./mapView";
+import type { TableMarketsView } from "./tableMarketsView";
 
 export type GamePhase = "Action" | "Maintenance";
 
@@ -26,4 +27,5 @@ export interface GameView {
   readonly seats: readonly SeatPublicView[];
   readonly map: readonly MapHexView[];
   readonly ships: readonly ShipOnMapView[];
+  readonly markets: TableMarketsView;
 }
