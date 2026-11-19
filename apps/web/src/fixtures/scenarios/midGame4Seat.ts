@@ -4,6 +4,7 @@ import type { MapHexView, MapTileView } from "../../view/mapView";
 import { anomalyGatesForName, planetGatesForName } from "../../view/mapHexPresentation";
 import { board4SeatHexes, gatesForBoardHex } from "../board/boardLayout4Seat";
 import { midGame4SeatMarkets } from "./midGame4SeatMarkets";
+import { midGame4SeatViewerFleet } from "./midGame4SeatFleet";
 
 /** Revealed tiles for a mid-game 4-seat fixture (`implementation-plan.md` §5.4 `midGame*`). */
 const tileByCoord: Readonly<Record<string, MapTileView>> = {
@@ -85,13 +86,14 @@ export const midGame4SeatView: GameView = {
   ],
   map: buildMap(),
   ships: [
-    { q: -1, r: -2, seat: 1, selected: true },
+    { q: -1, r: -2, seat: 1, instanceId: "seat1-corvette-a", selected: true },
     { q: 3, r: -2, seat: 2 },
     { q: -3, r: 2, seat: 3 },
     { q: 1, r: 2, seat: 4 },
-    { q: 1, r: 0, seat: 1, laneOffset: -1, pinned: true },
+    { q: 1, r: 0, seat: 1, instanceId: "seat1-corvette-b", laneOffset: -1, pinned: true },
     { q: 1, r: 0, seat: 2, laneOffset: 1, pinned: true },
     { q: 0, r: -1, seat: 3 },
   ],
   markets: midGame4SeatMarkets,
+  viewerFleet: midGame4SeatViewerFleet,
 };

@@ -26,11 +26,15 @@ export function assetCardTextBlockHeight(widthPx: number, sectorDeck?: SectorArt
   return Math.round(widthPx * ratio);
 }
 
-/** Effect area (`footerReserve`): attack dice, speed line, footer notes. */
+/** Effect area (`footerReserve`): attack dice, speed line, footer notes (`AssetCard.module.css`). */
 export function assetCardFooterReserveHeight(widthPx: number, sectorDeck?: SectorArtDeck): number {
   const compact = widthPx < 140;
+  const detail = widthPx >= cardWidthDetail;
   const linePx = compact ? 10 : 11;
   if (sectorDeck === "s2") {
+    if (detail) {
+      return 34;
+    }
     return linePx * 2 + 8;
   }
   return (linePx * 2 + 4) * 2;
@@ -39,6 +43,42 @@ export function assetCardFooterReserveHeight(widthPx: number, sectorDeck?: Secto
 /** Gap at the card bottom when the effect area was reclaimed into text or image. */
 export function assetCardBottomInsetPx(widthPx: number): number {
   return widthPx >= cardWidthDetail ? 8 : 6;
+}
+
+/** Matches `.withFaceTexture .footerReserve { margin-bottom: 4px }` in `AssetCard.module.css`. */
+export const assetCardTexturedFooterMarginBottomPx = 4;
+
+/**
+ * Vertical space the effect area occupies on the card (footer band, or bottom inset when reclaimed).
+ * Sector face-texture cards add {@link assetCardTexturedFooterMarginBottomPx} below the band — include it in stack peeks.
+ */
+export function assetCardEffectAreaOuterHeight(
+  widthPx: number,
+  sectorDeck: SectorArtDeck | undefined,
+  options: { readonly usesEffectFooter: boolean },
+): number {
+  const compact = widthPx < 140;
+  const band = options.usesEffectFooter
+    ? assetCardFooterReserveHeight(widthPx, sectorDeck)
+    : assetCardBottomInsetPx(widthPx);
+  if (compact || !sectorDeck || !options.usesEffectFooter) {
+    return band;
+  }
+  return band + assetCardTexturedFooterMarginBottomPx;
+}
+
+/** Installed-stack peeks only — a sliver above the effect band so overlap does not clip the footer. */
+export const assetCardInstalledEffectOnlyPeekSlackPx = 6;
+
+/** Effect-only install cards (rules blank, footer has the effect). */
+export function assetCardInstalledEffectOnlyPeekHeight(
+  widthPx: number,
+  sectorDeck: SectorArtDeck | undefined,
+): number {
+  return (
+    assetCardEffectAreaOuterHeight(widthPx, sectorDeck, { usesEffectFooter: true }) +
+    assetCardInstalledEffectOnlyPeekSlackPx
+  );
 }
 
 export type AssetCardRegionHeights = {

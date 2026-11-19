@@ -1,4 +1,4 @@
-import { ensignCrew, firstPlayableSlice, missionCatalogue } from "@void-matter/content";
+import { commanderCrew, ensignCrew, firstPlayableSlice, missionCatalogue } from "@void-matter/content";
 import type { SectorArtDeck } from "../components/game/assetCardArt";
 import type { GalleryCrewCard } from "./crewCardFixtures";
 import { galleryCrewCardsFromCatalogue } from "./crewCardFixtures";
@@ -66,13 +66,14 @@ export function gallerySectorAssetCardsByDeck(): Readonly<Record<SectorArtDeck, 
   >;
 }
 
-const galleryCrewCards = galleryCrewCardsFromCatalogue(
+const galleryEnsignCards = galleryCrewCardsFromCatalogue(
   ensignCrew.filter((row) => firstPlayableSlice.includedCrewIds.includes(row.id)),
   "ensign",
 );
+const galleryCommanderCards = galleryCrewCardsFromCatalogue(commanderCrew, "commander");
 
 export const galleryCrewCardsById: Readonly<Record<string, GalleryCrewCard>> = Object.fromEntries(
-  galleryCrewCards.map((card) => [card.catalogueId, card]),
+  [...galleryEnsignCards, ...galleryCommanderCards].map((card) => [card.catalogueId, card]),
 );
 
 export function galleryCrewMarketZoneView(): CrewMarketZoneView {

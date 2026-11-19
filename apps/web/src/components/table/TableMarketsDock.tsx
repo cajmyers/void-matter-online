@@ -18,11 +18,16 @@ export function TableMarketsDock({
   overlayHostRef,
   onInspectCard,
   onInspectDiscard,
+  onRequestClosePeer,
+  externalCloseSignal,
 }: {
   readonly view: Pick<GameView, "markets" | "map" | "ships" | "seatCount" | "viewerSeat">;
   readonly overlayHostRef: RefObject<HTMLElement | null>;
   readonly   onInspectCard?: (target: MarketCardInspectTarget) => void;
   onInspectDiscard?: (target: MarketDiscardInspectTarget) => void;
+  /** Fleet dock bumps this when a ship tab opens so the market overlay closes. */
+  readonly externalCloseSignal?: number;
+  readonly onRequestClosePeer?: () => void;
 }) {
   const barRef = useRef<HTMLElement>(null);
   const context = useMemo(
@@ -57,12 +62,20 @@ export function TableMarketsDock({
         setMarketsOpen(false);
         return;
       }
+      onRequestClosePeer?.();
       ignoreCloseUntil.current = performance.now() + 250;
       setActiveTabId(tabId);
       setMarketsOpen(true);
     },
-    [activeTabId, marketsOpen],
+    [activeTabId, marketsOpen, onRequestClosePeer],
   );
+
+  useEffect(() => {
+    if (externalCloseSignal === undefined || externalCloseSignal === 0) {
+      return;
+    }
+    closeMarkets();
+  }, [closeMarkets, externalCloseSignal]);
 
   const active = tabs.find((tab) => tab.id === activeTabId) ?? tabs[0];
   const overlayHost = overlayHostRef.current;
@@ -106,7 +119,7 @@ export function TableMarketsDock({
   }, [closeMarkets, marketsOpen]);
 
   return (
-    <section ref={barRef} className={styles.bar} aria-label="Markets">
+    <section ref={barRef} className={styles.bar} data-table-markets-dock="true" aria-label="Markets">
       <div className={styles.navRow}>
         <ZoneTabRail
           tabs={tabs}

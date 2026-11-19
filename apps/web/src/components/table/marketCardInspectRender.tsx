@@ -1,7 +1,11 @@
 import type { ReactNode } from "react";
+import { playerShips } from "@void-matter/content";
 import { AssetCard } from "../game/AssetCard";
 import { CrewCard } from "../game/CrewCard";
 import { MissionCard } from "../game/MissionCard";
+import { ShipCard } from "../game/ShipCard";
+import { shipCardPropsFromPlayerShip } from "../../fixtures/shipCardFixtures";
+import type { TableCardInspectTarget } from "../../view/marketCardInspect";
 import {
   galleryCrewCardsById,
   galleryMissionsById,
@@ -51,4 +55,21 @@ export function renderMarketCardDetail(
       width={width}
     />
   );
+}
+
+export function renderTableCardDetail(target: TableCardInspectTarget, width: number): ReactNode {
+  if (target.kind === "ship") {
+    const ship = playerShips.find((row) => row.id === target.catalogueId);
+    if (!ship) {
+      return null;
+    }
+    return (
+      <ShipCard
+        {...shipCardPropsFromPlayerShip(ship)}
+        width={width}
+        damage={target.damage ?? 0}
+      />
+    );
+  }
+  return renderMarketCardDetail(target.kind, target.catalogueId, width);
 }

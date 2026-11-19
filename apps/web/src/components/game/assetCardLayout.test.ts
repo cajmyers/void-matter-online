@@ -3,6 +3,7 @@ import { cardWidthDetail, cardWidthHand } from "./cardSizes";
 import {
   assetCardArtPlateHeight,
   assetCardBottomInsetPx,
+  assetCardEffectAreaOuterHeight,
   assetCardFooterReserveHeight,
   assetCardRegionHeights,
   assetCardTextBlockHeight,
@@ -20,8 +21,16 @@ describe("assetCardLayout", () => {
   it("gives S2 inspect cards more text and a shorter footer", () => {
     expect(assetCardArtPlateHeight(cardWidthDetail, "s2")).toBe(101);
     expect(assetCardTextBlockHeight(cardWidthDetail, "s2")).toBe(110);
-    expect(assetCardFooterReserveHeight(cardWidthDetail, "s2")).toBe(30);
+    expect(assetCardFooterReserveHeight(cardWidthDetail, "s2")).toBe(34);
     expect(assetCardFooterReserveHeight(cardWidthHand, "s2")).toBe(28);
+  });
+
+  it("counts textured footer margin in effect-area outer height for installed peeks", () => {
+    expect(assetCardEffectAreaOuterHeight(cardWidthDetail, "s2", { usesEffectFooter: true })).toBe(38);
+    expect(assetCardEffectAreaOuterHeight(cardWidthHand, "s2", { usesEffectFooter: true })).toBe(28);
+    expect(assetCardEffectAreaOuterHeight(cardWidthDetail, "s4", { usesEffectFooter: true })).toBe(56);
+    expect(assetCardEffectAreaOuterHeight(cardWidthDetail, undefined, { usesEffectFooter: true })).toBe(52);
+    expect(assetCardEffectAreaOuterHeight(cardWidthDetail, "s4", { usesEffectFooter: false })).toBe(8);
   });
 
   it("reclaims empty effect area into text on detail cards; compact keeps the footer band", () => {

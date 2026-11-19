@@ -28,6 +28,8 @@ export interface ShipOnMapView {
   readonly q: number;
   readonly r: number;
   readonly seat: SeatNumber;
+  /** Links map badge to `FleetShipView.instanceId` on the fleet panel. */
+  readonly instanceId?: string;
   /** Lateral lane within a hex: −1 left, +1 right (scaled by hex size in `GameBoard`). */
   readonly laneOffset?: -1 | 1;
   readonly pinned?: boolean;

@@ -55,6 +55,18 @@
   min-width: 0;
 }
 
+.playerDock {
+  position: relative;
+  z-index: var(--z-index-hud);
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--palette-divider);
+  background: color-mix(in srgb, var(--palette-background-elevated) 88%, transparent);
+  backdrop-filter: blur(8px);
+}
+
 .hint {
   position: absolute;
   bottom: var(--spacing-1);

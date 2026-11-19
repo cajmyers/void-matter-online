@@ -22,6 +22,8 @@ export function DiscardPile({ label = "Discard", count, topCard, width, onInspec
     onInspectDiscard();
   };
 
+  const inspectable = Boolean(onInspectDiscard);
+
   if (count <= 0) {
     return (
       <div
@@ -41,8 +43,8 @@ export function DiscardPile({ label = "Discard", count, topCard, width, onInspec
   const depth = Math.min(count, 3);
   return (
     <div
-      className={`${styles.pile} ${styles.spent}`}
-      style={{ width, cursor: onInspectDiscard ? "context-menu" : undefined }}
+      className={`${styles.pile} ${styles.spent}${inspectable ? ` ${styles.inspectable}` : ""}`}
+      style={{ width }}
       role="group"
       aria-label={`${label}: ${count} cards, top face-up`}
       onContextMenu={onContextMenu}

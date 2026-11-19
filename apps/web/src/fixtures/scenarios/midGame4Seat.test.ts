@@ -14,6 +14,14 @@ describe("midGame4Seat fixture", () => {
     expect(midGame4SeatView.markets.crew.faceUpCrewIds.length).toBeGreaterThan(0);
   });
 
+  it("includes viewer fleet linked to map ships", () => {
+    expect(midGame4SeatView.viewerFleet.ships).toHaveLength(2);
+    const mapIds = midGame4SeatView.ships
+      .map((ship) => ship.instanceId)
+      .filter((id): id is string => id !== undefined);
+    expect(mapIds).toContain(midGame4SeatView.viewerFleet.selectedInstanceId);
+  });
+
   it("places one Outer Rim Nexus per seat", () => {
     const rim = midGame4SeatView.map.filter((hex) => hex.tile.kind === "nexusRim");
     expect(rim).toHaveLength(4);

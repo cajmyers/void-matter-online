@@ -71,6 +71,10 @@ export const ownerSectorAssetCards: readonly OwnerGalleryAssetCard[] = sectorAss
   .map((card) => toGalleryCard(card))
   .filter((card): card is OwnerGalleryAssetCard => card !== null);
 
+export const ownerGalleryAssetCardsById: Readonly<Record<string, OwnerGalleryAssetCard>> = Object.fromEntries(
+  ownerSectorAssetCards.map((card) => [card.catalogueId, card]),
+);
+
 export function ownerAssetCardsForDeck(deck: (typeof sectorDeckOrder)[number]): readonly OwnerGalleryAssetCard[] {
   return ownerSectorAssetCards.filter((card) => card.sectorDeck === deck);
 }

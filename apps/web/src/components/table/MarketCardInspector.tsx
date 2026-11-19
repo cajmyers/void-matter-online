@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Typography } from "../Typography/Typography";
+import { playerShips } from "@void-matter/content";
 import { cardWidthDetail } from "../game/cardSizes";
 import {
   galleryCrewCardsById,
   galleryMissionsById,
   gallerySectorAssetCardsByDeck,
 } from "../../fixtures/zoneFixtures";
-import type { MarketCardInspectTarget } from "../../view/marketCardInspect";
-import { renderMarketCardDetail } from "./marketCardInspectRender";
+import type { TableCardInspectTarget } from "../../view/marketCardInspect";
+import { renderTableCardDetail } from "./marketCardInspectRender";
 import styles from "./MarketCardInspector.module.css";
 
 function resolveAssetCard(catalogueId: string) {
@@ -21,7 +22,10 @@ function resolveAssetCard(catalogueId: string) {
   return undefined;
 }
 
-function inspectTitle(target: MarketCardInspectTarget): string {
+function inspectTitle(target: TableCardInspectTarget): string {
+  if (target.kind === "ship") {
+    return playerShips.find((row) => row.id === target.catalogueId)?.title ?? target.catalogueId;
+  }
   if (target.kind === "asset") {
     return resolveAssetCard(target.catalogueId)?.title ?? target.catalogueId;
   }
@@ -37,7 +41,7 @@ export function MarketCardInspector({
   target,
   onClose,
 }: {
-  readonly target: MarketCardInspectTarget;
+  readonly target: TableCardInspectTarget;
   readonly onClose: () => void;
 }) {
   const panelRef = useRef<HTMLElement>(null);
@@ -45,7 +49,7 @@ export function MarketCardInspector({
 
   useEffect(() => {
     ignoreCloseUntil.current = performance.now() + 250;
-  }, [target.kind, target.catalogueId]);
+  }, [target]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -69,11 +73,7 @@ export function MarketCardInspector({
 
   const title = inspectTitle(target);
 
-  const pileKind = target.kind;
-  const preview = useMemo(
-    () => renderMarketCardDetail(pileKind, target.catalogueId, cardWidthDetail),
-    [pileKind, target.catalogueId],
-  );
+  const preview = useMemo(() => renderTableCardDetail(target, cardWidthDetail), [target]);
 
   return (
     <div className={styles.root}>

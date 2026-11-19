@@ -5,10 +5,12 @@ export function InspectableMarketCard({
   children,
   onInspect,
   label,
+  fill = false,
 }: {
   readonly children: ReactNode;
   readonly onInspect: () => void;
   readonly label: string;
+  readonly fill?: boolean;
 }) {
   const onContextMenu = (event: MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -16,8 +18,10 @@ export function InspectableMarketCard({
     onInspect();
   };
 
+  const className = fill ? `${styles.wrap} ${styles.fill}` : styles.wrap;
+
   return (
-    <div className={styles.wrap} onContextMenu={onContextMenu} role="group" aria-label={label}>
+    <div className={className} onContextMenu={onContextMenu} role="group" aria-label={label}>
       {children}
     </div>
   );

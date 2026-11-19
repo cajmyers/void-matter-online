@@ -9,9 +9,10 @@ import { GameBoard } from "../../components/table/GameBoard";
 import { MapHexInspector } from "../../components/table/MapHexInspector";
 import { MarketCardInspector } from "../../components/table/MarketCardInspector";
 import { MarketDiscardInspector } from "../../components/table/MarketDiscardInspector";
+import { TableFleetDock } from "../../components/table/TableFleetDock";
 import { TableMarketsDock } from "../../components/table/TableMarketsDock";
 import type { MapHexView } from "../../view/mapView";
-import type { MarketCardInspectTarget, MarketDiscardInspectTarget } from "../../view/marketCardInspect";
+import type { MarketDiscardInspectTarget, TableCardInspectTarget } from "../../view/marketCardInspect";
 import { Typography } from "../../components/Typography/Typography";
 import { devPagesEnabled } from "../../app/devPages";
 import { DevPagesMenu } from "../../app/DevPagesMenu";
@@ -43,8 +44,11 @@ export default function TablePage() {
   const view = midGame4SeatView;
   const devLinks = appNavLinks;
   const [inspectorHex, setInspectorHex] = useState<MapHexView | null>(null);
-  const [inspectorCard, setInspectorCard] = useState<MarketCardInspectTarget | null>(null);
+  const [inspectorCard, setInspectorCard] = useState<TableCardInspectTarget | null>(null);
   const [inspectorDiscard, setInspectorDiscard] = useState<MarketDiscardInspectTarget | null>(null);
+  const [selectedShipInstanceId, setSelectedShipInstanceId] = useState(view.viewerFleet.selectedInstanceId);
+  const [closeMarketsSignal, setCloseMarketsSignal] = useState(0);
+  const [closeFleetSignal, setCloseFleetSignal] = useState(0);
 
   const onInspectHex = useCallback((hex: MapHexView) => {
     setInspectorCard(null);
@@ -52,7 +56,7 @@ export default function TablePage() {
     setInspectorHex(hex);
   }, []);
 
-  const onInspectMarketCard = useCallback((target: MarketCardInspectTarget) => {
+  const onInspectTableCard = useCallback((target: TableCardInspectTarget) => {
     setInspectorHex(null);
     setInspectorDiscard(null);
     setInspectorCard(target);
@@ -90,8 +94,10 @@ export default function TablePage() {
       <TableMarketsDock
         view={view}
         overlayHostRef={tableRegionRef}
-        onInspectCard={onInspectMarketCard}
+        onInspectCard={onInspectTableCard}
         onInspectDiscard={onInspectMarketDiscard}
+        externalCloseSignal={closeMarketsSignal}
+        onRequestClosePeer={() => setCloseFleetSignal((signal) => signal + 1)}
       />
 
       <div className={styles.playfield}>
@@ -101,6 +107,7 @@ export default function TablePage() {
             <GameBoard
               view={view}
               inspectedHex={inspectorHex ? { q: inspectorHex.q, r: inspectorHex.r } : undefined}
+              selectedShipInstanceId={selectedShipInstanceId}
               onInspectHex={onInspectHex}
             />
           </BoardViewport>
@@ -118,6 +125,17 @@ export default function TablePage() {
           ) : null}
         </div>
       </div>
+
+      <footer className={styles.playerDock} aria-label="Your fleet">
+        <TableFleetDock
+          fleet={view.viewerFleet}
+          overlayHostRef={tableRegionRef}
+          onActiveShip={setSelectedShipInstanceId}
+          onInspectCard={onInspectTableCard}
+          externalCloseSignal={closeFleetSignal}
+          onRequestClosePeer={() => setCloseMarketsSignal((signal) => signal + 1)}
+        />
+      </footer>
     </div>
   );
 }

@@ -1,0 +1,36 @@
+.bar {
+  position: relative;
+  flex: none;
+  background: transparent;
+  border: none;
+}
+
+.navRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: var(--spacing-1) var(--spacing-2) var(--spacing-1);
+}
+
+.overlayRoot {
+  position: absolute;
+  inset: 0;
+  z-index: calc(var(--z-index-hud) + 14);
+  pointer-events: none;
+}
+
+.floatingPanel {
+  position: absolute;
+  bottom: var(--spacing-2);
+  left: var(--spacing-2);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  pointer-events: auto;
+  max-width: calc(100% - var(--spacing-2) * 2);
+  max-height: calc(100% - var(--spacing-2) * 2);
+  overflow-x: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}

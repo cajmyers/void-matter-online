@@ -28,6 +28,21 @@
 .top {
   position: relative;
   flex: none;
+  border-radius: var(--shape-border-radius-lg);
+}
+
+.top::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid transparent;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.inspectable:hover .top::after {
+  border-color: var(--palette-text-primary);
 }
 
 .countBadge {

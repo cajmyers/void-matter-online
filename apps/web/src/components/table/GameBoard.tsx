@@ -11,6 +11,7 @@ export interface GameBoardProps {
   readonly view: Pick<GameView, "map" | "ships">;
   readonly hexSize?: number;
   readonly inspectedHex?: { readonly q: number; readonly r: number };
+  readonly selectedShipInstanceId?: string;
   readonly onInspectHex?: (hex: MapHexView, event: ReactMouseEvent<SVGGElement>) => void;
 }
 
@@ -19,6 +20,7 @@ export function GameBoard({
   view,
   hexSize = hexTileSizeBoard,
   inspectedHex,
+  selectedShipInstanceId,
   onInspectHex,
 }: GameBoardProps) {
   const placed = view.map.map((hex) => {
@@ -93,7 +95,11 @@ export function GameBoard({
             size={hexSize}
             seat={ship.seat}
             pinned={ship.pinned}
-            selected={ship.selected}
+            selected={
+              selectedShipInstanceId !== undefined
+                ? ship.instanceId === selectedShipInstanceId
+                : Boolean(ship.selected)
+            }
             hovered={ship.hovered}
             pointerEvents={false}
           />
